@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/fragment_datetime_picker_expanded"
+        android:alpha="0">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/paleSpringBud"
+                android:orientation="horizontal">
+
+                <revolver.headead.ui.views.typography.MontserratTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_horizontal"
+                    android:padding="16dp"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:id="@+id/fragment_datetime_picker_expanded_now"
+                    android:text="@string/fragment_datetime_picker_now"
+                    android:textColor="@color/blackOlive"
+                    android:textSize="14.6sp"
+                    android:textAllCaps="true"
+                    app:textStyle="semiBold"/>
+
+                <revolver.headead.ui.views.typography.MontserratTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_horizontal"
+                    android:padding="16dp"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:id="@+id/fragment_datetime_picker_expanded_ongoing"
+                    android:text="@string/fragment_datetime_picker_ongoing"
+                    android:textColor="@color/blackOlive"
+                    android:textSize="14.6sp"
+                    android:textAllCaps="true"
+                    app:textStyle="regular"/>
+
+                <revolver.headead.ui.views.typography.MontserratTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_horizontal"
+                    android:padding="16dp"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:id="@+id/fragment_datetime_picker_expanded_custom"
+                    android:text="@string/fragment_datetime_picker_custom"
+                    android:textColor="@color/blackOlive"
+                    android:textSize="14.6sp"
+                    android:textAllCaps="true"
+                    app:textStyle="regular"/>
+
+            </LinearLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="16dp"
+                        android:background="@android:color/transparent"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="16dp"
+                        android:id="@+id/fragment_datetime_picker_ongoing_selector"
+                        android:background="@android:color/transparent"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="16dp"
+                        android:background="@color/paleSpringBudDark"/>
+
+                </LinearLayout>
+
+                <revolver.headead.ui.views.typography.MontserratTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="24dp"
+                    android:text="@string/fragment_datetime_picker_date_header"
+                    android:textSize="14.6sp"
+                    android:textAllCaps="true"
+                    app:textStyle="semiBold"/>
+
+                <revolver.headead.ui.views.MaterialCalendarView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fragment_datetime_picker_date"
+                    android:layout_margin="8dp"/>
+
+                <revolver.headead.ui.views.typography.MontserratTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:text="@string/fragment_datetime_picker_time_header"
+                    android:textSize="14.6sp"
+                    android:textAllCaps="true"
+                    app:textStyle="semiBold"/>
+
+                <revolver.headead.ui.views.MaterialTimePickerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fragment_datetime_picker_time"
+                    android:layout_margin="8dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_margin="24dp"
+                    android:id="@+id/fragment_datetime_picker_expanded_confirm"
+                    android:text="@string/fragment_datetime_picker_confirm"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/roboto_regular"
+                    app:backgroundTint="@color/flame"/>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="132dp"
+        android:id="@+id/fragment_datetime_picker_collapsed"
+        android:orientation="vertical">
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="16dp"
+            android:id="@+id/fragment_datetime_picker_collapsed_confirm"
+            android:text="@string/fragment_datetime_picker_confirm"
+            android:textColor="@color/white"
+            android:fontFamily="@font/roboto_regular"
+            app:backgroundTint="@color/flame"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:background="@color/paleSpringBudDark"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <revolver.headead.ui.views.typography.MontserratTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_horizontal"
+                android:padding="16dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground"
+                android:id="@+id/fragment_datetime_picker_now"
+                android:text="@string/fragment_datetime_picker_now"
+                android:textColor="@color/blackOlive"
+                android:textSize="14.6sp"
+                android:textAllCaps="true"
+                app:textStyle="semiBold"/>
+
+            <revolver.headead.ui.views.typography.MontserratTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_horizontal"
+                android:padding="16dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground"
+                android:id="@+id/fragment_datetime_picker_ongoing"
+                android:text="@string/fragment_datetime_picker_ongoing"
+                android:textColor="@color/blackOlive"
+                android:textSize="14.6sp"
+                android:textAllCaps="true"
+                app:textStyle="regular"/>
+
+            <revolver.headead.ui.views.typography.MontserratTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_horizontal"
+                android:padding="16dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground"
+                android:id="@+id/fragment_datetime_picker_custom"
+                android:text="@string/fragment_datetime_picker_custom"
+                android:textColor="@color/blackOlive"
+                android:textSize="14.6sp"
+                android:textAllCaps="true"
+                app:textStyle="regular"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

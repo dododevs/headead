@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="256dp">
+
+    <revolver.headead.ui.views.typography.MontserratTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/fragment_pain_intensity_picker_title"
+        android:textAllCaps="true"
+        android:textSize="12.8sp"
+        android:id="@+id/fragment_pain_intensity_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:textStyle="semiBold" />
+
+    <ImageView
+        android:id="@+id/fragment_pain_intensity_picker_scale"
+        android:layout_width="match_parent"
+        android:layout_height="128dp"
+        android:layout_marginStart="37dp"
+        android:layout_marginEnd="38dp"
+        android:layout_marginBottom="24dp"
+        android:contentDescription="@string/cd_intensity_scale"
+        android:scaleType="fitXY"
+        android:src="@drawable/fragment_pain_intensity_picker_base"
+        app:layout_constraintTop_toBottomOf="@id/fragment_pain_intensity_title"
+        app:layout_constraintBottom_toBottomOf="@id/fragment_pain_intensity_picker_slider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <revolver.headead.ui.views.AnimatedSlider
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="24dp"
+        android:stepSize="0"
+        android:valueFrom="0"
+        android:valueTo="30"
+        android:id="@+id/fragment_pain_intensity_picker_slider"
+        app:labelBehavior="gone"
+        app:layout_constraintBottom_toTopOf="@id/fragment_pain_intensity_picker_confirm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:thumbColor="@color/blackOlive"
+        app:tickColor="@color/blackOlive"
+        app:trackColor="@android:color/transparent"
+        app:haloColor="@android:color/transparent"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:layout_marginStart="37dp"
+        android:layout_marginEnd="32dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="@id/fragment_pain_intensity_picker_slider">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"/>
+
+        <revolver.headead.ui.views.typography.LektonTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/headache_intensity_low_short"
+            android:textColor="@color/blackOlive"
+            android:textSize="13.6sp"
+            android:textAlignment="center"
+            app:textStyle="bold"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"/>
+
+        <revolver.headead.ui.views.typography.LektonTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:text="@string/headache_intensity_medium_short"
+            android:textColor="@color/blackOlive"
+            android:textSize="13.6sp"
+            android:textAlignment="center"
+            app:textStyle="bold"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"/>
+
+        <revolver.headead.ui.views.typography.LektonTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:text="@string/headache_intensity_high_short"
+            android:textColor="@color/blackOlive"
+            android:textSize="13.6sp"
+            android:textAlignment="center"
+            app:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:id="@+id/fragment_pain_intensity_picker_confirm"
+        android:text="@string/fragment_pain_intensity_picker_confirm"
+        android:textColor="@color/white"
+        android:fontFamily="@font/roboto_regular"
+        app:backgroundTint="@color/flame"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

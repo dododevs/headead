@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/paleSpringBud">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/paleSpringBud"
+        android:id="@+id/toolbar"
+        android:theme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="@string/activity_record_headache_2_title"
+        app:navigationIcon="@drawable/ic_arrow_back_dark"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

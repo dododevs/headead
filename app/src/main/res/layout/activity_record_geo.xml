@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/activity_record_geo">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:elevation="8dp"
+        android:background="@color/blackOlive">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="12dp"
+            android:padding="4dp"
+            android:id="@+id/back"
+            android:src="@drawable/ic_close_light"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/cd_close"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="24dp"
+            android:id="@+id/activity_record_geo_title"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:text="@string/activity_record_geo_title"
+            android:textColor="@color/white"/>
+
+        <androidx.appcompat.widget.SearchView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start|center_vertical"
+            android:layout_marginStart="-24dp"
+            android:id="@+id/search"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            app:iconifiedByDefault="true"
+            app:searchIcon="@drawable/ic_search_light"
+            app:searchHintIcon="@null"
+            app:queryBackground="@android:color/transparent"
+            app:queryHint="@string/activity_record_geo_search_hint"/>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/frame"/>
+
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center"
+        android:id="@+id/activity_record_geo_marker"
+        android:contentDescription="@string/cd_marker"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        android:background="@color/white"
+        android:id="@+id/activity_record_geo_results_container"
+        android:visibility="gone">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/activity_record_geo_results"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:id="@+id/activity_record_geo_no_results"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:text="@string/shrug"
+                android:textColor="@color/tertiaryText"
+                android:textSize="24sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:text="@string/activity_record_geo_no_results"
+                android:textColor="@color/tertiaryText"
+                android:textSize="14.8sp"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_geo"
+        android:tint="@color/white"
+        android:id="@+id/fab"
+        android:focusable="true"
+        android:clickable="true"
+        android:contentDescription="@string/cd_get_location"
+        app:fabSize="normal"
+        app:backgroundTint="@color/flame"
+        app:elevation="6dp"
+        app:pressedTranslationZ="6dp"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

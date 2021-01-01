@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blackOlive"
+        android:id="@+id/toolbar_container">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:id="@+id/toolbar"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            app:title="@string/activity_drug_intake_title"
+            app:navigationIcon="@drawable/ic_arrow_back_light"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginBottom="4dp"
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_pill"
+                android:contentDescription="@string/cd_drug"
+                app:tint="@color/listDivider"/>
+
+            <revolver.headead.ui.views.typography.MontserratTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="4dp"
+                android:text="@string/activity_drug_intake_drug_header"
+                android:textColor="@color/listDivider"
+                android:textSize="12sp"
+                android:textAllCaps="true"
+                app:textStyle="semiBold"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:id="@+id/activity_drug_intake_drug_name"
+            android:textColor="@color/white"
+            android:textSize="14.8sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:id="@+id/activity_drug_intake_drug_maker"
+            android:textColor="@color/white"
+            android:textSize="12.8sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="4dp"
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_packaging"
+                android:contentDescription="@string/cd_packaging"
+                app:tint="@color/listDivider"/>
+
+            <revolver.headead.ui.views.typography.MontserratTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="4dp"
+                android:text="@string/activity_drug_intake_packaging_header"
+                android:textColor="@color/listDivider"
+                android:textSize="12sp"
+                android:textAllCaps="true"
+                app:textStyle="semiBold"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:id="@+id/activity_drug_intake_packaging_name"
+            android:textColor="@color/white"
+            android:textSize="14.8sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="24dp"
+            android:id="@+id/activity_drug_intake_active_principle"
+            android:textColor="@color/white"
+            android:textSize="12.8sp"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior=".ui.views.BelowGrowingAppBarLayoutBehavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_margin="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_dosage"
+                    android:contentDescription="@string/cd_dosage"
+                    app:tint="@color/secondaryText"/>
+
+                <revolver.headead.ui.views.typography.MontserratTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/activity_drug_intake_dosage_header"
+                    android:textColor="@color/secondaryText"
+                    android:textSize="12sp"
+                    android:textAllCaps="true"
+                    app:textStyle="semiBold"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginBottom="4dp"
+                android:orientation="horizontal"
+                android:id="@+id/activity_drug_intake_unit"
+                android:focusable="true"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/activity_drug_intake_unit"
+                    android:textColor="@color/blackOlive"
+                    android:textSize="16.8sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/activity_drug_intake_unit_label"
+                    android:text="@string/activity_drug_intake_unit_default"
+                    android:textColor="@color/secondaryText"
+                    android:textSize="14.8sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
+                android:id="@+id/activity_drug_intake_quantity"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/activity_drug_intake_quantity"
+                        android:textColor="@color/blackOlive"
+                        android:textSize="16.8sp"/>
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:id="@+id/activity_drug_intake_quantity_chips"
+                        app:singleSelection="true"
+                        app:selectionRequired="true">
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/fraction12"
+                            android:checkable="true"
+                            android:id="@+id/fraction12"
+                            style="@style/DrugIntakeDefaultQuantityChip"/>
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/fraction13"
+                            android:checkable="true"
+                            android:id="@+id/fraction13"
+                            style="@style/DrugIntakeDefaultQuantityChip"/>
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/fraction14"
+                            android:checkable="true"
+                            android:id="@+id/fraction14"
+                            style="@style/DrugIntakeDefaultQuantityChip"/>
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/fraction23"
+                            android:checkable="true"
+                            android:id="@+id/fraction23"
+                            style="@style/DrugIntakeDefaultQuantityChip"/>
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/fraction34"
+                            android:checkable="true"
+                            android:id="@+id/fraction34"
+                            style="@style/DrugIntakeDefaultQuantityChip"/>
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/other"
+                            android:checkable="true"
+                            android:id="@+id/other"
+                            style="@style/DrugIntakeDefaultQuantityChip"/>
+
+                    </com.google.android.material.chip.ChipGroup>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/activity_drug_intake_quantity_label"
+                    android:gravity="center_vertical|end"
+                    android:text="@string/activity_drug_intake_quantity_default"
+                    android:textColor="@color/secondaryText"
+                    android:textSize="14.8sp"
+                    android:minWidth="96dp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="8dp"
+                android:background="@color/listDivider"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
+                android:orientation="horizontal"
+                android:id="@+id/activity_drug_intake_date"
+                android:background="?attr/selectableItemBackground"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/activity_drug_intake_date"
+                    android:textColor="@color/blackOlive"
+                    android:textSize="16.8sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/activity_drug_intake_date_label"
+                    android:text="@string/activity_drug_intake_date_default"
+                    android:textColor="@color/secondaryText"
+                    android:textSize="14.8sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
+                android:orientation="horizontal"
+                android:id="@+id/activity_drug_intake_comment"
+                android:background="?attr/selectableItemBackground"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/activity_drug_intake_comment"
+                    android:textColor="@color/blackOlive"
+                    android:textSize="16.8sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/activity_drug_intake_comment_label"
+                    android:text="@string/activity_drug_intake_comment_default"
+                    android:textColor="@color/secondaryText"
+                    android:textSize="14.8sp"
+                    android:maxWidth="72dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:scrollHorizontally="true"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_done"
+        android:focusable="true"
+        android:clickable="true"
+        android:id="@+id/fab"
+        android:contentDescription="@string/cd_done"
+        app:layout_anchor="@id/toolbar_container"
+        app:layout_anchorGravity="bottom|end"
+        app:fabSize="normal"
+        app:backgroundTint="@color/flameDark"
+        app:elevation="4dp"
+        app:pressedTranslationZ="0dp"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

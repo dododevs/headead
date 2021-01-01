@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#102542</color>
+    <color name="colorPrimaryDark">#011633</color>
+    <color name="colorAccent">#F87060</color>
+
+    <color name="iconGray">#757575</color>
+    <color name="primaryText">#ff000000</color>
+    <color name="primaryTextLighter">#ff363636</color>
+    <color name="secondaryText">#ff808080</color>
+    <color name="tertiaryText">#ffbebebe</color>
+    <color name="listDivider">#ffdcdcdc</color>
+
+    <color name="white">@android:color/white</color>
+    <color name="black">@android:color/black</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="bittersweetRed">#FF715B</color>
+    <color name="coralRed">#FF8552</color>
+    <color name="lightYellow">#ffe32b</color>
+    <color name="mikadoYellow">#f3b800</color>
+    <color name="pastelGreen">#7DD181</color>
+    <color name="darkerGreen">#52a656</color>
+    <color name="lightBlue">#3498db</color>
+    <color name="liverGray">#523F38</color>
+    
+    <color name="blackOlive">#3F3F37</color>
+    <color name="blackOliveDark">#2f2f27</color>
+    <color name="cardBorder">#453F3F37</color>
+    <!--<color name="paleSpringBud">#D6D6B1</color>
+    <color name="paleSpringBudDark">#bcbc97</color>-->
+    <color name="paleSpringBud">#F2EFEA</color>
+    <color name="paleSpringBudDark">#d8d5d0</color>
+    <color name="oliveDrab7">#494331</color>
+    <color name="middleGray">#878472</color>
+    <color name="flame">#DE541E</color>
+    <color name="flameDark">#c03600</color>
+</resources>

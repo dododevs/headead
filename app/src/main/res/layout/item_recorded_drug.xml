@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/item_recorded_drug_quantity"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13.6sp"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/item_recorded_drug_unit_icon"
+                android:contentDescription="@string/cd_drug_dosage_unit"
+                app:tint="@color/colorPrimary"/>
+
+            <revolver.headead.ui.views.typography.MontserratTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:id="@+id/item_recorded_drug_unit"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                app:textStyle="semiBold"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:id="@+id/item_recorded_drug_name"
+            android:textColor="@color/black"
+            android:textSize="16.8sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:id="@+id/item_recorded_drug_packaging_name"
+            android:textColor="@color/secondaryText"
+            android:textSize="13.6sp"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="8dp"
+        android:src="@drawable/ic_close_dark"
+        android:focusable="true"
+        android:clickable="true"
+        android:padding="4dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:id="@+id/item_recorded_drug_remove"
+        android:contentDescription="@string/cd_remove"
+        app:tint="@color/blackOliveDark"/>
+
+</LinearLayout>

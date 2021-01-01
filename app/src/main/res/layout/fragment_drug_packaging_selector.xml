@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar_container"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:id="@+id/toolbar"
+            android:background="@color/white"
+            app:title="@string/fragment_drug_packaging_selector_title"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/formats"
+        android:visibility="gone"
+        android:overScrollMode="never"/>
+
+    <ProgressBar
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:id="@+id/wheel"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/primaryText"
+        style="@style/Widget.MaterialComponents.ProgressIndicator.Circular.Indeterminate"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="8dp"
+        android:visibility="gone"
+        android:id="@+id/fragment_drug_packaging_selector_no_formats"
+        android:text="@string/fragment_drug_packaging_selector_no_formats"
+        android:textColor="@color/tertiaryText"
+        android:textSize="13.8sp"/>
+
+</LinearLayout>

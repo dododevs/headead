@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:id="@+id/toolbar"
+            android:background="@color/white"
+            android:theme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="@string/fragment_record_scenario_title"
+            app:navigationIcon="@drawable/ic_arrow_back_dark"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="2.8dp"
+                app:contentPadding="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_margin="8dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_context"
+                            android:contentDescription="@string/cd_headache_context"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="8dp"
+                            android:text="@string/fragment_record_scenario_datetime_header"
+                            android:textColor="@color/iconGray"
+                            android:textSize="13.6sp"/>
+
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:layout_margin="8dp"
+                        android:id="@+id/fragment_record_scenario_datetime_mode"
+                        app:selectionRequired="true"
+                        app:singleSelection="true"
+                        app:checkedButton="@id/fragment_record_scenario_datetime_mode_default">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/fragment_record_scenario_datetime_mode_default"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:text="@string/fragment_record_scenario_datetime_default"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/fragment_record_scenario_datetime_mode_custom"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:text="@string/fragment_record_scenario_datetime_custom"/>
+
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/fragment_record_scenario_datetime"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal"
+                            android:id="@+id/fragment_record_scenario_date"
+                            android:focusable="true"
+                            android:clickable="true"
+                            android:background="?attr/selectableItemBackground">
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="24dp"
+                                android:layout_weight="0.1"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="8dp"
+                                android:src="@drawable/ic_context_date"
+                                android:contentDescription="@string/cd_context_date"/>
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.9"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="16dp"
+                                android:id="@+id/fragment_record_scenario_custom_date"
+                                android:paddingVertical="16dp"
+                                android:text="@string/fragment_record_scenario_date_default"
+                                android:textSize="14.8sp"
+                                android:textColor="@color/secondaryText"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:id="@+id/fragment_record_scenario_time"
+                            android:focusable="true"
+                            android:clickable="true"
+                            android:background="?attr/selectableItemBackground">
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="24dp"
+                                android:layout_weight="0.1"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="8dp"
+                                android:src="@drawable/ic_context_time"
+                                android:contentDescription="@string/cd_context_time"/>
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.9"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="16dp"
+                                android:id="@+id/fragment_record_scenario_custom_time"
+                                android:paddingVertical="16dp"
+                                android:text="@string/fragment_record_scenario_time_default"
+                                android:textSize="14.8sp"
+                                android:textColor="@color/secondaryText"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:paddingBottom="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="2.8dp"
+                app:contentPadding="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_margin="8dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_geo"
+                            android:contentDescription="@string/cd_headache_geo"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="8dp"
+                            android:text="@string/fragment_record_scenario_geo_header"
+                            android:textColor="@color/iconGray"
+                            android:textSize="13.6sp"/>
+
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:id="@+id/fragment_record_scenario_geo_set"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:text="@string/fragment_record_scenario_geo_set"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:paddingBottom="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="2.8dp"
+                app:contentPadding="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_margin="8dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_trigger"
+                            android:contentDescription="@string/cd_headache_trigger"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="8dp"
+                            android:text="@string/fragment_record_scenario_triggers_header"
+                            android:textColor="@color/iconGray"
+                            android:textSize="13.6sp"/>
+
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:id="@+id/fragment_record_scenario_triggers_set"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:text="@string/fragment_record_scenario_trigger_add"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_arrow_forward_light"
+        android:tint="@color/white"
+        android:id="@+id/fab"
+        android:focusable="true"
+        android:clickable="true"
+        app:fabSize="normal"
+        app:backgroundTint="@color/colorAccent"
+        app:elevation="6dp"
+        app:pressedTranslationZ="6dp"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:focusable="true"
+    android:clickable="true"
+    android:background="?attr/selectableItemBackground"
+    android:paddingHorizontal="8dp"
+    android:paddingVertical="12dp">
+
+    <ImageView
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="16dp"
+        android:id="@+id/item_drug_dosage_unit_icon"
+        android:contentDescription="@string/cd_drug_dosage_unit"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:layout_marginHorizontal="8dp"
+        android:id="@+id/item_drug_dosage_unit_name"
+        android:textColor="@color/black"
+        android:textSize="14.8sp"/>
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center_vertical"
+        android:visibility="gone"
+        android:src="@drawable/ic_done"
+        android:id="@+id/item_drug_dosage_unit_selected"
+        android:contentDescription="@string/cd_selected"
+        app:tint="@color/flameDark"/>
+
+</LinearLayout>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_dialog_white_rounded"
+    android:padding="16dp"
+    android:animateLayoutChanges="true">
+
+    <revolver.headead.ui.views.typography.MontserratTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialog_alert_simple_title"
+        android:textColor="@color/blackOlive"
+        android:textSize="12sp"
+        android:textAllCaps="true"
+        android:visibility="gone"
+        app:textStyle="semiBold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginVertical="16dp"
+        android:id="@+id/dialog_alert_simple_message"
+        android:textColor="@color/secondaryText"
+        android:textSize="14.8sp"
+        android:padding="4dp"
+        android:visibility="gone"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialog_alert_simple_list"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:id="@+id/dialog_alert_simple_entry"
+        android:hint="@string/dialog_alert_simple_hint"
+        android:inputType="text"
+        android:autofillHints="@null"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="2dp"
+            android:gravity="center_vertical"
+            android:padding="6dp"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackground"
+            android:id="@+id/dialog_alert_simple_neutral"
+            android:text="@string/dialog_alert_simple_neutral"
+            android:textColor="@color/blackOlive"
+            android:textStyle="bold"
+            android:textSize="13.8sp"
+            android:textAllCaps="true"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="6dp"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackground"
+            android:id="@+id/dialog_alert_simple_negative"
+            android:text="@string/dialog_alert_simple_negative"
+            android:textColor="@color/flameDark"
+            android:textStyle="bold"
+            android:textSize="13.8sp"
+            android:textAllCaps="true"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="6dp"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackground"
+            android:id="@+id/dialog_alert_simple_positive"
+            android:text="@string/dialog_alert_simple_positive"
+            android:textColor="@color/flameDark"
+            android:textStyle="bold"
+            android:textSize="13.8sp"
+            android:textAllCaps="true"
+            android:visibility="invisible"/>
+
+    </LinearLayout>
+
+</LinearLayout>

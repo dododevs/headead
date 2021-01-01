@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="512dp"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/fragment_drug_packaging_overview_title"
+        android:textColor="@color/black"
+        android:textSize="16.8sp"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_margin="8dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_pill"
+            android:contentDescription="@string/cd_drug"/>
+
+        <revolver.headead.ui.views.typography.MontserratTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="4dp"
+            android:text="@string/fragment_drug_packaging_overview_drug_header"
+            android:textColor="@color/iconGray"
+            android:textSize="12sp"
+            android:textAllCaps="true"
+            app:textStyle="semiBold"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:id="@+id/fragment_drug_packaging_overview_drug_name"
+        android:textColor="@color/black"
+        android:textSize="14.8sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:id="@+id/fragment_drug_packaging_overview_drug_maker"
+        android:textColor="@color/secondaryText"
+        android:textSize="12.8sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_margin="8dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_packaging"
+            android:contentDescription="@string/cd_packaging"/>
+
+        <revolver.headead.ui.views.typography.MontserratTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="4dp"
+            android:text="@string/fragment_drug_packaging_overview_packaging_header"
+            android:textColor="@color/iconGray"
+            android:textSize="12sp"
+            android:textAllCaps="true"
+            app:textStyle="semiBold"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:id="@+id/fragment_drug_packaging_overview_packaging_name"
+        android:textColor="@color/black"
+        android:textSize="14.8sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:id="@+id/fragment_drug_packaging_overview_packaging_active_principle"
+        android:textColor="@color/secondaryText"
+        android:textSize="12.8sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_margin="8dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_dosage"
+            android:contentDescription="@string/cd_dosage"/>
+
+        <revolver.headead.ui.views.typography.MontserratTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="4dp"
+            android:text="@string/fragment_drug_packaging_overview_dosage_header"
+            android:textColor="@color/iconGray"
+            android:textSize="12sp"
+            android:textAllCaps="true"
+            app:textStyle="semiBold"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:visibility="gone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="4dp"
+            android:id="@+id/fragment_drug_packaging_overview_dosage_default_values"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="16dp"
+            android:gravity="center_horizontal"
+            android:id="@+id/fragment_drug_packaging_overview_dosage_value"
+            android:inputType="numberDecimal"
+            android:autofillHints="@null"
+            android:enabled="false"
+            tools:ignore="LabelFor"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:id="@+id/fragment_drug_packaging_overview_dosage_unit"
+            android:focusable="true"
+            android:clickable="true"
+            android:padding="8dp"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/fragment_drug_packaging_overview_dosage_unit_default"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12.8sp"
+            android:textStyle="bold"
+            android:textAllCaps="true"/>
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="24dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:id="@+id/fragment_drug_packaging_overview_confirm"
+        style="?attr/materialButtonStyle"
+        android:text="@string/fragment_drug_packaging_overview_confirm"
+        app:backgroundTint="@color/flame"/>
+
+</LinearLayout>

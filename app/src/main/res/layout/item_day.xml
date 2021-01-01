@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<revolver.headead.ui.views.typography.LektonTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:textColor="@color/blackOlive"
+    android:textSize="12.8sp"
+    android:textAlignment="center"
+    android:padding="6dp"
+    android:id="@+id/item_day_digit"
+    app:textStyle="bold"/>

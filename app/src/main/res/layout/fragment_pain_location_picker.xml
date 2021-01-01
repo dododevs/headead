@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="256dp"
+    android:orientation="vertical">
+
+    <revolver.headead.ui.views.typography.MontserratTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/fragment_pain_location_picker_title"
+        android:textSize="12.8sp"
+        android:textAllCaps="true"
+        app:textStyle="semiBold"/>
+
+    <ImageView
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="54dp"
+        android:layout_marginBottom="72dp"
+        android:src="@drawable/ic_head_outline"
+        android:contentDescription="@string/cd_head_outline"/>
+
+    <com.google.android.material.chip.Chip
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|start"
+        android:layout_marginTop="48dp"
+        android:layout_marginStart="8dp"
+        android:focusable="true"
+        android:clickable="true"
+        android:checkable="true"
+        android:id="@+id/fragment_pain_location_picker_bilateral"
+        android:text="@string/headache_location_bilateral_long"
+        app:chipIcon="@drawable/ic_headache_location_bilateral"/>
+
+    <com.google.android.material.chip.Chip
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="16dp"
+        android:focusable="true"
+        android:clickable="true"
+        android:checkable="true"
+        android:id="@+id/fragment_pain_location_picker_back"
+        android:text="@string/headache_location_back_long"
+        app:chipIcon="@drawable/ic_headache_location_back"
+        android:fontFamily="@font/roboto_regular"/>
+
+    <com.google.android.material.chip.Chip
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|start"
+        android:layout_marginTop="64dp"
+        android:layout_marginStart="16dp"
+        android:focusable="true"
+        android:clickable="true"
+        android:checkable="true"
+        android:id="@+id/fragment_pain_location_picker_sx"
+        android:text="@string/headache_location_sx_long"
+        app:chipIcon="@drawable/ic_headache_location_sx"
+        android:fontFamily="@font/roboto_regular"/>
+
+    <com.google.android.material.chip.Chip
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|end"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="16dp"
+        android:focusable="true"
+        android:clickable="true"
+        android:checkable="true"
+        android:id="@+id/fragment_pain_location_picker_dx"
+        android:text="@string/headache_location_dx_long"
+        app:chipIcon="@drawable/ic_headache_location_dx"
+        android:fontFamily="@font/roboto_regular"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="8dp"
+        android:id="@+id/fragment_pain_location_picker_confirm"
+        android:text="@string/fragment_pain_location_picker_confirm"
+        android:textColor="@color/white"
+        android:fontFamily="@font/roboto_regular"
+        app:backgroundTint="@color/flame"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

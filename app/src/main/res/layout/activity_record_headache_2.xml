@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="false"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/paleSpringBud">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:id="@+id/toolbar"
+        android:background="@color/paleSpringBud"
+        app:title="@string/activity_record_headache_2_title"
+        app:titleTextColor="@color/blackOlive"
+        app:navigationIcon="@drawable/ic_arrow_back_dark"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:paddingHorizontal="16dp"
+        android:orientation="vertical">
+
+        <revolver.headead.ui.views.typography.MontserratTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_record_headache_2_pain_header"
+            android:textSize="12.8sp"
+            android:textAllCaps="true"
+            app:textStyle="semiBold"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="8dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:checkable="true"
+                android:id="@+id/activity_record_headache_2_pain_location"
+                app:rippleColor="@color/paleSpringBud"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/cardBorder"
+                app:strokeWidth="1dp"
+                app:cardCornerRadius="4dp"
+                app:cardBackgroundColor="@color/white">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="8dp"
+                    android:visibility="gone"
+                    android:id="@+id/activity_record_headache_2_pain_location_checked"
+                    android:src="@drawable/ic_card_checked"
+                    app:tint="@color/paleSpringBudDark"
+                    android:contentDescription="@string/cd_card_checked"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <revolver.headead.ui.views.typography.LektonTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:id="@+id/activity_record_headache_2_pain_location_value"
+                            android:alpha="0"
+                            android:textColor="@color/iconGray"
+                            android:textSize="32sp"
+                            app:textStyle="bold"/>
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center"
+                            android:transformPivotX="0dp"
+                            android:transformPivotY="36dp"
+                            android:id="@+id/activity_record_headache_2_pain_location_icon"
+                            android:src="@drawable/ic_headache_location"
+                            android:contentDescription="@string/cd_headache_location"
+                            app:tint="@color/blackOlive"/>
+
+                    </FrameLayout>
+
+                    <revolver.headead.ui.views.typography.MontserratTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/activity_record_headache_2_pain_location"
+                        android:textColor="@color/blackOlive"
+                        android:textSize="12.8sp"
+                        app:textStyle="semiBold"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="8dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:checkable="true"
+                android:id="@+id/activity_record_headache_2_pain_intensity"
+                app:rippleColor="@color/paleSpringBud"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/cardBorder"
+                app:strokeWidth="1dp"
+                app:cardCornerRadius="4dp"
+                app:cardBackgroundColor="@color/white">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="8dp"
+                    android:visibility="gone"
+                    android:id="@+id/activity_record_headache_2_pain_intensity_checked"
+                    android:src="@drawable/ic_card_checked"
+                    app:tint="@color/paleSpringBudDark"
+                    android:contentDescription="@string/cd_card_checked"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <revolver.headead.ui.views.typography.LektonTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:id="@+id/activity_record_headache_2_pain_intensity_value"
+                            android:alpha="0"
+                            android:textColor="@color/iconGray"
+                            android:textSize="32sp"
+                            app:textStyle="bold"/>
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center"
+                            android:transformPivotX="0dp"
+                            android:transformPivotY="36dp"
+                            android:id="@+id/activity_record_headache_2_pain_intensity_icon"
+                            android:src="@drawable/ic_headache_intensity"
+                            android:contentDescription="@string/cd_headache_intensity"
+                            app:tint="@color/blackOlive"/>
+
+                    </FrameLayout>
+
+                    <revolver.headead.ui.views.typography.MontserratTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/activity_record_headache_2_pain_intensity"
+                        android:textColor="@color/blackOlive"
+                        android:textSize="12.8sp"
+                        app:textStyle="semiBold"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="8dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:checkable="true"
+                android:id="@+id/activity_record_headache_2_pain_type"
+                app:rippleColor="@color/paleSpringBud"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/cardBorder"
+                app:strokeWidth="1dp"
+                app:cardCornerRadius="4dp"
+                app:cardBackgroundColor="@color/white">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="8dp"
+                    android:visibility="gone"
+                    android:id="@+id/activity_record_headache_2_pain_type_checked"
+                    android:src="@drawable/ic_card_checked"
+                    app:tint="@color/paleSpringBudDark"
+                    android:contentDescription="@string/cd_card_checked"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <revolver.headead.ui.views.typography.LektonTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:id="@+id/activity_record_headache_2_pain_type_value"
+                            android:alpha="0"
+                            android:textColor="@color/iconGray"
+                            android:textSize="32sp"
+                            app:textStyle="bold"/>
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center"
+                            android:transformPivotX="0dp"
+                            android:transformPivotY="36dp"
+                            android:id="@+id/activity_record_headache_2_pain_type_icon"
+                            android:src="@drawable/ic_headache_type"
+                            android:contentDescription="@string/cd_headache_type"
+                            app:tint="@color/blackOlive"/>
+
+                    </FrameLayout>
+
+                    <revolver.headead.ui.views.typography.MontserratTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/activity_record_headache_2_pain_type"
+                        android:textColor="@color/blackOlive"
+                        android:textSize="12.8sp"
+                        app:textStyle="semiBold"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+        <revolver.headead.ui.views.typography.MontserratTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/activity_record_headache_2_scenario_and_medication_header"
+            android:textSize="12.8sp"
+            android:textAllCaps="true"
+            app:textStyle="semiBold"/>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginVertical="16dp"
+            app:rippleColor="@color/paleSpringBud"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/cardBorder"
+            app:strokeWidth="1dp"
+            app:cardCornerRadius="4dp"
+            app:cardBackgroundColor="@color/white"
+            app:contentPadding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:id="@+id/activity_record_headache_2_datetime_start">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="top|end"
+                            android:visibility="gone"
+                            android:id="@+id/activity_record_headache_2_datetime_start_checked"
+                            android:src="@drawable/ic_card_checked"
+                            app:tint="@color/paleSpringBudDark"
+                            android:contentDescription="@string/cd_card_checked"/>
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_timespan_start"
+                            android:id="@+id/activity_record_headache_2_datetime_start_icon"
+                            android:transformPivotX="0dp"
+                            android:transformPivotY="36dp"
+                            app:tint="@color/blackOlive"
+                            android:contentDescription="@string/cd_timespan_start"/>
+
+                        <revolver.headead.ui.views.typography.LektonTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:id="@+id/activity_record_headache_2_datetime_start_value"
+                            android:alpha="0"
+                            android:textColor="@color/iconGray"
+                            android:textSize="32sp"
+                            app:textStyle="bold"/>
+
+                    </FrameLayout>
+
+                    <revolver.headead.ui.views.typography.MontserratTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:id="@+id/activity_record_headache_2_datetime_start_label"
+                        android:text="@string/activity_record_headache_2_datetime_start"
+                        android:textColor="@color/blackOlive"
+                        android:textSize="12.8sp"
+                        app:textStyle="semiBold"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:background="@color/cardBorder"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:id="@+id/activity_record_headache_2_datetime_end">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="top|end"
+                            android:visibility="gone"
+                            android:id="@+id/activity_record_headache_2_datetime_end_checked"
+                            android:src="@drawable/ic_card_checked"
+                            app:tint="@color/paleSpringBudDark"
+                            android:contentDescription="@string/cd_card_checked"/>
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center"
+                            android:id="@+id/activity_record_headache_2_datetime_end_icon"
+                            android:src="@drawable/ic_timespan_end"
+                            android:transformPivotX="0dp"
+                            android:transformPivotY="36dp"
+                            app:tint="@color/blackOlive"
+                            android:contentDescription="@string/cd_timespan_end"/>
+
+                        <revolver.headead.ui.views.typography.LektonTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:id="@+id/activity_record_headache_2_datetime_end_value"
+                            android:alpha="0"
+                            android:textColor="@color/iconGray"
+                            android:textSize="32sp"
+                            app:textStyle="bold"/>
+
+                    </FrameLayout>
+
+                    <revolver.headead.ui.views.typography.MontserratTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:id="@+id/activity_record_headache_2_datetime_end_label"
+                        android:text="@string/activity_record_headache_2_datetime_end"
+                        android:textColor="@color/blackOlive"
+                        android:textSize="12.8sp"
+                        app:textStyle="semiBold"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="8dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:checkable="true"
+                android:id="@+id/activity_record_headache_2_geo"
+                app:rippleColor="@color/paleSpringBud"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/cardBorder"
+                app:strokeWidth="1dp"
+                app:cardCornerRadius="4dp"
+                app:cardBackgroundColor="@color/white">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="8dp"
+                    android:visibility="gone"
+                    android:id="@+id/activity_record_headache_2_geo_checked"
+                    android:src="@drawable/ic_card_checked"
+                    app:tint="@color/paleSpringBudDark"
+                    android:contentDescription="@string/cd_card_checked"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <revolver.headead.ui.views.typography.LektonTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:id="@+id/activity_record_headache_2_geo_value"
+                            android:alpha="0"
+                            android:textColor="@color/iconGray"
+                            android:textSize="32sp"
+                            app:textStyle="bold"/>
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center"
+                            android:transformPivotX="0dp"
+                            android:transformPivotY="36dp"
+                            android:id="@+id/activity_record_headache_2_geo_icon"
+                            android:src="@drawable/ic_geo"
+                            android:contentDescription="@string/cd_headache_geo"
+                            app:tint="@color/blackOlive"/>
+
+                    </FrameLayout>
+
+                    <revolver.headead.ui.views.typography.MontserratTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/activity_record_headache_2_geo"
+                        android:textColor="@color/blackOlive"
+                        android:textSize="12.8sp"
+                        app:textStyle="semiBold"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="8dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:checkable="true"
+                android:id="@+id/activity_record_headache_2_medication"
+                app:rippleColor="@color/paleSpringBud"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/cardBorder"
+                app:strokeWidth="1dp"
+                app:cardCornerRadius="4dp"
+                app:cardBackgroundColor="@color/white">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="8dp"
+                    android:visibility="gone"
+                    android:id="@+id/activity_record_headache_2_medication_checked"
+                    android:src="@drawable/ic_card_checked"
+                    app:tint="@color/paleSpringBudDark"
+                    android:contentDescription="@string/cd_card_checked"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <revolver.headead.ui.views.typography.LektonTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:id="@+id/activity_record_headache_2_medication_value"
+                            android:alpha="0"
+                            android:textColor="@color/iconGray"
+                            android:textSize="32sp"
+                            app:textStyle="bold"/>
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center"
+                            android:transformPivotX="0dp"
+                            android:transformPivotY="36dp"
+                            android:id="@+id/activity_record_headache_2_medication_icon"
+                            android:src="@drawable/ic_medication"
+                            android:contentDescription="@string/cd_drug"
+                            app:tint="@color/blackOlive"/>
+
+                    </FrameLayout>
+
+                    <revolver.headead.ui.views.typography.MontserratTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/activity_record_headache_2_medication"
+                        android:textColor="@color/blackOlive"
+                        android:textSize="12.8sp"
+                        app:textStyle="semiBold"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false"
+        android:background="#993F3F37"
+        android:visibility="gone"
+        android:focusable="true"
+        android:clickable="true"
+        android:id="@+id/activity_record_headache_2_dim"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/frame"
+        android:background="@color/white"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/activity_record_headache_2_bottom_pane"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_bottom_dialog_white_rounded"
+        android:orientation="vertical"
+        android:elevation="6dp"
+        android:animateLayoutChanges="true"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        app:behavior_draggable="false"
+        app:behavior_hideable="false">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bottom_frame"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="256dp"
+            android:backgroundTint="@color/white"/>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

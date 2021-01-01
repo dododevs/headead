@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_drug_lookup"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal"
+        android:elevation="8dp"
+        android:background="@color/blackOlive">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="12dp"
+            android:padding="4dp"
+            android:id="@+id/back"
+            android:src="@drawable/ic_arrow_back_light"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/cd_arrow_back"/>
+
+        <androidx.appcompat.widget.SearchView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="start|center_vertical"
+            android:id="@+id/search"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            app:closeIcon="@null"
+            app:iconifiedByDefault="false"
+            app:searchIcon="@null"
+            app:queryBackground="@android:color/transparent"
+            app:queryHint="@string/activity_drug_lookup_hint"/>
+
+        <ProgressBar
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="8dp"
+            android:id="@+id/wheel"
+            android:padding="4dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/white"
+            android:visibility="invisible"
+            style="@style/Widget.MaterialComponents.ProgressIndicator.Circular.Indeterminate"/>
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:padding="4dp"
+            android:id="@+id/barcode"
+            android:src="@drawable/ic_barcode"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/cd_barcode"
+            app:tint="@color/white"/>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="64dp"
+        android:id="@+id/results"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:id="@+id/no_results"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="@string/shrug"
+            android:textColor="@color/tertiaryText"
+            android:textSize="24sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="@string/activity_drug_lookup_no_results"
+            android:textColor="@color/tertiaryText"
+            android:textSize="14.8sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:id="@+id/no_query"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="@string/shrug"
+            android:textColor="@color/tertiaryText"
+            android:textSize="24sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="@string/activity_drug_lookup_no_query"
+            android:textColor="@color/tertiaryText"
+            android:textSize="14.8sp"/>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

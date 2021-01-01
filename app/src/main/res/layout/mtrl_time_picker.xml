@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <LinearLayout
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:background="@drawable/bg_time_picker_field"
+            android:textSize="36sp"
+            android:textColor="@color/blackOlive"
+            android:textAlignment="center"
+            android:textCursorDrawable="@drawable/mtrl_time_picker_cursor"
+            android:inputType="number"
+            android:id="@+id/mtrl_time_picker_hour"
+            android:autofillHints="@null"
+            android:imeOptions="actionNext"
+            android:hint="@string/mtrl_time_picker_hour_hint"/>
+
+        <revolver.headead.ui.views.typography.MontserratTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/mtrl_time_picker_hour_label"
+            android:textColor="@color/blackOlive"
+            android:textSize="12sp"
+            android:textAllCaps="true"
+            app:textStyle="semiBold"/>
+
+    </LinearLayout>
+
+    <revolver.headead.ui.views.typography.LektonTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_horizontal"
+        android:layout_margin="8dp"
+        android:text="@string/mtrl_time_picker_separator"
+        android:textColor="@color/blackOlive"
+        android:textSize="32sp"
+        android:textAlignment="center"
+        app:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:background="@drawable/bg_time_picker_field"
+            android:textSize="36sp"
+            android:textColor="@color/blackOlive"
+            android:textAlignment="center"
+            android:textCursorDrawable="@drawable/mtrl_time_picker_cursor"
+            android:inputType="number"
+            android:id="@+id/mtrl_time_picker_minute"
+            android:autofillHints="@null"
+            android:hint="@string/mtrl_time_picker_minute_hint"/>
+
+        <revolver.headead.ui.views.typography.MontserratTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/mtrl_time_picker_minute_label"
+            android:textColor="@color/blackOlive"
+            android:textSize="12sp"
+            android:textAllCaps="true"
+            app:textStyle="semiBold"/>
+
+    </LinearLayout>
+
+</LinearLayout>

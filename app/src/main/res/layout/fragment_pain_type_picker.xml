@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="256dp">
+
+    <revolver.headead.ui.views.typography.MontserratTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/fragment_pain_type_picker_title"
+        android:textAllCaps="true"
+        android:textSize="12.8sp"
+        app:textStyle="semiBold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="36dp"
+        android:layout_marginBottom="48dp"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_head_pain_type_a"
+                android:contentDescription="@string/cd_headache_type_a"/>
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_pain_type_picker_a"/>
+
+            <revolver.headead.ui.views.typography.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/fragment_pain_type_picker_a_label"
+                android:focusable="true"
+                android:clickable="true"
+                android:text="@string/headache_type_a_long"
+                android:textColor="@color/blackOlive"
+                android:textSize="14.6sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="8dp"
+                android:orientation="vertical">
+
+                <revolver.headead.ui.views.typography.MontserratTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="@string/headache_type_a_short"
+                    android:textColor="@color/blackOlive"
+                    android:textSize="13.8sp"
+                    app:textStyle="semiBold"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_head_pain_type_b"
+                android:contentDescription="@string/cd_headache_type_b"/>
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_pain_type_picker_b"/>
+
+            <revolver.headead.ui.views.typography.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/fragment_pain_type_picker_b_label"
+                android:focusable="true"
+                android:clickable="true"
+                android:text="@string/headache_type_b_long"
+                android:textColor="@color/blackOlive"
+                android:textSize="14.6sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="8dp"
+                android:orientation="vertical">
+
+                <revolver.headead.ui.views.typography.MontserratTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="@string/headache_type_b_short"
+                    android:textColor="@color/blackOlive"
+                    android:textSize="13.8sp"
+                    app:textStyle="semiBold"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_head_pain_type_c"
+                android:contentDescription="@string/cd_headache_type_c"/>
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_pain_type_picker_c"/>
+
+            <revolver.headead.ui.views.typography.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/fragment_pain_type_picker_c_label"
+                android:focusable="true"
+                android:clickable="true"
+                android:text="@string/headache_type_c_long"
+                android:textColor="@color/blackOlive"
+                android:textSize="14.6sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="8dp"
+                android:orientation="vertical">
+
+                <revolver.headead.ui.views.typography.MontserratTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="@string/headache_type_c_short"
+                    android:textColor="@color/blackOlive"
+                    android:textSize="13.8sp"
+                    app:textStyle="semiBold"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="8dp"
+        android:id="@+id/fragment_pain_type_picker_confirm"
+        android:text="@string/fragment_pain_type_picker_confirm"
+        android:textColor="@color/white"
+        android:fontFamily="@font/roboto_regular"
+        app:backgroundTint="@color/flame" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_bottom_dialog_white_rounded"
+    android:padding="16dp">
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|end"
+        android:layout_margin="16dp"
+        style="?attr/materialButtonStyle"
+        android:padding="8dp"
+        android:text="Salva"
+        android:textColor="@color/white"
+        android:fontFamily="@font/roboto_regular"
+        app:backgroundTint="@color/flame"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
