@@ -37,12 +37,6 @@ public class PainIntensityPickerFragment extends Fragment {
     private PainIntensityScaleDrawable scaleDrawable;
     private PainIntensity painIntensity;
 
-    /*@NonNull
-    @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        return new BottomSheetDialog(requireContext(), R.style.RoundedBottomSheetDialog);
-    }*/
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

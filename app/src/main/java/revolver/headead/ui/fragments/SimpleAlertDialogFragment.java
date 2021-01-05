@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,6 +32,8 @@ public class SimpleAlertDialogFragment extends DialogFragment {
     private RecyclerView.Adapter<? extends RecyclerView.ViewHolder> listAdapter;
     private String inputHint;
     private int inputType = EditorInfo.TYPE_CLASS_TEXT;
+
+    private View customView;
 
     private EditText editText;
     private EntryTextValidator entryTextValidator;
@@ -124,17 +128,18 @@ public class SimpleAlertDialogFragment extends DialogFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 if (entryTextValidator != null) {
-                    if (entryTextValidator.validate(editText)) {
-                        if (positiveButtonView != null) positiveButtonView.setEnabled(true);
-                    } else {
-                        if (positiveButtonView != null) positiveButtonView.setEnabled(false);
-                    }
+                    positiveButtonView.setEnabled(entryTextValidator.validate(editText));
                 }
             }
         });
         if (inputHint != null) {
             editText.setVisibility(View.VISIBLE);
             positiveButtonView.setEnabled(false);
+        }
+
+        if (customView != null) {
+            ((ScrollView) view.findViewById(
+                    R.id.dialog_alert_simple_container)).addView(customView);
         }
     }
 
@@ -172,6 +177,10 @@ public class SimpleAlertDialogFragment extends DialogFragment {
         this.inputHint = hint;
         this.inputType = inputType;
         this.entryTextValidator = validator;
+    }
+
+    public void customView(final View view) {
+        this.customView = view;
     }
 
     public CharSequence getEntryText() {
@@ -250,6 +259,11 @@ public class SimpleAlertDialogFragment extends DialogFragment {
 
         public Builder editText(final @StringRes int hint, int inputType, @Nullable EntryTextValidator validator) {
             this.fragment.editText(context.getString(hint), inputType, validator);
+            return this;
+        }
+
+        public Builder customView(final View view) {
+            this.fragment.customView(view);
             return this;
         }
 

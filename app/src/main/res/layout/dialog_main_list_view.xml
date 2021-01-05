@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <revolver.headead.ui.views.typography.MontserratTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/dialog_main_list_view_grouping_header"
+        android:textColor="@color/iconGray"
+        android:textSize="12sp"
+        android:textAllCaps="true"
+        app:textStyle="semiBold"/>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/dialog_main_list_view_grouping">
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:paddingHorizontal="4dp"
+            android:id="@+id/dialog_main_list_view_grouping_by_month"
+            android:text="@string/dialog_main_list_view_grouping_by_month"
+            android:textColor="@color/black"
+            android:textSize="14.6sp"/>
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:paddingHorizontal="4dp"
+            android:id="@+id/dialog_main_list_view_grouping_by_pain_location"
+            android:text="@string/dialog_main_list_view_grouping_by_pain_location"
+            android:textColor="@color/black"
+            android:textSize="14.6sp"/>
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:paddingHorizontal="4dp"
+            android:id="@+id/dialog_main_list_view_grouping_by_pain_intensity"
+            android:text="@string/dialog_main_list_view_grouping_by_pain_intensity"
+            android:textColor="@color/black"
+            android:textSize="14.6sp"/>
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:paddingHorizontal="4dp"
+            android:id="@+id/dialog_main_list_view_grouping_by_pain_type"
+            android:text="@string/dialog_main_list_view_grouping_by_pain_type"
+            android:textColor="@color/black"
+            android:textSize="14.6sp"/>
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/dialog_main_list_view_filter_by_drug"/>
+
+        <revolver.headead.ui.views.typography.MontserratTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/dialog_main_list_view_filter_by_drug_header"
+            android:textColor="@color/iconGray"
+            android:textSize="12sp"
+            android:textAllCaps="true"
+            app:textStyle="semiBold"/>
+
+    </LinearLayout>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:visibility="gone"
+        android:id="@+id/dialog_main_list_view_filter_by_drug_spinner"/>
+
+</LinearLayout>

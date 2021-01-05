@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:focusable="true"
+    android:clickable="true"
+    android:background="?attr/selectableItemBackground"
+    android:baselineAligned="false">
+
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/item_recorded_headache_start"
+            android:gravity="end"
+            android:textColor="@color/iconGray"
+            android:textSize="16.8sp"/>
+
+        <ImageView
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="16dp"
+            android:src="@drawable/ic_arrow_forward_light"
+            android:contentDescription="@string/cd_until"
+            app:tint="@color/blackOlive"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/item_recorded_headache_end"
+            android:gravity="start"
+            android:textColor="@color/iconGray"
+            android:textSize="16.8sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <revolver.headead.ui.views.typography.LektonTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/item_recorded_headache_pain_location"
+                android:textColor="@color/iconGray"
+                android:textSize="24sp"
+                app:textStyle="bold"/>
+
+            <revolver.headead.ui.views.typography.MontserratTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:text="@string/item_recorded_headache_pain_location_footer"
+                android:textColor="@color/blackOlive"
+                android:textSize="12sp"
+                android:textAllCaps="true"
+                app:textStyle="semiBold"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:background="@color/listDivider"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <revolver.headead.ui.views.typography.LektonTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/item_recorded_headache_pain_intensity"
+                android:textColor="@color/iconGray"
+                android:textSize="24sp"
+                app:textStyle="bold"/>
+
+            <revolver.headead.ui.views.typography.MontserratTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:text="@string/item_recorded_headache_pain_intensity_footer"
+                android:textColor="@color/blackOlive"
+                android:textSize="12sp"
+                android:textAllCaps="true"
+                app:textStyle="semiBold"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:background="@color/listDivider"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <revolver.headead.ui.views.typography.LektonTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/item_recorded_headache_pain_type"
+                android:textColor="@color/iconGray"
+                android:textSize="24sp"
+                app:textStyle="bold"/>
+
+            <ImageView
+                android:visibility="gone"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/cd_headache_type"
+                app:tint="@color/iconGray"/>
+
+            <revolver.headead.ui.views.typography.MontserratTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:text="@string/item_recorded_headache_pain_type_footer"
+                android:textColor="@color/blackOlive"
+                android:textSize="12sp"
+                android:textAllCaps="true"
+                app:textStyle="semiBold"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/item_recorded_headache_divider"
+        android:background="@color/listDivider"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginHorizontal="16dp"/>
+
+</LinearLayout>

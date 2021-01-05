@@ -14,20 +14,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activities.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".ui.activities.MainActivity"/>
         <activity android:name=".ui.activities.DrugLookupActivity"/>
         <activity android:name=".ui.activities.record.RecordHeadacheActivity"/>
         <activity android:name=".ui.activities.record.RecordGeoActivity"/>
         <activity android:name=".ui.activities.record.RecordTriggersActivity"/>
         <activity android:name=".ui.activities.record.RecordDrugsActivity"/>
 
-
-        <activity android:name=".ui.activities.record.RecordHeadacheActivity2"/>
+        <activity android:name=".ui.activities.record.RecordHeadacheActivity2">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.activities.record.RecordHeadacheActivity3"/>
         <activity android:name=".ui.activities.record.RecordHeadacheActivity4"/>
 

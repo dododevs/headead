@@ -11,9 +11,11 @@ import java.util.Date;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import revolver.headead.core.display.ListItem;
+import revolver.headead.ui.adapters.RecordedHeadachesAdapter;
 import revolver.headead.ui.fragments.record2.pickers.DateTimePickerFragment;
 
-public class Headache extends RealmObject implements Parcelable {
+public class Headache extends RealmObject implements Parcelable, ListItem {
 
     @SerializedName("startDate")
     private Date startDate;
@@ -47,6 +49,9 @@ public class Headache extends RealmObject implements Parcelable {
 
     @SerializedName("takenDrugs")
     private RealmList<DrugIntake> drugIntakes;
+
+    @SerializedName("aura")
+    private boolean isAuraPresent;
 
     public Headache() {
     }
@@ -115,6 +120,10 @@ public class Headache extends RealmObject implements Parcelable {
         this.drugIntakes = drugIntakes;
     }
 
+    public void setIsAuraPresent(boolean auraPresent) {
+        this.isAuraPresent = auraPresent;
+    }
+
     public PainIntensity getPainIntensity() {
         return PainIntensity.valueOf(this.painIntensity);
     }
@@ -158,6 +167,10 @@ public class Headache extends RealmObject implements Parcelable {
         return drugIntakes;
     }
 
+    public boolean isAuraPresent() {
+        return isAuraPresent;
+    }
+
     private Headache(Parcel src) {
         this.startDate = (Date) src.readSerializable();
         this.endDate = (Date) src.readSerializable();
@@ -172,6 +185,7 @@ public class Headache extends RealmObject implements Parcelable {
         src.readTypedList(this.selectedTriggers, Trigger.CREATOR);
         this.drugIntakes = new RealmList<>();
         src.readTypedList(this.drugIntakes, DrugIntake.CREATOR);
+        this.isAuraPresent = src.readInt() == 1;
     }
 
     @Override
@@ -185,11 +199,30 @@ public class Headache extends RealmObject implements Parcelable {
         dest.writeDouble(longitude);
         dest.writeTypedList(this.selectedTriggers);
         dest.writeTypedList(this.drugIntakes);
+        dest.writeInt(isAuraPresent ? 1 : 0);
     }
 
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Headache{" +
+                "startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", startDateTimeMode='" + startDateTimeMode + '\'' +
+                ", endDateTimeMode='" + endDateTimeMode + '\'' +
+                ", painLocation='" + painLocation + '\'' +
+                ", painIntensity='" + painIntensity + '\'' +
+                ", painType='" + painType + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", selectedTriggers=" + selectedTriggers +
+                ", drugIntakes=" + drugIntakes +
+                ", isAuraPresent=" + isAuraPresent +
+                '}';
     }
 
     public static final Creator<Headache> CREATOR = new Creator<Headache>() {

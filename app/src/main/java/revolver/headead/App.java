@@ -10,6 +10,8 @@ import androidx.core.content.res.ResourcesCompat;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import revolver.headead.core.model.Trigger;
 import revolver.headead.util.ui.ColorUtils;
 import revolver.headead.util.ui.M;
@@ -17,13 +19,17 @@ import revolver.headead.util.ui.M;
 public class App extends Application {
 
     private static int colorPrimary, colorPrimaryDark, colorAccent;
-
     private static final List<Trigger> allTriggers = new ArrayList<>();
+    private static Realm defaultRealm;
 
     @Override
     public void onCreate() {
         super.onCreate();
         M.setDisplayMetrics(getResources().getDisplayMetrics());
+
+        Realm.init(this);
+        defaultRealm = Realm.getInstance(
+                new RealmConfiguration.Builder().name("userdata.3.realm").build());
 
         colorPrimary = ColorUtils.get(this, R.color.colorPrimary);
         colorPrimaryDark = ColorUtils.get(this, R.color.colorPrimaryDark);
@@ -91,6 +97,10 @@ public class App extends Application {
 
     public static @ColorInt int colorAccent() {
         return colorAccent;
+    }
+
+    public static Realm getDefaultRealm() {
+        return defaultRealm;
     }
 
     public static class Fonts {

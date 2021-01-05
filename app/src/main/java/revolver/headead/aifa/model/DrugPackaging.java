@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import revolver.headead.aifa.adapters.DrugArrayToStringAdapter;
@@ -124,6 +126,37 @@ public class DrugPackaging extends RealmObject implements Parcelable {
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DrugPackaging that = (DrugPackaging) o;
+        return isAuthorized == that.isAuthorized &&
+                drugDescription.equals(that.drugDescription) &&
+                drugMaker.equals(that.drugMaker) &&
+                packagingDescription.equals(that.packagingDescription) &&
+                activePrinciple.equals(that.activePrinciple) &&
+                drugPackagingId.equals(that.drugPackagingId);
+    }
+
+    @Override
+    public String toString() {
+        return "DrugPackaging{" +
+                "drugDescription='" + drugDescription + '\'' +
+                ", drugMaker='" + drugMaker + '\'' +
+                ", packagingDescription='" + packagingDescription + '\'' +
+                ", isAuthorized=" + isAuthorized +
+                ", brochureUrls=" + brochureUrls +
+                ", activePrinciple='" + activePrinciple + '\'' +
+                ", drugPackagingId='" + drugPackagingId + '\'' +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(drugDescription, drugMaker, packagingDescription, isAuthorized, activePrinciple, drugPackagingId);
     }
 
     public static final Creator<DrugPackaging> CREATOR = new Creator<DrugPackaging>() {
