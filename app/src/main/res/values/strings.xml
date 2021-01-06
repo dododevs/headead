@@ -163,6 +163,14 @@
         <item quantity="one">Fiala</item>
         <item quantity="other">Fiale</item>
     </plurals>
+    <plurals name="drug_dosage_unit_drop">
+        <item quantity="one">Goccia</item>
+        <item quantity="other">Gocce</item>
+    </plurals>
+    <plurals name="drug_dosage_unit_spoon">
+        <item quantity="one">Cucchiaio/ino</item>
+        <item quantity="other">Cucchiai/ini</item>
+    </plurals>
     <plurals name="drug_dosage_unit_unknown">
         <item quantity="one">Dose</item>
         <item quantity="other">Dosi</item>
@@ -333,4 +341,34 @@
     <string name="dialog_main_list_view_positive">Applica</string>
     <string name="item_drug_filter_name_default">Scegli un medicinale…</string>
     <string name="dialog_main_list_view_negative">Annulla</string>
+    <string name="fragment_headache_detail_backdrop_title">Dettagli episodio</string>
+    <string name="fragment_headache_detail_backdrop_start_header">Episodio del</string>
+    <string name="fragment_headache_detail_backdrop_no_headache">C\'è stato un problema nel caricamento di questo episodio. Riprova!</string>
+    <string name="fragment_headache_detail_front_pain_location_footer">Area</string>
+    <string name="fragment_headache_detail_front_pain_intensity_footer">Intensità</string>
+    <string name="fragment_headache_detail_front_pain_type_footer">Tipo</string>
+    <string name="fragment_headache_detail_front_drugs_header">Farmaci assunti</string>
+    <string name="fragment_headache_detail_backdrop_duration_undefined">In corso</string>
+    <string name="fragment_headache_detail_front_geo_header">Posizione</string>
+    <string name="toolbar_fragment_headache_detail_backdrop_edit">Modifica</string>
+    <string name="fragment_headache_detail_front_no_geo">Nessuna posizione impostata.</string>
+    <string name="fragment_headache_detail_front_triggers_header">Fattori scatenanti</string>
+    <string name="fragment_headache_detail_front_no_triggers">Nessun fattore impostato.</string>
+    <string name="activity_record_headache_2_edit_title">Modifica episodio</string>
+    <string name="fragment_headache_detail_front_aura_header">Aura</string>
+    <string name="fragment_headache_detail_front_aura_on">L\'aura è presente.</string>
+    <string name="fragment_headache_detail_front_aura_off">L\'aura non è presente.</string>
+    <string name="fragment_headache_detail_front_no_drugs">Nessun farmaco assunto.</string>
+    <string name="fragment_headache_detail_front_drug_intake_quantity">%s ×</string>
+    <string name="fragment_headache_detail_front_drug_intake_name">%s • %s</string>
+    <string name="fragment_headache_detail_front_geo_label">Tocca per visualizzare</string>
+    <string name="dialog_main_list_view_grouping_by_duration">Per durata</string>
+    <string name="ordering_criterion_by_duration_header">Durata ascendente</string>
+    <string name="dialog_recorded_headache_removal_title">Conferma</string>
+    <string name="dialog_recorded_headache_removal_message">L\'episodio selezionato verrà rimosso. Proseguire?</string>
+    <string name="dialog_recorded_headache_removal_positive">Conferma</string>
+    <string name="dialog_recorded_headache_removal_negative">Annulla</string>
+    <string name="cd_more_details">Icona dei dettagli</string>
+    <string name="item_display_recorded_drug_date">Assunto il %s alle %s.</string>
+    <string name="item_display_recorded_drug_comment">Non è stato aggiunto alcun commento.</string>
 </resources>

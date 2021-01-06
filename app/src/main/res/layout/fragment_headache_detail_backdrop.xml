@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="128dp"
+    android:background="@color/paleSpringBud">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:id="@+id/toolbar"
+        android:theme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="@string/fragment_headache_detail_backdrop_title"
+        app:navigationIcon="@drawable/ic_arrow_back_dark"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:layout_marginHorizontal="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_headache_detail_backdrop_start_header"
+            android:textColor="@color/secondaryText"
+            android:textSize="13.6sp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <revolver.headead.ui.views.typography.LektonTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/fragment_headache_detail_backdrop_start"
+                android:textColor="@color/blackOlive"
+                android:textSize="24sp"
+                app:textStyle="bold"/>
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginHorizontal="8dp"
+                android:id="@+id/fragment_headache_detail_backdrop_timespan_arrow"
+                android:src="@drawable/ic_arrow_forward_light"
+                android:contentDescription="@string/cd_timespan_end"
+                app:tint="@color/black"/>
+
+            <revolver.headead.ui.views.typography.LektonTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/fragment_headache_detail_backdrop_end"
+                android:textColor="@color/blackOlive"
+                android:textSize="24sp"
+                app:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-4dp"
+            android:id="@+id/fragment_headache_detail_backdrop_duration"
+            android:textColor="@color/secondaryText"
+            android:textSize="13.6sp"/>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

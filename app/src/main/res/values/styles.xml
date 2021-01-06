@@ -77,6 +77,16 @@
         <item name="android:textColor">@color/mtrl_trigger_chip_text</item>
     </style>
 
+    <style name="DisplayTriggerChip" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="chipIconVisible">true</item>
+        <item name="closeIconVisible">false</item>
+        <item name="chipStrokeColor">@color/flameDark</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="chipBackgroundColor">@color/transparent</item>
+        <item name="chipIconTint">@color/flame</item>
+        <item name="android:textColor">@color/blackOlive</item>
+    </style>
+
     <style name="DrugIntakeDefaultQuantityChip" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="closeIconVisible">false</item>
         <item name="checkedIconVisible">false</item>

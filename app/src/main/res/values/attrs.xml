@@ -17,4 +17,7 @@
     <declare-styleable name="LektonTextView">
         <attr name="textStyle"/>
     </declare-styleable>
+    <declare-styleable name="ExpandedCoordinatorLayout">
+        <attr name="expandedOffset" format="dimension"/>
+    </declare-styleable>
 </resources>

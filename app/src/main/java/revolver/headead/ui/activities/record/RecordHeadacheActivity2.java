@@ -6,7 +6,9 @@ import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.ArrayMap;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
@@ -48,6 +50,8 @@ import revolver.headead.core.model.PainLocation;
 import revolver.headead.core.model.PainType;
 import revolver.headead.core.model.Trigger;
 import revolver.headead.ui.fragments.SimpleAlertDialogFragment;
+import revolver.headead.ui.fragments.display.HeadacheDetailBackdropFragment;
+import revolver.headead.ui.fragments.display.HeadacheDetailFrontFragment;
 import revolver.headead.ui.fragments.display.ListHeadachesFragment;
 import revolver.headead.ui.fragments.record2.pickers.DateTimePickerFragment;
 import revolver.headead.ui.fragments.record2.pickers.PainIntensityPickerFragment;
@@ -85,6 +89,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
     private FrameLayout bottomSheetFrame;
     private FrameLayout bottomSheetDimmer;
     private BottomSheetBehavior<LinearLayout> bottomSheetBehavior;
+    private Fragment backdropFragment;
 
     private PainLocation painLocation;
     private PainIntensity painIntensity;
@@ -99,6 +104,9 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
     private Date headacheEndDate;
     private DateTimePickerFragment.DateTimeMode headacheStartDateTimeMode;
     private DateTimePickerFragment.DateTimeMode headacheEndDateTimeMode;
+
+    private Headache editedHeadache;
+    private boolean editMode = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -195,20 +203,11 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         if (resultCode == RESULT_OK && data != null) {
             if (requestCode == REQUEST_DRUGS) {
                 drugDosages = data.getParcelableArrayListExtra("drugs");
-                if (drugDosages != null) {
-                    findViewById(R.id.activity_record_headache_2_medication_checked)
-                            .setVisibility(drugDosages.isEmpty() ? View.GONE : View.VISIBLE);
-                }
+                onDrugIntakesUpdated();
             } else if (requestCode == REQUEST_LOCATION) {
                 currentLocation = data.getParcelableExtra("location");
                 currentCameraPosition = data.getParcelableExtra("cameraPosition");
-                if (currentLocation != null || currentCameraPosition != null) {
-                    findViewById(R.id.activity_record_headache_2_geo_checked)
-                            .setVisibility(View.VISIBLE);
-                } else {
-                    findViewById(R.id.activity_record_headache_2_geo_checked)
-                            .setVisibility(View.GONE);
-                }
+                onCurrentLocationUpdated();
             }
         }
     }
@@ -411,9 +410,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
                 .alpha(0.f)
                 .setDuration(200L)
                 .setInterpolator(new LinearInterpolator())
-                .withEndAction(() -> {
-                    bottomSheetDimmer.setVisibility(View.GONE);
-                }).start();
+                .withEndAction(() -> bottomSheetDimmer.setVisibility(View.GONE)).start();
     }
 
     private void bounceMissingDataView(final View view) {
@@ -453,7 +450,8 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
             Snacks.shorter(bottomSheetFrame,
                     R.string.activity_record_headache_2_error_missing_data, false);
         } else {
-            final Headache headache = new Headache();
+            final Headache headache =
+                    editMode ? editedHeadache : new Headache();
             headache.setStartDateTimeMode(headacheStartDateTimeMode);
             headache.setStartDate(headacheStartDate);
             headache.setEndDateTimeMode(headacheEndDateTimeMode);
@@ -482,8 +480,26 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
                 headache.setLongitude(currentLocation.getLongitude());
             }
 
-            App.getDefaultRealm().executeTransaction(realm -> realm.insert(headache));
-            revertToMainListFragment();
+            App.getDefaultRealm().executeTransaction(realm -> {
+                if (editMode) {
+                    realm.insertOrUpdate(headache);
+                } else {
+                    realm.insert(headache);
+                }
+            });
+
+            if (editMode) {
+                startBottomTransitionToFragment(HeadacheDetailFrontFragment
+                        .of(editedHeadache), "detailFront", M.screenHeight() - ViewUtils
+                            .getStatusBarHeight() - M.dp(128.f + 16.f)
+                                .intValue(), false, false);
+                replaceBackdropFragment(HeadacheDetailBackdropFragment.of(editedHeadache));
+            } else {
+                revertToMainListFragment();
+            }
+
+            editedHeadache = null;
+            editMode = false;
         }
     }
 
@@ -603,6 +619,57 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
                 .build();
     }
 
+    private void onCurrentLocationUpdated() {
+        if (currentLocation != null || currentCameraPosition != null) {
+            findViewById(R.id.activity_record_headache_2_geo_checked)
+                    .setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.activity_record_headache_2_geo_checked)
+                    .setVisibility(View.GONE);
+        }
+    }
+
+    private void onDrugIntakesUpdated() {
+        if (drugDosages != null) {
+            findViewById(R.id.activity_record_headache_2_medication_checked)
+                    .setVisibility(drugDosages.isEmpty() ? View.GONE : View.VISIBLE);
+        } else {
+            findViewById(R.id.activity_record_headache_2_medication_checked)
+                    .setVisibility(View.GONE);
+        }
+    }
+
+    public void replaceBackdropFragment(final Fragment fragment) {
+        findViewById(R.id.frame).animate()
+                .setDuration(200L)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .alpha(1.f)
+                .withStartAction(() -> {
+                    findViewById(R.id.frame).setAlpha(0.f);
+                    findViewById(R.id.frame).setVisibility(View.VISIBLE);
+                }).start();
+        getSupportFragmentManager().beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.frame, backdropFragment = fragment)
+                .commit();
+    }
+
+    public void deleteBackdropFragment() {
+        if (backdropFragment == null) {
+            return;
+        }
+        findViewById(R.id.frame).animate()
+                .setDuration(200L)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .alpha(0.f)
+                .withEndAction(() -> findViewById(R.id.frame).setVisibility(View.GONE))
+                .start();
+        getSupportFragmentManager().beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .remove(backdropFragment)
+                .commit();
+    }
+
     public void startBottomTransitionToFragment(final Fragment fragment,
                                                 final String tag,
                                                 final int newPeekHeight,
@@ -637,15 +704,19 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         startBottomTransitionToFragment(fragment, tag, newPeekHeight, dimBackground, false);
     }
 
-    public void startBottomTransitionToExpandedFragment(final Fragment fragment, final String tag, final int expandedOffset, final boolean dimBackground) {
+    public void startBottomTransitionToExpandedFragment(final Fragment fragment, final String tag, final int expandedOffset, final boolean dimBackground, final Pair<View, String> sharedElement) {
         bottomSheetFrame.animate()
                 .setDuration(200L)
                 .setInterpolator(new LinearInterpolator())
                 .alpha(0.f)
                 .start();
-        getSupportFragmentManager().beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.bottom_frame, fragment, tag)
+        final FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        if (sharedElement != null) {
+            transaction.addSharedElement(sharedElement.first, sharedElement.second);
+        }
+        transaction.replace(R.id.bottom_frame, fragment, tag)
                 .runOnCommit(() -> bottomSheetFrame.animate()
                         .setDuration(300L)
                         .setInterpolator(new LinearInterpolator())
@@ -659,22 +730,41 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
                             } else {
                                 disableBackgroundDimmer();
                             }
-                        }).start()).commit();
+                        }).start());
+        transaction.commit();
     }
 
-    @Override
-    public void onBackPressed() {
-        final List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        final Fragment lastAdded = fragments.get(fragments.size() - 1);
-        if (backStackedFragmentTags.contains(lastAdded.getTag())) {
-            /* if one of the picker fragments is visible, revert back to
-               BottomPaneFragment instead of firing onBackPressed */
-            resetBottomPane();
-        } else if (MAIN_LIST_TAG.equals(lastAdded.getTag())) {
-            super.onBackPressed();
-        } else {
-            revertToMainListFragment();
+    public void startBottomTransitionToExpandedFragment(final Fragment fragment, final String tag, final int expandedOffset, final boolean dimBackground) {
+        startBottomTransitionToExpandedFragment(fragment, tag, expandedOffset, dimBackground, null);
+    }
+
+    public void startEditMode(final Headache headache) {
+        editMode = true;
+        editedHeadache = headache;
+        headacheStartDateTimeMode = editedHeadache.getStartDateTimeMode();
+        headacheEndDateTimeMode = editedHeadache.getEndDateTimeMode();
+        headacheStartDate = editedHeadache.getStartDate();
+        headacheEndDate = editedHeadache.getEndDate();
+        onHeadacheStartDateUpdated();
+        onHeadacheEndDateUpdated(false);
+        animatePainLocationChange(editedHeadache.getPainLocation());
+        animatePainIntensityChange(editedHeadache.getPainIntensity());
+        animatePainTypeChange(editedHeadache.getPainType());
+        triggersStatus = new ArrayMap<>();
+        for (final Trigger trigger : App.getAllTriggers()) {
+            triggersStatus.put(trigger, editedHeadache.getSelectedTriggers() != null
+                    && editedHeadache.getSelectedTriggers().contains(trigger));
         }
+        isAuraEnabled = editedHeadache.isAuraPresent();
+        drugDosages = new ArrayList<>(editedHeadache.getDrugIntakes());
+        onDrugIntakesUpdated();
+        currentLocation = editedHeadache.getLocation();
+        onCurrentLocationUpdated();
+
+        getToolbar().setTitle(R.string.activity_record_headache_2_edit_title);
+        getToolbar().setNavigationOnClickListener((v) -> onBackPressed());
+        deleteBackdropFragment();
+        resetBottomPane();
     }
 
     public void revertToMainListFragment() {
@@ -711,13 +801,34 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         isAuraEnabled = false;
 
         drugDosages = new ArrayList<>();
-        findViewById(R.id.activity_record_headache_2_medication_checked)
-                .setVisibility(View.GONE);
+        onDrugIntakesUpdated();
 
         currentLocation = null;
         currentCameraPosition = null;
-        findViewById(R.id.activity_record_headache_2_geo_checked)
-                .setVisibility(View.GONE);
+        onCurrentLocationUpdated();
+    }
+
+    @Override
+    public void onBackPressed() {
+        final List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        final Fragment lastAdded = fragments.get(fragments.size() - 1);
+        if (backStackedFragmentTags.contains(lastAdded.getTag())) {
+            /* if one of the picker fragments is visible, revert back to
+               BottomPaneFragment instead of firing onBackPressed */
+            resetBottomPane();
+        } else if (editMode) {
+            startBottomTransitionToFragment(HeadacheDetailFrontFragment.of(editedHeadache),
+                    "detailFront", M.screenHeight() - ViewUtils
+                            .getStatusBarHeight() - M.dp(128.f + 16.f).intValue(), false, false);
+            replaceBackdropFragment(HeadacheDetailBackdropFragment.of(editedHeadache));
+            toolbar.postDelayed(this::resetToolbar, 300L);
+            editMode = false;
+            editedHeadache = null;
+        } else if (MAIN_LIST_TAG.equals(lastAdded.getTag())) {
+            super.onBackPressed();
+        } else {
+            revertToMainListFragment();
+        }
     }
 
     public static MaterialShapeDrawable createBottomPaneRoundedBackground() {

@@ -76,6 +76,29 @@ public class RecordedDrugsAdapter extends RecyclerView.Adapter<RecordedDrugsAdap
         holder.drugDosageUnitIconView.setImageResource(unit.getIconResource());
         holder.drugDosageUnitView.setText(context.getResources()
                 .getQuantityString(unit.getNameResource(), quantity));
+        holder.removeView.setOnClickListener((v) -> {
+            final int pos = holder.getAdapterPosition();
+            final DrugIntake drugIntake = recordedDrugs.remove(pos);
+            notifyItemRemoved(pos);
+            if (listener != null) {
+                listener.onRecordedDrugRemoved(drugIntake);
+            }
+        });
+
+        holder.drugDosageQuantityView.setText(String.format(
+                Locale.ITALY, "%s×", buildQuantityString(context, quantity)));
+    }
+
+    @Override
+    public int getItemCount() {
+        return recordedDrugs != null ? recordedDrugs.size() : 0;
+    }
+
+    public void setOnRecordedDrugRemovedListener(final OnRecordedDrugRemovedListener listener) {
+        this.listener = listener;
+    }
+
+    public static String buildQuantityString(Context context, int quantity) {
         if (quantity < 0) {
             final String quantityLabel;
             switch (quantity) {
@@ -97,27 +120,10 @@ public class RecordedDrugsAdapter extends RecyclerView.Adapter<RecordedDrugsAdap
                 default:
                     quantityLabel = "?";
             }
-            holder.drugDosageQuantityView.setText(String.format(Locale.ITALY, "%s×", quantityLabel));
+            return quantityLabel;
         } else {
-            holder.drugDosageQuantityView.setText(String.format(Locale.ITALY, "%d×", quantity));
+            return String.valueOf(quantity);
         }
-        holder.removeView.setOnClickListener((v) -> {
-            final int pos = holder.getAdapterPosition();
-            final DrugIntake drugIntake = recordedDrugs.remove(pos);
-            notifyItemRemoved(pos);
-            if (listener != null) {
-                listener.onRecordedDrugRemoved(drugIntake);
-            }
-        });
-    }
-
-    @Override
-    public int getItemCount() {
-        return recordedDrugs != null ? recordedDrugs.size() : 0;
-    }
-
-    public void setOnRecordedDrugRemovedListener(final OnRecordedDrugRemovedListener listener) {
-        this.listener = listener;
     }
 
     private static Spanned normalizeText(final String info) {

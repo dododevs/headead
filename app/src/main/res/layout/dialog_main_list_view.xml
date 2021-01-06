@@ -35,6 +35,16 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:paddingHorizontal="4dp"
+            android:id="@+id/dialog_main_list_view_grouping_by_duration"
+            android:text="@string/dialog_main_list_view_grouping_by_duration"
+            android:textColor="@color/black"
+            android:textSize="14.6sp"/>
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:paddingHorizontal="4dp"
             android:id="@+id/dialog_main_list_view_grouping_by_pain_location"
             android:text="@string/dialog_main_list_view_grouping_by_pain_location"
             android:textColor="@color/black"

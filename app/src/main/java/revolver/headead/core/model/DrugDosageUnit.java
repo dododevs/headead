@@ -11,6 +11,8 @@ public enum DrugDosageUnit {
     WEIGHT(R.plurals.drug_dosage_unit_weight, R.drawable.ic_weight),
     VOLUME(R.plurals.drug_dosage_unit_volume, R.drawable.ic_liquid_volume),
     VIAL(R.plurals.drug_dosage_unit_vial, R.drawable.ic_vial),
+    DROP(R.plurals.drug_dosage_unit_drop, R.drawable.ic_drop),
+    SPOON(R.plurals.drug_dosage_unit_spoon, R.drawable.ic_spoon),
     UNKNOWN(R.plurals.drug_dosage_unit_unknown, R.drawable.ic_dose);
 
     private final @PluralsRes int nameResource;

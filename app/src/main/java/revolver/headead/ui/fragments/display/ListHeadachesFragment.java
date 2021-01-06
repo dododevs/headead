@@ -8,6 +8,8 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.util.ArrayMap;
+import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +30,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import io.realm.Realm;
 import revolver.headead.App;
 import revolver.headead.R;
 import revolver.headead.aifa.model.DrugPackaging;
+import revolver.headead.core.display.criteria.ByDuration;
 import revolver.headead.core.display.criteria.ByMonth;
 import revolver.headead.core.display.criteria.ByPainIntensity;
 import revolver.headead.core.display.criteria.ByPainLocation;
@@ -44,14 +48,20 @@ import revolver.headead.core.model.Headache;
 import revolver.headead.ui.activities.record.RecordHeadacheActivity2;
 import revolver.headead.ui.adapters.RecordedHeadachesAdapter;
 import revolver.headead.ui.fragments.SimpleAlertDialogFragment;
+import revolver.headead.util.ui.M;
+import revolver.headead.util.ui.ViewUtils;
 
 public class ListHeadachesFragment extends Fragment {
 
     private List<Headache> headaches;
     private RecordedHeadachesAdapter adapter;
 
-    private OrderingCriterion orderingCriterion;
-    private FilteringCriterion filteringCriterion;
+    private RecyclerView listView;
+    private View noHeadachesView;
+
+    private static OrderingCriterion orderingCriterion;
+    private static FilteringCriterion filteringCriterion;
+    private static int scroll;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -88,22 +98,39 @@ public class ListHeadachesFragment extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        final RecyclerView listView = view.findViewById(R.id.list);
-        listView.setLayoutManager(new LinearLayoutManager(
+        listView = view.findViewById(R.id.list);
+
+        final LinearLayoutManager layoutManager;
+        listView.setLayoutManager(layoutManager = new LinearLayoutManager(
                 requireContext(), RecyclerView.VERTICAL, false));
 
         headaches = App.getDefaultRealm().copyFromRealm(
                 App.getDefaultRealm().where(Headache.class).findAll());
-        listView.setAdapter(adapter =
-                new RecordedHeadachesAdapter(headaches,
-                        filteringCriterion = null, orderingCriterion = new ByMonth()));
+        listView.setAdapter(adapter = new RecordedHeadachesAdapter(
+                requireContext(), headaches,
+                    filteringCriterion, orderingCriterion != null ?
+                        orderingCriterion : (orderingCriterion = new ByMonth())));
+        if (scroll != -1 && scroll < adapter.getItemCount()) {
+            layoutManager.scrollToPosition(scroll);
+        }
+        adapter.setOnHeadacheSelectedListener((headache, holder) -> {
+            scroll = layoutManager.findFirstCompletelyVisibleItemPosition();
+            requireRecordHeadacheActivity().startBottomTransitionToFragment(
+                    HeadacheDetailFrontFragment.of(headache), "detailFront",
+                        M.screenHeight() - ViewUtils.getStatusBarHeight() - M.dp(128.f + 16.f).intValue(),
+                            false, false);
+            requireRecordHeadacheActivity().replaceBackdropFragment(
+                    HeadacheDetailBackdropFragment.of(headache));
+        });
+        adapter.setOnHeadacheLongClickedListener((headache, holder) ->
+                buildRemovalDialog(headache, holder).show(getChildFragmentManager(), null));
 
-        final View noResultsView = view.findViewById(R.id.no_results);
+        noHeadachesView = view.findViewById(R.id.no_results);
         if (headaches.isEmpty()) {
             listView.setVisibility(View.GONE);
-            noResultsView.setVisibility(View.VISIBLE);
+            noHeadachesView.setVisibility(View.VISIBLE);
         } else {
-            noResultsView.setVisibility(View.GONE);
+            noHeadachesView.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
         }
 
@@ -149,6 +176,8 @@ public class ListHeadachesFragment extends Fragment {
                         orderingCriterion = new ByPainIntensity();
                     } else if (id == R.id.dialog_main_list_view_grouping_by_pain_type) {
                         orderingCriterion = new ByPainType();
+                    } else if (id == R.id.dialog_main_list_view_grouping_by_duration) {
+                        orderingCriterion = new ByDuration();
                     } else {
                         shouldApplyOrdering = false;
                     }
@@ -181,6 +210,30 @@ public class ListHeadachesFragment extends Fragment {
                         adapter.notifyDataSetChanged();
                     }
                 }, true).negativeButton(R.string.dialog_main_list_view_negative, null, true).build();
+    }
+
+    private SimpleAlertDialogFragment buildRemovalDialog(final Headache headache, final RecordedHeadachesAdapter.ViewHolder holder) {
+        return new SimpleAlertDialogFragment.Builder(requireContext())
+                .title(R.string.dialog_recorded_headache_removal_title)
+                .message(R.string.dialog_recorded_headache_removal_message)
+                .positiveButton(R.string.dialog_recorded_headache_removal_positive, fragment -> {
+                    App.getDefaultRealm().executeTransaction(realm -> {
+                        realm.where(Headache.class)
+                                .equalTo("uuid", headache.getUuid())
+                                .findAll()
+                                .deleteAllFromRealm();
+                    });
+                    adapter.setHeadaches(headaches = App.getDefaultRealm().copyFromRealm(
+                            App.getDefaultRealm().where(Headache.class).findAll()));
+                    adapter.notifyDataSetChanged();
+                    if (headaches.isEmpty()) {
+                        listView.setVisibility(View.GONE);
+                        noHeadachesView.setVisibility(View.VISIBLE);
+                    } else {
+                        noHeadachesView.setVisibility(View.GONE);
+                        listView.setVisibility(View.VISIBLE);
+                    }
+                }, true).negativeButton(R.string.dialog_recorded_headache_removal_negative, null, true).build();
     }
 
     private List<DrugPackaging> getDrugsFromIntakes() {

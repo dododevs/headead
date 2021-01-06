@@ -29,7 +29,7 @@ public class App extends Application {
 
         Realm.init(this);
         defaultRealm = Realm.getInstance(
-                new RealmConfiguration.Builder().name("userdata.3.realm").build());
+                new RealmConfiguration.Builder().name("userdata.4.realm").build());
 
         colorPrimary = ColorUtils.get(this, R.color.colorPrimary);
         colorPrimaryDark = ColorUtils.get(this, R.color.colorPrimaryDark);

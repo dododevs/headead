@@ -82,8 +82,8 @@ public class DrugLookupActivity extends AppCompatActivity implements SearchView.
     }
 
     public void onFarmacodeDetected(final String farmacode) {
-        DrugPackagingOverviewFragment.of(farmacode).show(
-                getSupportFragmentManager(), "drugDetails");
+        startActivityForResult(new Intent(this, DrugIntakeActivity.class)
+                .putExtra("id", farmacode), DrugLookupActivity.REQUEST_DRUG_INTAKE);
     }
 
     public void onDrugPackagingAndDosageConfirmed(final DrugIntake drugIntake) {

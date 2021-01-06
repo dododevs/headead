@@ -1,7 +1,10 @@
 package revolver.headead.util.ui;
 
+import android.location.Location;
 import android.text.Editable;
 import android.text.TextWatcher;
+
+import java.util.Locale;
 
 public final class TextUtils {
 
@@ -26,6 +29,16 @@ public final class TextUtils {
 
     public static String capitalizeFirst(final String s) {
         return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
+    }
+
+    public static String formatLocationString(final Location location) {
+        final String latitude = Location
+                .convert(location.getLatitude(), Location.FORMAT_DEGREES);
+        final String longitude = Location
+                .convert(location.getLongitude(), Location.FORMAT_DEGREES);
+        return String.format(Locale.getDefault(), "%s° %s  %s° %s",
+                latitude, location.getLatitude() < 0 ? "S" : "N",
+                    longitude, location.getLongitude() < 0 ? "W" : "E");
     }
 
     public static class SimpleTextWatcher implements TextWatcher {

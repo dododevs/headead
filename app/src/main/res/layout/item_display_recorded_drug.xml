@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:focusable="true"
+    android:clickable="true"
+    android:background="?attr/selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/item_display_recorded_drug_quantity"
+            android:textColor="@color/secondaryText"
+            android:textSize="13.6sp"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="16dp"
+            android:orientation="vertical">
+
+            <revolver.headead.ui.views.typography.MontserratTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/item_display_recorded_drug_unit"
+                android:textColor="@color/blackOlive"
+                android:textSize="13.6sp"
+                android:textAllCaps="true"
+                app:textStyle="semiBold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/item_display_recorded_drug_name"
+                android:textColor="@color/black"
+                android:textSize="14.8sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/item_display_recorded_drug_active_principle"
+                android:textColor="@color/secondaryText"
+                android:textSize="13.6sp"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_chevron_down"
+            android:contentDescription="@string/cd_more_details"
+            app:tint="@color/blackOlive"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:orientation="vertical"
+        android:id="@+id/item_display_recorded_drug_other">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/item_display_recorded_drug_date"
+            android:textColor="@color/secondaryText"
+            android:textSize="13.6sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/item_display_recorded_drug_comment"
+            android:textColor="@color/secondaryText"
+            android:textSize="13.6sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

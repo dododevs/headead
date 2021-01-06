@@ -87,6 +87,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
+            android:id="@+id/item_recorded_headache_pain_data"
+            android:transitionName="painData"
             android:baselineAligned="false">
 
             <LinearLayout

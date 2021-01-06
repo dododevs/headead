@@ -8,14 +8,20 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
+import java.util.UUID;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 import revolver.headead.core.display.ListItem;
 import revolver.headead.ui.adapters.RecordedHeadachesAdapter;
 import revolver.headead.ui.fragments.record2.pickers.DateTimePickerFragment;
 
 public class Headache extends RealmObject implements Parcelable, ListItem {
+
+    @PrimaryKey
+    @SerializedName("uuid")
+    private String uuid;
 
     @SerializedName("startDate")
     private Date startDate;
@@ -39,10 +45,10 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
     private String painType;
 
     @SerializedName("locationLatitude")
-    private double latitude;
+    private double latitude = Double.MAX_VALUE;
 
     @SerializedName("locationLongitude")
-    private double longitude;
+    private double longitude = Double.MAX_VALUE;
 
     @SerializedName("triggers")
     private RealmList<Trigger> selectedTriggers;
@@ -54,6 +60,11 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
     private boolean isAuraPresent;
 
     public Headache() {
+        this.uuid = UUID.randomUUID().toString();
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public void setPainIntensity(String painIntensity) {
@@ -144,6 +155,10 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
         return endDate;
     }
 
+    public String getUuid() {
+        return uuid;
+    }
+
     public DateTimePickerFragment.DateTimeMode getStartDateTimeMode() {
         return DateTimePickerFragment.DateTimeMode.fromString(startDateTimeMode);
     }
@@ -153,6 +168,9 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
     }
 
     public Location getLocation() {
+        if (latitude < -180.f || latitude > 180.f || longitude < -180.f || longitude > 180.f) {
+            return null;
+        }
         final Location location = new Location(LocationManager.GPS_PROVIDER);
         location.setLatitude(this.latitude);
         location.setLongitude(this.longitude);
@@ -172,6 +190,7 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
     }
 
     private Headache(Parcel src) {
+        this.uuid = src.readString();
         this.startDate = (Date) src.readSerializable();
         this.endDate = (Date) src.readSerializable();
         this.startDateTimeMode = src.readString();
@@ -190,6 +209,7 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(uuid);
         dest.writeSerializable(startDate);
         dest.writeSerializable(endDate);
         dest.writeString(painLocation);
@@ -210,7 +230,8 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
     @Override
     public String toString() {
         return "Headache{" +
-                "startDate=" + startDate +
+                "uuid=" + uuid +
+                ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", startDateTimeMode='" + startDateTimeMode + '\'' +
                 ", endDateTimeMode='" + endDateTimeMode + '\'' +

@@ -27,7 +27,7 @@ import revolver.headead.util.ui.ViewUtils;
 
 public class RecordedHeadachesAdapter extends RecyclerView.Adapter<RecordedHeadachesAdapter.ViewHolder> {
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         final LinearLayout innerView;
         final TextView startTimeView;
         final TextView durationView;
@@ -36,6 +36,7 @@ public class RecordedHeadachesAdapter extends RecyclerView.Adapter<RecordedHeada
         final TextView painTypeView;
         final ImageView auraView;
         final ImageView drugsView;
+        public final LinearLayout painDataView;
         final View dividerView;
 
         final TextView headerLabelView;
@@ -59,41 +60,42 @@ public class RecordedHeadachesAdapter extends RecyclerView.Adapter<RecordedHeada
             painTypeView = v.findViewById(R.id.item_recorded_headache_pain_type);
             auraView = v.findViewById(R.id.item_recorded_headache_aura);
             drugsView = v.findViewById(R.id.item_recorded_headache_drugs);
+            painDataView = v.findViewById(R.id.item_recorded_headache_pain_data);
             dividerView = v.findViewById(R.id.item_recorded_headache_divider);
 
             headerLabelView = v.findViewById(R.id.item_recorded_headache_header_label);
         }
     }
 
-    private static SimpleDateFormat startAndEndFormatter =
+    public static SimpleDateFormat startAndEndFormatter =
             new SimpleDateFormat("dd MMM, HH:mm", Locale.getDefault());
     private static final int VIEW_TYPE_HEADER = 0;
     private static final int VIEW_TYPE_ITEM = 1;
 
-    private final List<Headache> headaches;
+    private List<Headache> headaches;
     private final List<ListItem> dataset = new ArrayList<>();
     private List<Headache> filteredHeadaches;
 
     private OrderingCriterion orderingCriterion;
     private FilteringCriterion filteringCriterion;
+    private OnHeadacheSelectedListener onHeadacheSelectedListener;
+    private OnHeadacheLongClickedListener onHeadacheLongClickedListener;
 
-    private Context context;
+    private final Context context;
 
-    public RecordedHeadachesAdapter(final List<Headache> headaches, final FilteringCriterion filteringCriterion, final OrderingCriterion orderingCriterion) {
-        this.headaches = headaches;
+    public RecordedHeadachesAdapter(Context context, final List<Headache> headaches, final FilteringCriterion filteringCriterion, final OrderingCriterion orderingCriterion) {
+        this.context = context;
         this.filteringCriterion = filteringCriterion;
         this.orderingCriterion = orderingCriterion;
-        this.filteredHeadaches = new ArrayList<>(this.headaches);
-        applyOrderingCriterion();
+        setHeadaches(headaches);
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(View.inflate(context = parent.getContext(),
-                viewType == VIEW_TYPE_HEADER ?
-                        R.layout.item_recorded_headache_header :
-                            R.layout.item_recorded_headache, null), viewType);
+        return new ViewHolder(View.inflate(context, viewType == VIEW_TYPE_HEADER ?
+                R.layout.item_recorded_headache_header :
+                    R.layout.item_recorded_headache, null), viewType);
     }
 
     @Override
@@ -104,7 +106,7 @@ public class RecordedHeadachesAdapter extends RecyclerView.Adapter<RecordedHeada
             holder.startTimeView.setText(startAndEndFormatter.format(headache.getStartDate()));
             if (headache.getEndDate() != null) {
                 holder.durationView.setText(buildDurationLabel(
-                        headache.getStartDate(), headache.getEndDate()));
+                        context, headache.getStartDate(), headache.getEndDate()));
             } else {
                 holder.durationView.setText(R.string.item_recorded_headache_duration_undefined);
             }
@@ -126,6 +128,22 @@ public class RecordedHeadachesAdapter extends RecyclerView.Adapter<RecordedHeada
             } else {
                 holder.dividerView.setVisibility(View.VISIBLE);
             }
+
+            holder.innerView.setOnClickListener((v) -> {
+                if (onHeadacheSelectedListener != null) {
+                    onHeadacheSelectedListener.onHeadacheSelected(this.headaches.get(
+                            this.headaches.indexOf(this.dataset.get(
+                                    holder.getAdapterPosition()))), holder);
+                }
+            });
+            holder.innerView.setOnLongClickListener((v) -> {
+                if (onHeadacheLongClickedListener != null) {
+                    onHeadacheLongClickedListener.onHeadacheLongClicked(
+                            this.headaches.get(this.headaches.indexOf(this.dataset.get(
+                                    holder.getAdapterPosition()))), holder);
+                }
+                return true;
+            });
         } else if (item instanceof Header) {
             final Header header = (Header) item;
             holder.headerLabelView.setText(header.getLabel());
@@ -142,7 +160,7 @@ public class RecordedHeadachesAdapter extends RecyclerView.Adapter<RecordedHeada
         return this.dataset.get(position) instanceof Header ? VIEW_TYPE_HEADER : VIEW_TYPE_ITEM;
     }
 
-    private String buildDurationLabel(final Date start, final Date end) {
+    public static String buildDurationLabel(final Context context, final Date start, final Date end) {
         long elapsed = end.getTime() - start.getTime();
         int seconds = (int) (elapsed / 1000);
         int hours = seconds / 3600;
@@ -184,5 +202,28 @@ public class RecordedHeadachesAdapter extends RecyclerView.Adapter<RecordedHeada
     public void applyOrderingCriterion(final OrderingCriterion orderingCriterion) {
         this.orderingCriterion = orderingCriterion;
         applyOrderingCriterion();
+    }
+
+    public void setOnHeadacheSelectedListener(final OnHeadacheSelectedListener listener) {
+        this.onHeadacheSelectedListener = listener;
+    }
+
+    public void setOnHeadacheLongClickedListener(final OnHeadacheLongClickedListener listener) {
+        this.onHeadacheLongClickedListener = listener;
+    }
+
+    public void setHeadaches(final List<Headache> headaches) {
+        this.headaches = headaches;
+        this.filteredHeadaches = new ArrayList<>(this.headaches);
+        applyFilteringCriterion();
+        applyOrderingCriterion();
+    }
+
+    public interface OnHeadacheSelectedListener {
+        void onHeadacheSelected(final Headache headache, final ViewHolder holder);
+    }
+
+    public interface OnHeadacheLongClickedListener {
+        void onHeadacheLongClicked(final Headache headache, final ViewHolder holder);
     }
 }
