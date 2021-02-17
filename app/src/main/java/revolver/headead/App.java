@@ -29,7 +29,7 @@ public class App extends Application {
 
         Realm.init(this);
         defaultRealm = Realm.getInstance(
-                new RealmConfiguration.Builder().name("userdata.4.realm").build());
+                new RealmConfiguration.Builder().name("userdata.5.realm").build());
 
         colorPrimary = ColorUtils.get(this, R.color.colorPrimary);
         colorPrimaryDark = ColorUtils.get(this, R.color.colorPrimaryDark);
@@ -81,6 +81,20 @@ public class App extends Application {
         Fonts.Lekton.Regular = Typeface.createFromAsset(
                 getAssets(), "fonts/lekton/Lekton-Regular.ttf");
         Fonts.Roboto.Regular = ResourcesCompat.getFont(this, R.font.roboto_regular);
+        Fonts.Manrope.Bold = Typeface.createFromAsset(
+                getAssets(), "fonts/manrope/Manrope-Bold.ttf");
+        Fonts.Manrope.ExtraBold = Typeface.createFromAsset(
+                getAssets(), "fonts/manrope/Manrope-ExtraBold.ttf");
+        Fonts.Manrope.ExtraLight = Typeface.createFromAsset(
+                getAssets(), "fonts/manrope/Manrope-ExtraLight.ttf");
+        Fonts.Manrope.Light = Typeface.createFromAsset(
+                getAssets(), "fonts/manrope/Manrope-Light.ttf");
+        Fonts.Manrope.Medium = Typeface.createFromAsset(
+                getAssets(), "fonts/manrope/Manrope-Medium.ttf");
+        Fonts.Manrope.Regular = Typeface.createFromAsset(
+                getAssets(), "fonts/manrope/Manrope-Regular.ttf");
+        Fonts.Manrope.SemiBold = Typeface.createFromAsset(
+                getAssets(), "fonts/manrope/Manrope-SemiBold.ttf");
     }
 
     public static List<Trigger> getAllTriggers() {
@@ -114,6 +128,10 @@ public class App extends Application {
 
         public static class Roboto {
             public static Typeface Regular;
+        }
+
+        public static class Manrope {
+            public static Typeface Bold, ExtraBold, ExtraLight, Light, Medium, Regular, SemiBold;
         }
     }
 }

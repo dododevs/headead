@@ -6,6 +6,12 @@ import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ImageSpan;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.SubscriptSpan;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.util.Pair;
@@ -61,6 +67,7 @@ import revolver.headead.ui.fragments.record2.RecordHeadacheBottomPaneFragment;
 import revolver.headead.util.misc.TimeFormattingUtils;
 import revolver.headead.util.ui.M;
 import revolver.headead.util.ui.Snacks;
+import revolver.headead.util.ui.TextUtils;
 import revolver.headead.util.ui.ViewUtils;
 
 public class RecordHeadacheActivity2 extends AppCompatActivity {
@@ -91,7 +98,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
     private BottomSheetBehavior<LinearLayout> bottomSheetBehavior;
     private Fragment backdropFragment;
 
-    private PainLocation painLocation;
+    private List<PainLocation> painLocations;
     private PainIntensity painIntensity;
     private PainType painType;
     private boolean isAuraEnabled;
@@ -212,10 +219,11 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         }
     }
 
-    public void animatePainLocationChange(final PainLocation newPainLocation) {
-        if (newPainLocation == null) {
+    public void animatePainLocationChange(final List<PainLocation> newPainLocations) {
+        if (newPainLocations == null || newPainLocations.isEmpty()) {
             painLocationIconView.animate()
                     .translationX(0)
+                    .translationY(0)
                     .scaleX(1.f)
                     .scaleY(1.f)
                     .setDuration(200L)
@@ -226,15 +234,27 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
                     .setDuration(200L)
                     .setInterpolator(new LinearInterpolator())
                     .start();
-            painLocation = null;
+            painLocations = null;
             painLocationCardView.findViewById(
                     R.id.activity_record_headache_2_pain_location_checked).setVisibility(View.GONE);
             return;
         }
-        painLocationValueView.setText(newPainLocation.getShortStringLabel());
-        if (painLocation == null) {
+        if (newPainLocations.size() == 1) {
+            painLocationValueView.setText(newPainLocations.get(0).getShortStringLabel());
+        } else {
+            final String first = getString(newPainLocations.get(0).getShortStringLabel());
+            final SpannableStringBuilder sb = new SpannableStringBuilder(first)
+                    .append("+").append(String.valueOf(newPainLocations.size() - 1));
+            final int start = first.length();
+            final int end = first.length() + 2;
+            sb.setSpan(new RelativeSizeSpan(0.5f), start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+            sb.setSpan(new TextUtils.LowerSpan(), start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+            painLocationValueView.setText(sb);
+        }
+        if (painLocations == null || painLocations.isEmpty()) {
             painLocationIconView.animate()
                     .translationX(M.dp(-12.f))
+                    .translationYBy(M.dp(8.f))
                     .scaleX(0.35f)
                     .scaleY(0.35f)
                     .setDuration(200L)
@@ -246,7 +266,8 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
                     .setInterpolator(new LinearInterpolator())
                     .start();
         }
-        painLocation = newPainLocation;
+        painLocations = newPainLocations;
+
         painLocationCardView.findViewById(
                 R.id.activity_record_headache_2_pain_location_checked).setVisibility(View.VISIBLE);
     }
@@ -255,6 +276,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         if (newPainIntensity == null) {
             painIntensityIconView.animate()
                     .translationX(0)
+                    .translationY(0)
                     .scaleX(1.f)
                     .scaleY(1.f)
                     .setDuration(200L)
@@ -274,6 +296,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         if (painIntensity == null) {
             painIntensityIconView.animate()
                     .translationX(M.dp(-12.f))
+                    .translationY(M.dp(8.f))
                     .scaleX(0.35f)
                     .scaleY(0.35f)
                     .setDuration(200L)
@@ -294,6 +317,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         if (newPainType == null) {
             painTypeIconView.animate()
                     .translationX(0)
+                    .translationY(0)
                     .scaleX(1.f)
                     .scaleY(1.f)
                     .setDuration(200L)
@@ -313,6 +337,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         if (painType == null) {
             painTypeIconView.animate()
                     .translationX(M.dp(-12.f))
+                    .translationY(M.dp(8.f))
                     .scaleX(0.35f)
                     .scaleY(0.35f)
                     .setDuration(200L)
@@ -349,8 +374,8 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         return bottomSheetBehavior;
     }
 
-    public PainLocation getPainLocation() {
-        return painLocation;
+    public List<PainLocation> getPainLocations() {
+        return painLocations;
     }
 
     public PainIntensity getPainIntensity() {
@@ -430,7 +455,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
 
     public void onNextButtonPressed() {
         boolean missingData = false;
-        if (painLocation == null) {
+        if (painLocations == null || painLocations.isEmpty()) {
             bounceMissingDataView(findViewById(R.id.activity_record_headache_2_pain_location));
             missingData = true;
         } else if (painIntensity == null) {
@@ -456,7 +481,11 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
             headache.setStartDate(headacheStartDate);
             headache.setEndDateTimeMode(headacheEndDateTimeMode);
             headache.setEndDate(headacheEndDate);
-            headache.setPainLocation(painLocation);
+
+            final RealmList<PainLocation> painLocations = new RealmList<>();
+            painLocations.addAll(this.painLocations);
+            headache.setPainLocation(painLocations);
+
             headache.setPainIntensity(painIntensity);
             headache.setPainType(painType);
             headache.setIsAuraPresent(isAuraEnabled);
@@ -473,11 +502,16 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
                     }
                 }
                 headache.setSelectedTriggers(triggers);
+            } else {
+                headache.setSelectedTriggers(null);
             }
 
             if (currentLocation != null) {
                 headache.setLatitude(currentLocation.getLatitude());
                 headache.setLongitude(currentLocation.getLongitude());
+            } else {
+                headache.setLatitude(Double.MAX_VALUE);
+                headache.setLongitude(Double.MAX_VALUE);
             }
 
             App.getDefaultRealm().executeTransaction(realm -> {
@@ -747,7 +781,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         headacheEndDate = editedHeadache.getEndDate();
         onHeadacheStartDateUpdated();
         onHeadacheEndDateUpdated(false);
-        animatePainLocationChange(editedHeadache.getPainLocation());
+        animatePainLocationChange(editedHeadache.getPainLocations());
         animatePainIntensityChange(editedHeadache.getPainIntensity());
         animatePainTypeChange(editedHeadache.getPainType());
         triggersStatus = new ArrayMap<>();

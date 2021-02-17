@@ -10,11 +10,15 @@
         <enum name="semiBold" value="6"/>
         <enum name="thin" value="7"/>
         <enum name="italic" value="8"/>
+        <enum name="extraLight" value="9"/>
     </attr>
     <declare-styleable name="MontserratTextView">
         <attr name="textStyle"/>
     </declare-styleable>
     <declare-styleable name="LektonTextView">
+        <attr name="textStyle"/>
+    </declare-styleable>
+    <declare-styleable name="ManropeTextView">
         <attr name="textStyle"/>
     </declare-styleable>
     <declare-styleable name="ExpandedCoordinatorLayout">

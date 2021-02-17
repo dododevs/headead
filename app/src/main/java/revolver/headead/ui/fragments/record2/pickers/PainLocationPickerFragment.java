@@ -3,6 +3,7 @@ package revolver.headead.ui.fragments.record2.pickers;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.util.ArrayMap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.chip.Chip;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import io.realm.RealmList;
 import revolver.headead.R;
 import revolver.headead.core.model.PainLocation;
 import revolver.headead.ui.activities.record.RecordHeadacheActivity2;
@@ -26,8 +30,8 @@ public class PainLocationPickerFragment extends Fragment {
 
     private Chip painLocationSxView, painLocationDxView,
             painLocationBilateralView, painLocationBackView;
-    private static ArrayMap<PainLocation, Integer> painLocationToViewMap = new ArrayMap<>();
-    private PainLocation painLocation;
+    private static final ArrayMap<PainLocation, Integer> painLocationToViewMap = new ArrayMap<>();
+    private List<PainLocation> painLocations;
 
     static {
         painLocationToViewMap.put(PainLocation.SX, R.id.fragment_pain_location_picker_sx);
@@ -47,56 +51,58 @@ public class PainLocationPickerFragment extends Fragment {
         painLocationSxView = view.findViewById(R.id.fragment_pain_location_picker_sx);
         painLocationSxView.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                resetAllChips();
-                painLocationSxView.setChecked(true);
-                painLocation = PainLocation.SX;
+                if (!painLocations.contains(PainLocation.SX)) {
+                    painLocations.add(PainLocation.SX);
+                }
             } else {
-                painLocation = null;
+                painLocations.remove(PainLocation.SX);
             }
         });
         painLocationDxView = view.findViewById(R.id.fragment_pain_location_picker_dx);
         painLocationDxView.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                resetAllChips();
-                painLocationDxView.setChecked(true);
-                painLocation = PainLocation.DX;
+                if (!painLocations.contains(PainLocation.DX)) {
+                    painLocations.add(PainLocation.DX);
+                }
             } else {
-                painLocation = null;
+                painLocations.remove(PainLocation.DX);
             }
         });
         painLocationBilateralView = view.findViewById(R.id.fragment_pain_location_picker_bilateral);
         painLocationBilateralView.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                resetAllChips();
-                painLocationBilateralView.setChecked(true);
-                painLocation = PainLocation.BILATERAL;
+                if (!painLocations.contains(PainLocation.BILATERAL)) {
+                    painLocations.add(PainLocation.BILATERAL);
+                }
             } else {
-                painLocation = null;
+                painLocations.remove(PainLocation.BILATERAL);
             }
         });
         painLocationBackView = view.findViewById(R.id.fragment_pain_location_picker_back);
         painLocationBackView.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                resetAllChips();
-                painLocationBackView.setChecked(true);
-                painLocation = PainLocation.BACK;
+                if (!painLocations.contains(PainLocation.BACK)) {
+                    painLocations.add(PainLocation.BACK);
+                }
             } else {
-                painLocation = null;
+                painLocations.remove(PainLocation.BACK);
             }
         });
         view.findViewById(R.id.fragment_pain_location_picker_confirm).setOnClickListener((v) -> {
-            if (painLocation != null) {
-                requireRecordHeadacheActivity().animatePainLocationChange(painLocation);
+            if (painLocations != null && !painLocations.isEmpty()) {
+                requireRecordHeadacheActivity().animatePainLocationChange(painLocations);
                 requireRecordHeadacheActivity().resetBottomPane();
             }
         });
 
-        final Chip current = getChipForCurrentSelection();
+        final Chip[] current = getChipsForCurrentSelections();
         if (current != null) {
-            current.setChecked(true);
-            painLocation = requireRecordHeadacheActivity().getPainLocation();
+            painLocations = requireRecordHeadacheActivity().getPainLocations();
+            for (final Chip chip : current) {
+                chip.setChecked(true);
+            }
         } else {
-            painLocation = null;
+            painLocations = new ArrayList<>();
         }
     }
 
@@ -107,11 +113,18 @@ public class PainLocationPickerFragment extends Fragment {
         painLocationBackView.setChecked(false);
     }
 
-    private Chip getChipForCurrentSelection() {
-        final PainLocation painLocation = requireRecordHeadacheActivity().getPainLocation();
-        if (painLocation != null && painLocationToViewMap.containsKey(painLocation)) {
-            return (Chip) requireView().findViewById(
-                    Objects.requireNonNull(painLocationToViewMap.get(painLocation)));
+    private Chip[] getChipsForCurrentSelections() {
+        final List<PainLocation> painLocations =
+                requireRecordHeadacheActivity().getPainLocations();
+        if (painLocations != null && !painLocations.isEmpty()) {
+            final Chip[] chips = new Chip[painLocations.size()];
+            for (int i = 0; i < chips.length; i++) {
+                if (painLocationToViewMap.containsKey(painLocations.get(i))) {
+                    chips[i] = requireView().findViewById(Objects
+                            .requireNonNull(painLocationToViewMap.get(painLocations.get(i))));
+                }
+            }
+            return chips;
         }
         return null;
     }

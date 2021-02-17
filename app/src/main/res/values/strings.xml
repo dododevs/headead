@@ -324,7 +324,7 @@
     <string name="item_recorded_headache_pain_location_footer">Area</string>
     <string name="item_recorded_headache_pain_intensity_footer">Intensità</string>
     <string name="item_recorded_headache_pain_type_footer">Tipo</string>
-    <string name="item_recorded_headache_start_header">Episodio del</string>
+    <string name="item_recorded_headache_start_header">Episodio</string>
     <string name="item_recorded_headache_duration_more_than_6h"><![CDATA[> 6h]]></string>
     <string name="item_recorded_headache_duration_less_than_1min"><![CDATA[< 1min]]></string>
     <string name="item_recorded_headache_duration_less_than_1h">%dmin</string>
@@ -371,4 +371,6 @@
     <string name="cd_more_details">Icona dei dettagli</string>
     <string name="item_display_recorded_drug_date">Assunto il %s alle %s.</string>
     <string name="item_display_recorded_drug_comment">Non è stato aggiunto alcun commento.</string>
+    <string name="more_dots">︙</string>
+    <string name="headache_location_all">Tutte</string>
 </resources>

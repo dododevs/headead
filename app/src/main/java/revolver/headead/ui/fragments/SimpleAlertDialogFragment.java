@@ -137,9 +137,11 @@ public class SimpleAlertDialogFragment extends DialogFragment {
             positiveButtonView.setEnabled(false);
         }
 
+        final ScrollView customViewContainer =
+                view.findViewById(R.id.dialog_alert_simple_container);
         if (customView != null) {
-            ((ScrollView) view.findViewById(
-                    R.id.dialog_alert_simple_container)).addView(customView);
+            customViewContainer.setVisibility(View.VISIBLE);
+            customViewContainer.addView(customView);
         }
     }
 

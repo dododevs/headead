@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:id="@+id/item_recorded_headache_inner"
+        android:padding="8dp"
         android:focusable="true"
         android:clickable="true"
         android:background="?attr/selectableItemBackground">
@@ -35,14 +35,14 @@
                     android:textColor="@color/secondaryText"
                     android:textSize="13.6sp"/>
 
-                <revolver.headead.ui.views.typography.LektonTextView
+                <revolver.headead.ui.views.typography.ManropeTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-4dp"
                     android:id="@+id/item_recorded_headache_start"
                     android:textColor="@color/blackOlive"
-                    android:textSize="24sp"
-                    app:textStyle="bold"/>
+                    android:textSize="21sp"
+                    app:textStyle="semiBold"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -97,7 +97,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <revolver.headead.ui.views.typography.LektonTextView
+                <revolver.headead.ui.views.typography.ManropeTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -125,7 +125,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <revolver.headead.ui.views.typography.LektonTextView
+                <revolver.headead.ui.views.typography.ManropeTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -153,7 +153,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <revolver.headead.ui.views.typography.LektonTextView
+                <revolver.headead.ui.views.typography.ManropeTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"

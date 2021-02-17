@@ -39,7 +39,7 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="108dp"
                 android:layout_weight="1"
                 android:layout_margin="8dp"
                 android:focusable="true"
@@ -75,14 +75,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <revolver.headead.ui.views.typography.LektonTextView
+                        <revolver.headead.ui.views.typography.ManropeTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:id="@+id/activity_record_headache_2_pain_location_value"
                             android:alpha="0"
                             android:textColor="@color/iconGray"
-                            android:textSize="32sp"
+                            android:textSize="28sp"
                             app:textStyle="bold"/>
 
                         <ImageView
@@ -115,7 +115,7 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="108dp"
                 android:layout_weight="1"
                 android:layout_margin="8dp"
                 android:focusable="true"
@@ -151,14 +151,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <revolver.headead.ui.views.typography.LektonTextView
+                        <revolver.headead.ui.views.typography.ManropeTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:id="@+id/activity_record_headache_2_pain_intensity_value"
                             android:alpha="0"
                             android:textColor="@color/iconGray"
-                            android:textSize="32sp"
+                            android:textSize="28sp"
                             app:textStyle="bold"/>
 
                         <ImageView
@@ -191,7 +191,7 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="108dp"
                 android:layout_weight="1"
                 android:layout_margin="8dp"
                 android:focusable="true"
@@ -227,14 +227,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <revolver.headead.ui.views.typography.LektonTextView
+                        <revolver.headead.ui.views.typography.ManropeTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:id="@+id/activity_record_headache_2_pain_type_value"
                             android:alpha="0"
                             android:textColor="@color/iconGray"
-                            android:textSize="32sp"
+                            android:textSize="28sp"
                             app:textStyle="bold"/>
 
                         <ImageView
@@ -329,7 +329,7 @@
                             app:tint="@color/blackOlive"
                             android:contentDescription="@string/cd_timespan_start"/>
 
-                        <revolver.headead.ui.views.typography.LektonTextView
+                        <revolver.headead.ui.views.typography.ManropeTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -395,7 +395,7 @@
                             app:tint="@color/blackOlive"
                             android:contentDescription="@string/cd_timespan_end"/>
 
-                        <revolver.headead.ui.views.typography.LektonTextView
+                        <revolver.headead.ui.views.typography.ManropeTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"

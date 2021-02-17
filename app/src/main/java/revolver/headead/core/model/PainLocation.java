@@ -1,6 +1,10 @@
 package revolver.headead.core.model;
 
+import android.content.Context;
+
 import androidx.annotation.StringRes;
+
+import java.util.List;
 
 import revolver.headead.R;
 
@@ -35,5 +39,19 @@ public enum PainLocation {
             }
         }
         return null;
+    }
+
+    public static String joinMultiple(final Context context, final List<PainLocation> painLocations) {
+        if (painLocations.size() == 1) {
+            return context.getString(painLocations.get(0).getShortStringLabel());
+        } else if (painLocations.size() == values().length) {
+            return context.getString(R.string.headache_location_all);
+        } else {
+            final StringBuilder sb = new StringBuilder();
+            for (final PainLocation painLocation : painLocations) {
+                sb.append(context.getString(painLocation.getShortStringLabel())).append("+");
+            }
+            return sb.substring(0, sb.length() - 1);
+        }
     }
 }

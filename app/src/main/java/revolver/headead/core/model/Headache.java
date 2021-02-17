@@ -7,7 +7,9 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import io.realm.RealmList;
@@ -36,7 +38,7 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
     private String endDateTimeMode;
 
     @SerializedName("painLocation")
-    private String painLocation;
+    private RealmList<String> painLocations;
 
     @SerializedName("painIntensity")
     private String painIntensity;
@@ -75,12 +77,15 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
         this.painIntensity = painIntensity.toString();
     }
 
-    public void setPainLocation(String painLocation) {
-        this.painLocation = painLocation;
+    public void setPainLocations(RealmList<String> painLocations) {
+        this.painLocations = painLocations;
     }
 
-    public void setPainLocation(PainLocation painLocation) {
-        this.painLocation = painLocation.toString();
+    public void setPainLocation(RealmList<PainLocation> painLocations) {
+        this.painLocations = new RealmList<>();
+        for (final PainLocation painLocation : painLocations) {
+            this.painLocations.add(painLocation.toString());
+        }
     }
 
     public void setPainType(String painType) {
@@ -139,8 +144,12 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
         return PainIntensity.valueOf(this.painIntensity);
     }
 
-    public PainLocation getPainLocation() {
-        return PainLocation.valueOf(this.painLocation);
+    public RealmList<PainLocation> getPainLocations() {
+        final RealmList<PainLocation> painLocations = new RealmList<>();
+        for (final String painLocation : this.painLocations) {
+            painLocations.add(PainLocation.valueOf(painLocation));
+        }
+        return painLocations;
     }
 
     public PainType getPainType() {
@@ -195,7 +204,8 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
         this.endDate = (Date) src.readSerializable();
         this.startDateTimeMode = src.readString();
         this.endDateTimeMode = src.readString();
-        this.painLocation = src.readString();
+        this.painLocations = new RealmList<>();
+        src.readStringList(this.painLocations);
         this.painIntensity = src.readString();
         this.painType = src.readString();
         this.latitude = src.readDouble();
@@ -212,7 +222,7 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
         dest.writeString(uuid);
         dest.writeSerializable(startDate);
         dest.writeSerializable(endDate);
-        dest.writeString(painLocation);
+        dest.writeStringList(painLocations);
         dest.writeString(painIntensity);
         dest.writeString(painType);
         dest.writeDouble(latitude);
@@ -235,7 +245,7 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
                 ", endDate=" + endDate +
                 ", startDateTimeMode='" + startDateTimeMode + '\'' +
                 ", endDateTimeMode='" + endDateTimeMode + '\'' +
-                ", painLocation='" + painLocation + '\'' +
+                ", painLocations='" + painLocations.toString() + '\'' +
                 ", painIntensity='" + painIntensity + '\'' +
                 ", painType='" + painType + '\'' +
                 ", latitude=" + latitude +

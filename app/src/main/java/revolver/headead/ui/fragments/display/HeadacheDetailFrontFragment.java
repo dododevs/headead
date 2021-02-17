@@ -29,6 +29,7 @@ import java.util.Locale;
 import revolver.headead.R;
 import revolver.headead.core.model.DrugIntake;
 import revolver.headead.core.model.Headache;
+import revolver.headead.core.model.PainLocation;
 import revolver.headead.core.model.Trigger;
 import revolver.headead.ui.activities.record.RecordHeadacheActivity2;
 import revolver.headead.ui.adapters.RecordedDrugsAdapter;
@@ -65,7 +66,7 @@ public class HeadacheDetailFrontFragment extends Fragment {
         }
 
         ((TextView) view.findViewById(R.id.fragment_headache_detail_front_pain_location))
-                .setText(headache.getPainLocation().getShortStringLabel());
+                .setText(PainLocation.joinMultiple(requireContext(), headache.getPainLocations()));
         ((TextView) view.findViewById(R.id.fragment_headache_detail_front_pain_intensity))
                 .setText(headache.getPainIntensity().getShortStringLabel());
         ((TextView) view.findViewById(R.id.fragment_headache_detail_front_pain_type))

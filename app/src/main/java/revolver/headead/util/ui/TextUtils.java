@@ -2,7 +2,11 @@ package revolver.headead.util.ui;
 
 import android.location.Location;
 import android.text.Editable;
+import android.text.TextPaint;
 import android.text.TextWatcher;
+import android.text.style.SubscriptSpan;
+
+import androidx.annotation.NonNull;
 
 import java.util.Locale;
 
@@ -50,6 +54,18 @@ public final class TextUtils {
         }
         @Override
         public void afterTextChanged(Editable s) {
+        }
+    }
+
+    public static class LowerSpan extends SubscriptSpan {
+        @Override
+        public void updateDrawState(@NonNull TextPaint textPaint) {
+            textPaint.baselineShift -= (int) (textPaint.ascent() / 3);
+        }
+
+        @Override
+        public void updateMeasureState(@NonNull TextPaint textPaint) {
+            textPaint.baselineShift -= (int) (textPaint.ascent() / 3);
         }
     }
 }

@@ -16,7 +16,7 @@ public class ByPainLocation extends OrderingCriterion {
 
     @Override
     public void apply(Context context, List<ListItem> dataset, List<Headache> headaches) {
-        dataset.clear();
+        /*dataset.clear();
         Collections.sort(headaches, (headache1, headache2) ->
                 headache2.getPainLocation().ordinal() - headache1.getPainLocation().ordinal());
         dataset.addAll(headaches);
@@ -33,7 +33,7 @@ public class ByPainLocation extends OrderingCriterion {
             }
         }
         dataset.add(0, new Header(context.getString(
-                headaches.get(0).getPainLocation().getLongStringLabel())));
+                headaches.get(0).getPainLocation().getLongStringLabel())));*/
     }
 
     @Override

@@ -23,6 +23,7 @@ import revolver.headead.core.display.ListItem;
 import revolver.headead.core.display.criteria.OrderingCriterion;
 import revolver.headead.core.display.filters.FilteringCriterion;
 import revolver.headead.core.model.Headache;
+import revolver.headead.core.model.PainLocation;
 import revolver.headead.util.ui.ViewUtils;
 
 public class RecordedHeadachesAdapter extends RecyclerView.Adapter<RecordedHeadachesAdapter.ViewHolder> {
@@ -120,7 +121,8 @@ public class RecordedHeadachesAdapter extends RecyclerView.Adapter<RecordedHeada
             } else {
                 holder.drugsView.setVisibility(View.GONE);
             }
-            holder.painLocationView.setText(headache.getPainLocation().getShortStringLabel());
+            holder.painLocationView.setText(
+                    PainLocation.joinMultiple(context, headache.getPainLocations()));
             holder.painIntensityView.setText(headache.getPainIntensity().getShortStringLabel());
             holder.painTypeView.setText(headache.getPainType().getShortStringLabel());
             if (position == getItemCount() - 1 || this.dataset.get(position + 1) instanceof Header) {

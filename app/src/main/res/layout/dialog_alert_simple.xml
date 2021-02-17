@@ -25,7 +25,7 @@
         android:layout_marginVertical="16dp"
         android:id="@+id/dialog_alert_simple_message"
         android:textColor="@color/secondaryText"
-        android:textSize="14.8sp"
+        android:textSize="16sp"
         android:padding="4dp"
         android:visibility="gone"/>
 
@@ -51,12 +51,13 @@
         android:layout_height="match_parent"
         android:layout_margin="8dp"
         android:orientation="vertical"
-        android:id="@+id/dialog_alert_simple_container"/>
+        android:id="@+id/dialog_alert_simple_container"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal">
 
         <TextView
@@ -65,7 +66,8 @@
             android:layout_weight="1"
             android:layout_marginEnd="2dp"
             android:gravity="center_vertical"
-            android:padding="6dp"
+            android:paddingHorizontal="6dp"
+            android:paddingBottom="2dp"
             android:focusable="true"
             android:clickable="true"
             android:background="?attr/selectableItemBackground"
@@ -81,7 +83,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:padding="6dp"
+            android:paddingHorizontal="6dp"
+            android:paddingBottom="2dp"
             android:focusable="true"
             android:clickable="true"
             android:background="?attr/selectableItemBackground"
@@ -97,7 +100,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:padding="6dp"
+            android:paddingHorizontal="6dp"
+            android:paddingBottom="2dp"
             android:focusable="true"
             android:clickable="true"
             android:background="?attr/selectableItemBackground"
