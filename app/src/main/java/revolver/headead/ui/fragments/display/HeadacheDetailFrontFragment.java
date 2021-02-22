@@ -68,7 +68,7 @@ public class HeadacheDetailFrontFragment extends Fragment {
         ((TextView) view.findViewById(R.id.fragment_headache_detail_front_pain_location))
                 .setText(PainLocation.joinMultiple(requireContext(), headache.getPainLocations()));
         ((TextView) view.findViewById(R.id.fragment_headache_detail_front_pain_intensity))
-                .setText(headache.getPainIntensity().getShortStringLabel());
+                .setText(String.valueOf(headache.getPainIntensity()));
         ((TextView) view.findViewById(R.id.fragment_headache_detail_front_pain_type))
                 .setText(headache.getPainType().getShortStringLabel());
 

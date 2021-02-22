@@ -42,7 +42,7 @@
         android:layout_marginBottom="24dp"
         android:stepSize="0"
         android:valueFrom="0"
-        android:valueTo="30"
+        android:valueTo="100"
         android:id="@+id/fragment_pain_intensity_picker_slider"
         app:labelBehavior="gone"
         app:layout_constraintBottom_toTopOf="@id/fragment_pain_intensity_picker_confirm"
@@ -57,58 +57,122 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:layout_marginStart="37dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginHorizontal="28dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="@id/fragment_pain_intensity_picker_slider">
+        app:layout_constraintTop_toTopOf="@id/fragment_pain_intensity_picker_slider"
+        tools:ignore="RtlSymmetry">
 
-        <View
+        <revolver.headead.ui.views.typography.LektonTextView
+            android:visibility="invisible"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@android:color/transparent"/>
-
-        <revolver.headead.ui.views.typography.LektonTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="@string/headache_intensity_low_short"
+            android:text="@string/headache_intensity_0"
             android:textColor="@color/blackOlive"
             android:textSize="13.6sp"
             android:textAlignment="center"
             app:textStyle="bold"/>
 
-        <View
+        <revolver.headead.ui.views.typography.LektonTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@android:color/transparent"/>
-
-        <revolver.headead.ui.views.typography.LektonTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="2dp"
-            android:text="@string/headache_intensity_medium_short"
+            android:text="@string/headache_intensity_1"
             android:textColor="@color/blackOlive"
             android:textSize="13.6sp"
             android:textAlignment="center"
             app:textStyle="bold"/>
 
-        <View
+        <revolver.headead.ui.views.typography.LektonTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@android:color/transparent"/>
-
-        <revolver.headead.ui.views.typography.LektonTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:text="@string/headache_intensity_high_short"
+            android:text="@string/headache_intensity_2"
             android:textColor="@color/blackOlive"
             android:textSize="13.6sp"
             android:textAlignment="center"
             app:textStyle="bold"/>
+
+        <revolver.headead.ui.views.typography.LektonTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/headache_intensity_3"
+            android:textColor="@color/blackOlive"
+            android:textSize="13.6sp"
+            android:textAlignment="center"
+            app:textStyle="bold"/>
+
+        <revolver.headead.ui.views.typography.LektonTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/headache_intensity_4"
+            android:textColor="@color/blackOlive"
+            android:textSize="13.6sp"
+            android:textAlignment="center"
+            app:textStyle="bold"/>
+
+        <revolver.headead.ui.views.typography.LektonTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/headache_intensity_5"
+            android:textColor="@color/blackOlive"
+            android:textSize="13.6sp"
+            android:textAlignment="center"
+            app:textStyle="bold"/>
+
+        <revolver.headead.ui.views.typography.LektonTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="1dp"
+            android:text="@string/headache_intensity_6"
+            android:textColor="@color/blackOlive"
+            android:textSize="13.6sp"
+            android:textAlignment="center"
+            app:textStyle="bold"/>
+
+        <revolver.headead.ui.views.typography.LektonTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/headache_intensity_7"
+            android:textColor="@color/blackOlive"
+            android:textSize="13.6sp"
+            android:textAlignment="center"
+            app:textStyle="bold"/>
+
+        <revolver.headead.ui.views.typography.LektonTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/headache_intensity_8"
+            android:textColor="@color/blackOlive"
+            android:textSize="13.6sp"
+            android:textAlignment="center"
+            app:textStyle="bold"/>
+
+        <revolver.headead.ui.views.typography.LektonTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/headache_intensity_9"
+            android:textColor="@color/blackOlive"
+            android:textSize="13.6sp"
+            android:textAlignment="center"
+            app:textStyle="bold"/>
+
+        <revolver.headead.ui.views.typography.LektonTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/headache_intensity_10"
+            android:textColor="@color/blackOlive"
+            android:textSize="13.6sp"
+            android:textAlignment="center"
+            app:textStyle="bold" />
 
     </LinearLayout>
 

@@ -99,7 +99,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
     private Fragment backdropFragment;
 
     private List<PainLocation> painLocations;
-    private PainIntensity painIntensity;
+    private int painIntensity;
     private PainType painType;
     private boolean isAuraEnabled;
     private Map<Trigger, Boolean> triggersStatus;
@@ -272,8 +272,8 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
                 R.id.activity_record_headache_2_pain_location_checked).setVisibility(View.VISIBLE);
     }
 
-    public void animatePainIntensityChange(final PainIntensity newPainIntensity) {
-        if (newPainIntensity == null) {
+    public void animatePainIntensityChange(final int newPainIntensity) {
+        if (newPainIntensity == 0) {
             painIntensityIconView.animate()
                     .translationX(0)
                     .translationY(0)
@@ -287,13 +287,13 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
                     .setDuration(200L)
                     .setInterpolator(new LinearInterpolator())
                     .start();
-            painIntensity = null;
+            painIntensity = 0;
             painIntensityCardView.findViewById(
                     R.id.activity_record_headache_2_pain_intensity_checked).setVisibility(View.GONE);
             return;
         }
-        painIntensityValueView.setText(newPainIntensity.getShortStringLabel());
-        if (painIntensity == null) {
+        painIntensityValueView.setText(String.valueOf(newPainIntensity));
+        if (painIntensity == 0) {
             painIntensityIconView.animate()
                     .translationX(M.dp(-12.f))
                     .translationY(M.dp(8.f))
@@ -378,7 +378,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         return painLocations;
     }
 
-    public PainIntensity getPainIntensity() {
+    public int getPainIntensity() {
         return painIntensity;
     }
 
@@ -458,7 +458,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         if (painLocations == null || painLocations.isEmpty()) {
             bounceMissingDataView(findViewById(R.id.activity_record_headache_2_pain_location));
             missingData = true;
-        } else if (painIntensity == null) {
+        } else if (painIntensity <= 0) {
             bounceMissingDataView(findViewById(R.id.activity_record_headache_2_pain_intensity));
             missingData = true;
         } else if (painType == null) {
@@ -828,7 +828,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         onHeadacheEndDateUpdated(true);
 
         animatePainLocationChange(null);
-        animatePainIntensityChange(null);
+        animatePainIntensityChange(0);
         animatePainTypeChange(null);
 
         triggersStatus = null;

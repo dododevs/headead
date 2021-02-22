@@ -18,22 +18,22 @@ public class ByPainIntensity extends OrderingCriterion {
     public void apply(Context context, List<ListItem> dataset, List<Headache> headaches) {
         dataset.clear();
         Collections.sort(headaches, (headache1, headache2) ->
-                headache2.getPainIntensity().ordinal() - headache1.getPainIntensity().ordinal());
+                headache2.getPainIntensity() - headache1.getPainIntensity());
         dataset.addAll(headaches);
 
-        PainIntensity lastPainIntensity = null;
+        int lastPainIntensity = 0;
         for (int i = headaches.size() - 1; i >= 0; i--) {
             final Headache headache = headaches.get(i);
-            if (lastPainIntensity == null) {
+            if (lastPainIntensity == 0) {
                 lastPainIntensity = headache.getPainIntensity();
             } else if (headache.getPainIntensity() != lastPainIntensity) {
-                dataset.add(i + 1, new Header(context.getString(
-                        headaches.get(i + 1).getPainIntensity().getLongStringLabel())));
+                dataset.add(i + 1, new Header(String.valueOf(
+                        headaches.get(i + 1).getPainIntensity())));
                 lastPainIntensity = headache.getPainIntensity();
             }
         }
-        dataset.add(0, new Header(context.getString(
-                headaches.get(0).getPainIntensity().getLongStringLabel())));
+        dataset.add(0, new Header(String.valueOf(
+                headaches.get(0).getPainIntensity())));
     }
 
     @Override

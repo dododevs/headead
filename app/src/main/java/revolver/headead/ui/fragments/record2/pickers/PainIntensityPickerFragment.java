@@ -35,7 +35,7 @@ import revolver.headead.util.ui.IconUtils;
 public class PainIntensityPickerFragment extends Fragment {
 
     private PainIntensityScaleDrawable scaleDrawable;
-    private PainIntensity painIntensity;
+    private int painIntensity;
 
     @Nullable
     @Override
@@ -49,7 +49,7 @@ public class PainIntensityPickerFragment extends Fragment {
         final AnimatedSlider intensitySliderView =
                 view.findViewById(R.id.fragment_pain_intensity_picker_slider);
         intensitySliderView.addOnChangeListener((slider, value, fromUser) ->
-                onSliderValueChanged(value / 30.f));
+                onSliderValueChanged(value / 100.f));
         intensitySliderView.addOnSliderTouchListener(new Slider.OnSliderTouchListener() {
             @Override
             public void onStartTrackingTouch(@NonNull Slider slider) {
@@ -57,20 +57,8 @@ public class PainIntensityPickerFragment extends Fragment {
 
             @Override
             public void onStopTrackingTouch(@NonNull Slider slider) {
-                final float value = slider.getValue();
-                if (value > 0.0f && value <= 5.f) {
-                    slider.setValue(0.f);
-                    painIntensity = null;
-                } else if ((value > 5.f && value <= 10.f) || (value > 10.f && value <= 15.f)) {
-                    slider.setValue(10.f);
-                    painIntensity = PainIntensity.LOW;
-                } else if ((value > 15.f && value <= 20.f) || (value > 20.f && value <= 25.f)) {
-                    slider.setValue(20.f);
-                    painIntensity = PainIntensity.MEDIUM;
-                } else if (value > 25.f && value <= 30.f) {
-                    slider.setValue(30.f);
-                    painIntensity = PainIntensity.HIGH;
-                }
+                slider.setValue((int) (slider.getValue() / 10) * 10);
+                painIntensity = (int) (slider.getValue() / 10);
             }
         });
         final ImageView painIntensityScale =
@@ -80,29 +68,19 @@ public class PainIntensityPickerFragment extends Fragment {
         painIntensityScale.setOnTouchListener((v, event) -> intensitySliderView.onTouchEvent(event));
 
         view.findViewById(R.id.fragment_pain_intensity_picker_confirm).setOnClickListener((v) -> {
-            if (painIntensity != null) {
+            if (painIntensity > 0) {
                 requireRecordHeadacheActivity().animatePainIntensityChange(painIntensity);
                 requireRecordHeadacheActivity().resetBottomPane();
             }
         });
 
-        final PainIntensity currentPainIntensity =
+        final int currentPainIntensity =
                 requireRecordHeadacheActivity().getPainIntensity();
-        if (currentPainIntensity != null) {
-            switch (currentPainIntensity) {
-                case LOW:
-                    intensitySliderView.setValue(10.f);
-                    break;
-                case MEDIUM:
-                    intensitySliderView.setValue(20.f);
-                    break;
-                case HIGH:
-                    intensitySliderView.setValue(30.f);
-                    break;
-            }
+        if (currentPainIntensity > 0) {
+            intensitySliderView.setValue(currentPainIntensity * 10.f);
             painIntensity = currentPainIntensity;
         } else {
-            painIntensity = null;
+            painIntensity = 0;
         }
     }
 

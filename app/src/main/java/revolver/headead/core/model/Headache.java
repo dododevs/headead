@@ -41,7 +41,7 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
     private RealmList<String> painLocations;
 
     @SerializedName("painIntensity")
-    private String painIntensity;
+    private int painIntensity;
 
     @SerializedName("painType")
     private String painType;
@@ -69,12 +69,8 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
         this.uuid = uuid;
     }
 
-    public void setPainIntensity(String painIntensity) {
+    public void setPainIntensity(int painIntensity) {
         this.painIntensity = painIntensity;
-    }
-
-    public void setPainIntensity(PainIntensity painIntensity) {
-        this.painIntensity = painIntensity.toString();
     }
 
     public void setPainLocations(RealmList<String> painLocations) {
@@ -140,8 +136,8 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
         this.isAuraPresent = auraPresent;
     }
 
-    public PainIntensity getPainIntensity() {
-        return PainIntensity.valueOf(this.painIntensity);
+    public int getPainIntensity() {
+        return this.painIntensity;
     }
 
     public RealmList<PainLocation> getPainLocations() {
@@ -206,7 +202,7 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
         this.endDateTimeMode = src.readString();
         this.painLocations = new RealmList<>();
         src.readStringList(this.painLocations);
-        this.painIntensity = src.readString();
+        this.painIntensity = src.readInt();
         this.painType = src.readString();
         this.latitude = src.readDouble();
         this.longitude = src.readDouble();
@@ -223,7 +219,7 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
         dest.writeSerializable(startDate);
         dest.writeSerializable(endDate);
         dest.writeStringList(painLocations);
-        dest.writeString(painIntensity);
+        dest.writeInt(painIntensity);
         dest.writeString(painType);
         dest.writeDouble(latitude);
         dest.writeDouble(longitude);

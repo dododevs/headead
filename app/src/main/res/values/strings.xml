@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Headead</string>
     <string name="activity_drug_lookup_title">Ricerca medicinali</string>
     <string name="cd_arrow_back">Freccia indietro</string>
@@ -127,7 +127,7 @@
     <string name="trigger_description_substance">Assunzione di sostanze che alterano il normale stato psico-fisico, quali alcolici, medicinali, derivati dell\'utilizzo di sigarette o simili</string>
     <string name="cd_trigger_icon">Icona del fattore scatenante</string>
     <string name="cd_barcode">Icona della scansione del codice a barre</string>
-    <string name="fragment_drug_barcode_detector_camera_error">Non è stato possibile accedere alla fotocamera</string>
+    <string name="fragment_drug_barcode_detector_camera_error" tools:ignore="Typos">Non è stato possibile accedere alla fotocamera</string>
     <string name="fragment_drug_barcode_detector_camera_permission_denied">È necessario il permesso di accedere alla fotocamera per utilizzare lo scanner</string>
     <string name="fragment_drug_packaging_overview_title">Sommario</string>
     <string name="fragment_drug_packaging_overview_drug_header">Farmaco</string>
@@ -262,12 +262,12 @@
     <string name="day_before_yesterday_at">L\'altro ieri alle %s</string>
     <string name="date_at_time">%s alle %s</string>
     <string name="activity_record_headache_2_datetime_set">Imposta</string>
-    <string name="cd_timespan_start">Icona del momento iniziale</string>
+    <string name="cd_timespan_start" tools:ignore="Typos">Icona del momento iniziale</string>
     <string name="activity_record_headache_2_datetime_start">Inizio</string>
-    <string name="cd_timespan_end">Icona del momento finale</string>
+    <string name="cd_timespan_end" tools:ignore="Typos">Icona del momento finale</string>
     <string name="activity_record_headache_2_datetime_end">Fine</string>
     <string name="dialog_start_after_end_title">Attenzione</string>
-    <string name="dialog_start_after_end_message">Hai scelto un momento di fine precedente al momento di inizio. Non lo trovi strano?</string>
+    <string name="dialog_start_after_end_message" tools:ignore="Typos">Hai scelto un momento di fine precedente al momento di inizio. Non lo trovi strano?</string>
     <string name="dialog_start_after_end_positive">Direi di sì</string>
     <string name="activity_record_headache_2_geo">Posizione</string>
     <string name="activity_record_headache_2_medication">Medicinali</string>
@@ -373,4 +373,15 @@
     <string name="item_display_recorded_drug_comment">Non è stato aggiunto alcun commento.</string>
     <string name="more_dots">︙</string>
     <string name="headache_location_all">Tutte</string>
+    <string name="headache_intensity_0">0</string>
+    <string name="headache_intensity_1">1</string>
+    <string name="headache_intensity_2">2</string>
+    <string name="headache_intensity_3">3</string>
+    <string name="headache_intensity_4">4</string>
+    <string name="headache_intensity_5">5</string>
+    <string name="headache_intensity_6">6</string>
+    <string name="headache_intensity_7">7</string>
+    <string name="headache_intensity_8">8</string>
+    <string name="headache_intensity_9">9</string>
+    <string name="headache_intensity_10">10</string>
 </resources>

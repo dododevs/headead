@@ -123,7 +123,7 @@ public class RecordedHeadachesAdapter extends RecyclerView.Adapter<RecordedHeada
             }
             holder.painLocationView.setText(
                     PainLocation.joinMultiple(context, headache.getPainLocations()));
-            holder.painIntensityView.setText(headache.getPainIntensity().getShortStringLabel());
+            holder.painIntensityView.setText(String.valueOf(headache.getPainIntensity()));
             holder.painTypeView.setText(headache.getPainType().getShortStringLabel());
             if (position == getItemCount() - 1 || this.dataset.get(position + 1) instanceof Header) {
                 holder.dividerView.setVisibility(View.GONE);

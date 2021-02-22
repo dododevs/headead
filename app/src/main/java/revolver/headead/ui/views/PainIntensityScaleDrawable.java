@@ -25,16 +25,14 @@ import revolver.headead.util.ui.ColorUtils;
 public class PainIntensityScaleDrawable extends LayerDrawable {
 
     private float value = 0.f;
-    private @ColorInt int startColor, endColor;
+    private final @ColorInt int startColor, endColor;
 
     public PainIntensityScaleDrawable(Context context) {
         super(new Drawable[] {
-                (VectorDrawable) Objects.requireNonNull(ContextCompat
+                Objects.requireNonNull(ContextCompat
                         .getDrawable(context, R.drawable.fragment_pain_intensity_picker_base)),
-                (VectorDrawable) Objects.requireNonNull(ContextCompat
+                Objects.requireNonNull(ContextCompat
                         .getDrawable(context, R.drawable.fragment_pain_intensity_picker_overlay)),
-                (VectorDrawable) Objects.requireNonNull(ContextCompat
-                        .getDrawable(context, R.drawable.fragment_pain_intensity_picker_delimiters))
         });
         startColor = ContextCompat.getColor(context, R.color.paleSpringBudDark);
         endColor = ContextCompat.getColor(context, R.color.flame);
@@ -47,7 +45,6 @@ public class PainIntensityScaleDrawable extends LayerDrawable {
         canvas.clipRect(0, 0, calculateClipEnd(), getBounds().bottom);
         getDrawable(1).draw(canvas);
         canvas.restore();
-        getDrawable(2).draw(canvas);
     }
 
     @Override
