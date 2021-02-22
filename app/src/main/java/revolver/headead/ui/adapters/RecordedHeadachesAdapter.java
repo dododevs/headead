@@ -24,6 +24,7 @@ import revolver.headead.core.display.criteria.OrderingCriterion;
 import revolver.headead.core.display.filters.FilteringCriterion;
 import revolver.headead.core.model.Headache;
 import revolver.headead.core.model.PainLocation;
+import revolver.headead.core.model.PainType;
 import revolver.headead.util.ui.ViewUtils;
 
 public class RecordedHeadachesAdapter extends RecyclerView.Adapter<RecordedHeadachesAdapter.ViewHolder> {
@@ -124,7 +125,7 @@ public class RecordedHeadachesAdapter extends RecyclerView.Adapter<RecordedHeada
             holder.painLocationView.setText(
                     PainLocation.joinMultiple(context, headache.getPainLocations()));
             holder.painIntensityView.setText(String.valueOf(headache.getPainIntensity()));
-            holder.painTypeView.setText(headache.getPainType().getShortStringLabel());
+            holder.painTypeView.setText(PainType.joinMultiple(context, headache.getPainTypes()));
             if (position == getItemCount() - 1 || this.dataset.get(position + 1) instanceof Header) {
                 holder.dividerView.setVisibility(View.GONE);
             } else {

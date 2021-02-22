@@ -16,24 +16,24 @@ public class ByPainType extends OrderingCriterion {
 
     @Override
     public void apply(Context context, List<ListItem> dataset, List<Headache> headaches) {
-        dataset.clear();
+        /*dataset.clear();
         Collections.sort(headaches, (headache1, headache2) ->
-                headache2.getPainType().ordinal() - headache1.getPainType().ordinal());
+                headache2.getPainTypes().ordinal() - headache1.getPainTypes().ordinal());
         dataset.addAll(headaches);
 
         PainType lastPainType = null;
         for (int i = headaches.size() - 1; i >= 0; i--) {
             final Headache headache = headaches.get(i);
             if (lastPainType == null) {
-                lastPainType = headache.getPainType();
-            } else if (headache.getPainType() != lastPainType) {
+                lastPainType = headache.getPainTypes();
+            } else if (headache.getPainTypes() != lastPainType) {
                 dataset.add(i + 1, new Header(context.getString(
-                        headaches.get(i + 1).getPainType().getLongStringLabel())));
-                lastPainType = headache.getPainType();
+                        headaches.get(i + 1).getPainTypes().getLongStringLabel())));
+                lastPainType = headache.getPainTypes();
             }
         }
         dataset.add(0, new Header(context.getString(
-                headaches.get(0).getPainType().getLongStringLabel())));
+                headaches.get(0).getPainTypes().getLongStringLabel())));*/
     }
 
     @Override

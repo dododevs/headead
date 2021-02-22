@@ -37,7 +37,7 @@
                 android:src="@drawable/ic_head_pain_type_a"
                 android:contentDescription="@string/cd_headache_type_a"/>
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
+            <com.google.android.material.checkbox.MaterialCheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/fragment_pain_type_picker_a"/>
@@ -87,7 +87,7 @@
                 android:src="@drawable/ic_head_pain_type_b"
                 android:contentDescription="@string/cd_headache_type_b"/>
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
+            <com.google.android.material.checkbox.MaterialCheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/fragment_pain_type_picker_b"/>
@@ -137,7 +137,7 @@
                 android:src="@drawable/ic_head_pain_type_c"
                 android:contentDescription="@string/cd_headache_type_c"/>
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
+            <com.google.android.material.checkbox.MaterialCheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/fragment_pain_type_picker_c"/>

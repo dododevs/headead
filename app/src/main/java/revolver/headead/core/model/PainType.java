@@ -1,6 +1,10 @@
 package revolver.headead.core.model;
 
+import android.content.Context;
+
 import androidx.annotation.StringRes;
+
+import java.util.List;
 
 import revolver.headead.R;
 
@@ -34,5 +38,17 @@ public enum PainType {
             }
         }
         return null;
+    }
+
+    public static String joinMultiple(final Context context, final List<PainType> painTypes) {
+        if (painTypes.size() == 1) {
+            return context.getString(painTypes.get(0).getShortStringLabel());
+        } else {
+            final StringBuilder sb = new StringBuilder();
+            for (final PainType painType : painTypes) {
+                sb.append(context.getString(painType.getShortStringLabel()));
+            }
+            return sb.toString();
+        }
     }
 }

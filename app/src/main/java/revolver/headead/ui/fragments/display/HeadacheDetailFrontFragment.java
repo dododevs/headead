@@ -1,22 +1,18 @@
 package revolver.headead.ui.fragments.display;
 
 import android.graphics.drawable.AnimatedVectorDrawable;
-import android.location.Location;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.chip.Chip;
@@ -30,10 +26,10 @@ import revolver.headead.R;
 import revolver.headead.core.model.DrugIntake;
 import revolver.headead.core.model.Headache;
 import revolver.headead.core.model.PainLocation;
+import revolver.headead.core.model.PainType;
 import revolver.headead.core.model.Trigger;
 import revolver.headead.ui.activities.record.RecordHeadacheActivity2;
 import revolver.headead.ui.adapters.RecordedDrugsAdapter;
-import revolver.headead.ui.fragments.SimpleAlertDialogFragment;
 import revolver.headead.util.ui.IconUtils;
 import revolver.headead.util.ui.Snacks;
 import revolver.headead.util.ui.TextUtils;
@@ -70,7 +66,7 @@ public class HeadacheDetailFrontFragment extends Fragment {
         ((TextView) view.findViewById(R.id.fragment_headache_detail_front_pain_intensity))
                 .setText(String.valueOf(headache.getPainIntensity()));
         ((TextView) view.findViewById(R.id.fragment_headache_detail_front_pain_type))
-                .setText(headache.getPainType().getShortStringLabel());
+                .setText(PainType.joinMultiple(requireContext(), headache.getPainTypes()));
 
         final ChipGroup triggerGroup =
                 view.findViewById(R.id.fragment_headache_detail_front_triggers);

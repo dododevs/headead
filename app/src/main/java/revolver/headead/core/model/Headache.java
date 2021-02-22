@@ -16,7 +16,6 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import revolver.headead.core.display.ListItem;
-import revolver.headead.ui.adapters.RecordedHeadachesAdapter;
 import revolver.headead.ui.fragments.record2.pickers.DateTimePickerFragment;
 
 public class Headache extends RealmObject implements Parcelable, ListItem {
@@ -44,7 +43,7 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
     private int painIntensity;
 
     @SerializedName("painType")
-    private String painType;
+    private RealmList<String> painTypes;
 
     @SerializedName("locationLatitude")
     private double latitude = Double.MAX_VALUE;
@@ -77,19 +76,18 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
         this.painLocations = painLocations;
     }
 
-    public void setPainLocation(RealmList<PainLocation> painLocations) {
+    public void setPainLocation(List<PainLocation> painLocations) {
         this.painLocations = new RealmList<>();
         for (final PainLocation painLocation : painLocations) {
             this.painLocations.add(painLocation.toString());
         }
     }
 
-    public void setPainType(String painType) {
-        this.painType = painType;
-    }
-
-    public void setPainType(PainType painType) {
-        this.painType = painType.toString();
+    public void setPainType(List<PainType> painTypes) {
+        this.painTypes = new RealmList<>();
+        for (final PainType painType : painTypes) {
+            this.painTypes.add(painType.toString());
+        }
     }
 
     public void setStartDate(Date startDate) {
@@ -140,16 +138,20 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
         return this.painIntensity;
     }
 
-    public RealmList<PainLocation> getPainLocations() {
-        final RealmList<PainLocation> painLocations = new RealmList<>();
+    public List<PainLocation> getPainLocations() {
+        final List<PainLocation> painLocations = new ArrayList<>();
         for (final String painLocation : this.painLocations) {
             painLocations.add(PainLocation.valueOf(painLocation));
         }
         return painLocations;
     }
 
-    public PainType getPainType() {
-        return PainType.fromString(this.painType);
+    public List<PainType> getPainTypes() {
+        final List<PainType> painTypes = new ArrayList<>();
+        for (final String painType : this.painTypes) {
+            painTypes.add(PainType.valueOf(painType));
+        }
+        return painTypes;
     }
 
     public Date getStartDate() {
@@ -203,7 +205,8 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
         this.painLocations = new RealmList<>();
         src.readStringList(this.painLocations);
         this.painIntensity = src.readInt();
-        this.painType = src.readString();
+        this.painTypes = new RealmList<>();
+        src.readStringList(this.painTypes);
         this.latitude = src.readDouble();
         this.longitude = src.readDouble();
         this.selectedTriggers = new RealmList<>();
@@ -220,7 +223,7 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
         dest.writeSerializable(endDate);
         dest.writeStringList(painLocations);
         dest.writeInt(painIntensity);
-        dest.writeString(painType);
+        dest.writeStringList(painTypes);
         dest.writeDouble(latitude);
         dest.writeDouble(longitude);
         dest.writeTypedList(this.selectedTriggers);
@@ -243,7 +246,7 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
                 ", endDateTimeMode='" + endDateTimeMode + '\'' +
                 ", painLocations='" + painLocations.toString() + '\'' +
                 ", painIntensity='" + painIntensity + '\'' +
-                ", painType='" + painType + '\'' +
+                ", painType='" + painTypes + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", selectedTriggers=" + selectedTriggers +

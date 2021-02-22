@@ -6,14 +6,10 @@ import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
-import android.text.style.ImageSpan;
 import android.text.style.RelativeSizeSpan;
-import android.text.style.SubscriptSpan;
 import android.util.ArrayMap;
-import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -25,7 +21,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -34,7 +29,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.libraries.maps.model.CameraPosition;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.shape.CornerFamily;
 import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.shape.ShapeAppearanceModel;
@@ -45,13 +39,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import io.realm.Realm;
 import io.realm.RealmList;
 import revolver.headead.App;
 import revolver.headead.R;
 import revolver.headead.core.model.DrugIntake;
 import revolver.headead.core.model.Headache;
-import revolver.headead.core.model.PainIntensity;
 import revolver.headead.core.model.PainLocation;
 import revolver.headead.core.model.PainType;
 import revolver.headead.core.model.Trigger;
@@ -100,7 +92,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
 
     private List<PainLocation> painLocations;
     private int painIntensity;
-    private PainType painType;
+    private List<PainType> painTypes;
     private boolean isAuraEnabled;
     private Map<Trigger, Boolean> triggersStatus;
     private ArrayList<DrugIntake> drugDosages = new ArrayList<>();
@@ -313,8 +305,8 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
                 R.id.activity_record_headache_2_pain_intensity_checked).setVisibility(View.VISIBLE);
     }
 
-    public void animatePainTypeChange(final PainType newPainType) {
-        if (newPainType == null) {
+    public void animatePainTypeChange(final List<PainType> newPainTypes) {
+        if (newPainTypes == null) {
             painTypeIconView.animate()
                     .translationX(0)
                     .translationY(0)
@@ -328,13 +320,13 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
                     .setDuration(200L)
                     .setInterpolator(new LinearInterpolator())
                     .start();
-            painType = null;
+            painTypes = null;
             painTypeCardView.findViewById(
                     R.id.activity_record_headache_2_pain_type_checked).setVisibility(View.GONE);
             return;
         }
-        painTypeValueView.setText(newPainType.getShortStringLabel());
-        if (painType == null) {
+        painTypeValueView.setText(PainType.joinMultiple(this, newPainTypes));
+        if (painTypes == null) {
             painTypeIconView.animate()
                     .translationX(M.dp(-12.f))
                     .translationY(M.dp(8.f))
@@ -349,7 +341,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
                     .setInterpolator(new LinearInterpolator())
                     .start();
         }
-        painType = newPainType;
+        painTypes = newPainTypes;
         painTypeCardView.findViewById(
                 R.id.activity_record_headache_2_pain_type_checked).setVisibility(View.VISIBLE);
     }
@@ -382,8 +374,8 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         return painIntensity;
     }
 
-    public PainType getPainType() {
-        return painType;
+    public List<PainType> getPainTypes() {
+        return this.painTypes;
     }
 
     public Date getHeadacheStartDate() {
@@ -461,7 +453,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         } else if (painIntensity <= 0) {
             bounceMissingDataView(findViewById(R.id.activity_record_headache_2_pain_intensity));
             missingData = true;
-        } else if (painType == null) {
+        } else if (painTypes == null) {
             bounceMissingDataView(findViewById(R.id.activity_record_headache_2_pain_type));
             missingData = true;
         } else if (headacheStartDate == null) {
@@ -487,7 +479,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
             headache.setPainLocation(painLocations);
 
             headache.setPainIntensity(painIntensity);
-            headache.setPainType(painType);
+            headache.setPainType(painTypes);
             headache.setIsAuraPresent(isAuraEnabled);
 
             final RealmList<DrugIntake> intakes = new RealmList<>();
@@ -783,7 +775,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         onHeadacheEndDateUpdated(false);
         animatePainLocationChange(editedHeadache.getPainLocations());
         animatePainIntensityChange(editedHeadache.getPainIntensity());
-        animatePainTypeChange(editedHeadache.getPainType());
+        animatePainTypeChange(editedHeadache.getPainTypes());
         triggersStatus = new ArrayMap<>();
         for (final Trigger trigger : App.getAllTriggers()) {
             triggersStatus.put(trigger, editedHeadache.getSelectedTriggers() != null
