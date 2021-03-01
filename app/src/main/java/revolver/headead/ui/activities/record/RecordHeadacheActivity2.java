@@ -93,7 +93,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
     private List<PainLocation> painLocations;
     private int painIntensity;
     private List<PainType> painTypes;
-    private boolean isAuraEnabled;
+    private boolean isAuraEnabled, getsWorseWithMovement;
     private Map<Trigger, Boolean> triggersStatus;
     private ArrayList<DrugIntake> drugDosages = new ArrayList<>();
     private CameraPosition currentCameraPosition;
@@ -362,6 +362,14 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         return isAuraEnabled;
     }
 
+    public void setGetsWorseWithMovement(boolean getsWorseWithMovement) {
+        this.getsWorseWithMovement = getsWorseWithMovement;
+    }
+
+    public boolean getsWorseWithMovement() {
+        return getsWorseWithMovement;
+    }
+
     public BottomSheetBehavior<LinearLayout> getBottomSheetBehavior() {
         return bottomSheetBehavior;
     }
@@ -481,6 +489,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
             headache.setPainIntensity(painIntensity);
             headache.setPainType(painTypes);
             headache.setIsAuraPresent(isAuraEnabled);
+            headache.setGetsWorseWithMovement(getsWorseWithMovement);
 
             final RealmList<DrugIntake> intakes = new RealmList<>();
             intakes.addAll(drugDosages);
@@ -782,6 +791,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
                     && editedHeadache.getSelectedTriggers().contains(trigger));
         }
         isAuraEnabled = editedHeadache.isAuraPresent();
+        getsWorseWithMovement = editedHeadache.getsWorseWithMovement();
         drugDosages = new ArrayList<>(editedHeadache.getDrugIntakes());
         onDrugIntakesUpdated();
         currentLocation = editedHeadache.getLocation();
@@ -825,6 +835,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
 
         triggersStatus = null;
         isAuraEnabled = false;
+        getsWorseWithMovement = false;
 
         drugDosages = new ArrayList<>();
         onDrugIntakesUpdated();

@@ -384,4 +384,16 @@
     <string name="headache_intensity_8">8</string>
     <string name="headache_intensity_9">9</string>
     <string name="headache_intensity_10">10</string>
+    <string name="cd_movement">Icona del peggioramento con il movimento</string>
+    <string name="fragment_headache_detail_front_aura_description">Insieme dei disturbi psichici, visivi, motori e/o neurologici che possono precedere l\'insorgenza dell\'emicrania.</string>
+    <string name="fragment_record_headache_extras_movement_header">Peggiora con il movimento</string>
+    <string name="fragment_headache_detail_front_movement_description">Il dolore tende a peggiorare con il movimento e con gli sforzi fisici.</string>
+    <string name="fragment_record_headache_extras_other_header">Altri sintomi</string>
+    <string name="fragment_headache_detail_front_other_header">Altri sintomi</string>
+    <string name="fragment_headache_detail_front_aura_footer">Aura</string>
+    <string name="fragment_headache_detail_front_movement_footer">Peggiora con movim.</string>
+    <string name="aura_yes">SÌ</string>
+    <string name="aura_no">NO</string>
+    <string name="movement_yes">SÌ</string>
+    <string name="movement_no">NO</string>
 </resources>

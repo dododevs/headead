@@ -60,6 +60,9 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
     @SerializedName("aura")
     private boolean isAuraPresent;
 
+    @SerializedName("movement")
+    private boolean getsWorseWithMovement;
+
     public Headache() {
         this.uuid = UUID.randomUUID().toString();
     }
@@ -134,6 +137,10 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
         this.isAuraPresent = auraPresent;
     }
 
+    public void setGetsWorseWithMovement(boolean getsWorseWithMovement) {
+        this.getsWorseWithMovement = getsWorseWithMovement;
+    }
+
     public int getPainIntensity() {
         return this.painIntensity;
     }
@@ -196,6 +203,10 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
         return isAuraPresent;
     }
 
+    public boolean getsWorseWithMovement() {
+        return getsWorseWithMovement;
+    }
+
     private Headache(Parcel src) {
         this.uuid = src.readString();
         this.startDate = (Date) src.readSerializable();
@@ -214,6 +225,7 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
         this.drugIntakes = new RealmList<>();
         src.readTypedList(this.drugIntakes, DrugIntake.CREATOR);
         this.isAuraPresent = src.readInt() == 1;
+        this.getsWorseWithMovement = src.readInt() == 1;
     }
 
     @Override
@@ -229,6 +241,7 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
         dest.writeTypedList(this.selectedTriggers);
         dest.writeTypedList(this.drugIntakes);
         dest.writeInt(isAuraPresent ? 1 : 0);
+        dest.writeInt(getsWorseWithMovement ? 1 : 0);
     }
 
     @Override
@@ -252,6 +265,7 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
                 ", selectedTriggers=" + selectedTriggers +
                 ", drugIntakes=" + drugIntakes +
                 ", isAuraPresent=" + isAuraPresent +
+                ", getsWorseWithMovement=" + getsWorseWithMovement +
                 '}';
     }
 

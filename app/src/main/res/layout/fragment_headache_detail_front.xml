@@ -39,7 +39,7 @@
                         android:layout_gravity="center_horizontal"
                         android:id="@+id/fragment_headache_detail_front_pain_location"
                         android:textColor="@color/iconGray"
-                        android:textSize="24sp"
+                        android:textSize="21sp"
                         app:textStyle="bold"/>
 
                     <revolver.headead.ui.views.typography.MontserratTextView
@@ -76,7 +76,7 @@
                         android:layout_gravity="center_horizontal"
                         android:id="@+id/fragment_headache_detail_front_pain_intensity"
                         android:textColor="@color/iconGray"
-                        android:textSize="24sp"
+                        android:textSize="21sp"
                         app:textStyle="bold"/>
 
                     <revolver.headead.ui.views.typography.MontserratTextView
@@ -113,7 +113,7 @@
                         android:layout_gravity="center_horizontal"
                         android:id="@+id/fragment_headache_detail_front_pain_type"
                         android:textColor="@color/iconGray"
-                        android:textSize="24sp"
+                        android:textSize="21sp"
                         app:textStyle="bold"/>
 
                     <ImageView
@@ -154,49 +154,98 @@
                 android:layout_margin="24dp"
                 android:background="@color/listDivider"/>
 
+            <revolver.headead.ui.views.typography.MontserratTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/fragment_headache_detail_front_other_header"
+                android:textColor="@color/iconGray"
+                android:textSize="12.8sp"
+                android:textAllCaps="true"
+                app:textStyle="semiBold"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="16dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
                     android:orientation="vertical">
+
+                    <revolver.headead.ui.views.typography.ManropeTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/fragment_headache_detail_front_aura"
+                        android:textColor="@color/iconGray"
+                        android:textSize="21sp"
+                        app:textStyle="bold"/>
 
                     <revolver.headead.ui.views.typography.MontserratTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:text="@string/fragment_headache_detail_front_aura_header"
-                        android:textColor="@color/iconGray"
-                        android:textSize="12.8sp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/fragment_headache_detail_front_aura_footer"
+                        android:textColor="@color/blackOlive"
+                        android:textSize="12sp"
                         android:textAllCaps="true"
                         app:textStyle="semiBold"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:id="@+id/fragment_headache_detail_front_aura"
-                        android:textColor="@color/blackOlive"
-                        android:textSize="14.6sp"/>
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="8dp"
+                        android:src="@drawable/ic_aura"
+                        android:contentDescription="@string/cd_aura"
+                        app:tint="@color/secondaryText"/>
 
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="21dp"
-                    android:layout_height="21dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="24dp"
-                    android:id="@+id/fragment_headache_detail_front_aura_icon"
-                    android:src="@drawable/avd_aura_in"
-                    android:contentDescription="@string/cd_aura"/>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <revolver.headead.ui.views.typography.ManropeTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/fragment_headache_detail_front_movement"
+                        android:textColor="@color/iconGray"
+                        android:textSize="21sp"
+                        app:textStyle="bold"/>
+
+                    <revolver.headead.ui.views.typography.MontserratTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:text="@string/fragment_headache_detail_front_movement_footer"
+                        android:textColor="@color/blackOlive"
+                        android:textSize="12sp"
+                        android:textAllCaps="true"
+                        app:textStyle="semiBold"/>
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="8dp"
+                        android:src="@drawable/ic_movement"
+                        android:contentDescription="@string/cd_movement"
+                        app:tint="@color/secondaryText"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -204,6 +253,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/fragment_headache_detail_front_triggers_header"
                 android:textColor="@color/iconGray"
                 android:textSize="12.8sp"

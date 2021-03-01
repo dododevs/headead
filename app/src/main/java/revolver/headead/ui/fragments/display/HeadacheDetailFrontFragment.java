@@ -1,13 +1,11 @@
 package revolver.headead.ui.fragments.display;
 
-import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -87,16 +85,12 @@ public class HeadacheDetailFrontFragment extends Fragment {
 
         final TextView auraLabelView =
                 view.findViewById(R.id.fragment_headache_detail_front_aura);
-        final ImageView auraIconView =
-                view.findViewById(R.id.fragment_headache_detail_front_aura_icon);
-        if (headache.isAuraPresent()) {
-            auraLabelView.setText(R.string.fragment_headache_detail_front_aura_on);
-            auraIconView.setImageResource(R.drawable.avd_aura_in);
-        } else {
-            auraLabelView.setText(R.string.fragment_headache_detail_front_aura_off);
-            auraIconView.setImageResource(R.drawable.avd_aura_out);
-        }
-        ((AnimatedVectorDrawable) auraIconView.getDrawable()).start();
+        auraLabelView.setText(headache.isAuraPresent() ? R.string.aura_yes : R.string.aura_no);
+
+        final TextView movementLabelView =
+                view.findViewById(R.id.fragment_headache_detail_front_movement);
+        movementLabelView.setText(headache
+                .getsWorseWithMovement() ? R.string.movement_yes : R.string.movement_no);
 
         final LinearLayout drugIntakesContainer =
                 view.findViewById(R.id.fragment_headache_detail_front_drugs_container);

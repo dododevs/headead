@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.button.MaterialButtonToggleGroup;
+import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.chip.Chip;
 
 import java.util.Collections;
@@ -33,7 +35,7 @@ import revolver.headead.util.ui.M;
 public class RecordHeadacheExtrasFragment extends Fragment {
 
     private Map<Trigger, Boolean> triggersStatus;
-    private boolean isAuraEnabled;
+    private boolean isAuraEnabled, getsWorseWithMovement;
 
     @Nullable
     @Override
@@ -97,31 +99,49 @@ public class RecordHeadacheExtrasFragment extends Fragment {
         chipsContainerView.setAdapter(adapter);
         selectedTriggersCountView.setOnCloseIconClickListener(v -> adapter.resetAllTriggers());
 
-        final MaterialButtonToggleGroup auraToggleView =
-                view.findViewById(R.id.fragment_record_headache_extras_aura);
+        final MaterialCheckBox auraCheckbox =
+                view.findViewById(R.id.fragment_record_headache_extras_aura_);
+        final MaterialCheckBox movementCheckbox =
+                view.findViewById(R.id.fragment_record_headache_extras_movement);
         final ImageView auraIconView =
                 view.findViewById(R.id.fragment_record_headache_extras_aura_icon);
-        auraToggleView.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
-            if (checkedId == R.id.aura_on) {
-                isAuraEnabled = true;
+        final ImageView movementIconView =
+                view.findViewById(R.id.fragment_record_headache_extras_movement_icon);
+
+        auraCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            isAuraEnabled = isChecked;
+            if (isChecked) {
                 auraIconView.setImageResource(R.drawable.avd_aura_in);
-                ((AnimatedVectorDrawable) auraIconView.getDrawable()).start();
-            } else if (checkedId == R.id.aura_off) {
-                isAuraEnabled = false;
+            } else {
                 auraIconView.setImageResource(R.drawable.avd_aura_out);
-                ((AnimatedVectorDrawable) auraIconView.getDrawable()).start();
             }
+            ((AnimatedVectorDrawable) auraIconView.getDrawable()).start();
+        });
+        movementCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            getsWorseWithMovement = isChecked;
+            if (isChecked) {
+                movementIconView.setImageResource(R.drawable.avd_movement_in);
+            } else {
+                movementIconView.setImageResource(R.drawable.avd_movement_out);
+            }
+            ((AnimatedVectorDrawable) movementIconView.getDrawable()).start();
         });
 
         isAuraEnabled = requireRecordHeadacheActivity().isAuraEnabled();
+        getsWorseWithMovement = requireRecordHeadacheActivity().getsWorseWithMovement();
         if (isAuraEnabled) {
-            auraToggleView.check(R.id.aura_on);
+            auraCheckbox.setChecked(true);
+        }
+        if (getsWorseWithMovement) {
+            movementCheckbox.setChecked(true);
         }
         ((AnimatedVectorDrawable) auraIconView.getDrawable()).start();
+        ((AnimatedVectorDrawable) movementIconView.getDrawable()).start();
 
         view.findViewById(R.id.fragment_record_headache_extras_confirm).setOnClickListener((v) -> {
             requireRecordHeadacheActivity().setTriggersStatus(triggersStatus);
             requireRecordHeadacheActivity().setAuraEnabled(isAuraEnabled);
+            requireRecordHeadacheActivity().setGetsWorseWithMovement(getsWorseWithMovement);
             requireRecordHeadacheActivity().resetBottomPane();
         });
     }

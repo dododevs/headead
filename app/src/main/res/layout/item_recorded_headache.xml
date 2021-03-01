@@ -103,7 +103,7 @@
                     android:layout_gravity="center_horizontal"
                     android:id="@+id/item_recorded_headache_pain_location"
                     android:textColor="@color/iconGray"
-                    android:textSize="24sp"
+                    android:textSize="21sp"
                     app:textStyle="bold"/>
 
                 <revolver.headead.ui.views.typography.MontserratTextView
@@ -131,7 +131,7 @@
                     android:layout_gravity="center_horizontal"
                     android:id="@+id/item_recorded_headache_pain_intensity"
                     android:textColor="@color/iconGray"
-                    android:textSize="24sp"
+                    android:textSize="21sp"
                     app:textStyle="bold"/>
 
                 <revolver.headead.ui.views.typography.MontserratTextView
@@ -159,7 +159,7 @@
                     android:layout_gravity="center_horizontal"
                     android:id="@+id/item_recorded_headache_pain_type"
                     android:textColor="@color/iconGray"
-                    android:textSize="24sp"
+                    android:textSize="21sp"
                     app:textStyle="bold"/>
 
                 <ImageView

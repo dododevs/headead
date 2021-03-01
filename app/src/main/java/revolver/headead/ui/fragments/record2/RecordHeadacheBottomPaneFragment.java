@@ -28,7 +28,7 @@ public class RecordHeadacheBottomPaneFragment extends Fragment {
         view.findViewById(R.id.fragment_record_headache_bottom_pane_more).setOnClickListener((v) ->
             requireRecordHeadacheActivity().startBottomTransitionToFragment(
                     new RecordHeadacheExtrasFragment(), RecordHeadacheActivity2.EXTRAS_TAG,
-                        M.dp(480.f).intValue(), true, false)
+                        M.dp(584.f).intValue(), true, false)
         );
         view.findViewById(R.id.fragment_record_headache_bottom_pane_next)
                 .setOnClickListener((v) -> requireRecordHeadacheActivity().onNextButtonPressed());

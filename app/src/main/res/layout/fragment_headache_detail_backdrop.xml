@@ -34,14 +34,14 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <revolver.headead.ui.views.typography.LektonTextView
+            <revolver.headead.ui.views.typography.ManropeTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:id="@+id/fragment_headache_detail_backdrop_start"
                 android:textColor="@color/blackOlive"
-                android:textSize="24sp"
-                app:textStyle="bold"/>
+                android:textSize="21sp"
+                app:textStyle="semiBold"/>
 
             <ImageView
                 android:layout_width="16dp"
@@ -53,14 +53,14 @@
                 android:contentDescription="@string/cd_timespan_end"
                 app:tint="@color/black"/>
 
-            <revolver.headead.ui.views.typography.LektonTextView
+            <revolver.headead.ui.views.typography.ManropeTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:id="@+id/fragment_headache_detail_backdrop_end"
                 android:textColor="@color/blackOlive"
-                android:textSize="24sp"
-                app:textStyle="bold"/>
+                android:textSize="21sp"
+                app:textStyle="semiBold"/>
 
         </LinearLayout>
 
