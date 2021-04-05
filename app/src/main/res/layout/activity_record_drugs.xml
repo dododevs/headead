@@ -30,6 +30,7 @@
         android:padding="8dp">
 
         <TextView
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -37,6 +38,14 @@
             android:text="@string/shrug"
             android:textColor="@color/tertiaryText"
             android:textSize="24sp"/>
+
+        <ImageView
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_medicines"
+            android:contentDescription="@string/cd_medicines"
+            app:tint="@color/tertiaryText"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -55,12 +64,31 @@
         android:layout_marginTop="56dp"
         android:id="@+id/list"/>
 
+    <LinearLayout
+        android:id="@+id/activity_record_drugs_bottom_pane"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_bottom_dialog_white_rounded"
+        android:orientation="vertical"
+        android:elevation="6dp"
+        android:animateLayoutChanges="true"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        app:behavior_draggable="false"
+        app:behavior_hideable="false">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bottom_frame"/>
+
+    </LinearLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="84dp"
         android:src="@drawable/ic_done"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         android:focusable="true"
@@ -70,6 +98,8 @@
         app:fabSize="normal"
         app:backgroundTint="@color/flame"
         app:elevation="6dp"
-        app:pressedTranslationZ="6dp"/>
+        app:pressedTranslationZ="6dp"
+        app:layout_anchor="@id/activity_record_drugs_bottom_pane"
+        app:layout_anchorGravity="end|top"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

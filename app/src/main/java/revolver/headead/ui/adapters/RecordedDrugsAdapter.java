@@ -111,11 +111,11 @@ public class RecordedDrugsAdapter extends RecyclerView.Adapter<RecordedDrugsAdap
                 case DrugIntakeActivity.FRACTION_14:
                     quantityLabel = context.getString(R.string.fraction14);
                     break;
-                case DrugIntakeActivity.FRACTION_23:
-                    quantityLabel = context.getString(R.string.fraction23);
+                case DrugIntakeActivity.ONE:
+                    quantityLabel = context.getString(R.string.one);
                     break;
-                case DrugIntakeActivity.FRACTION_34:
-                    quantityLabel = context.getString(R.string.fraction34);
+                case DrugIntakeActivity.TWO:
+                    quantityLabel = context.getString(R.string.two);
                     break;
                 default:
                     quantityLabel = "?";

@@ -8,8 +8,8 @@ android {
         applicationId "revolver.headead"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "0.1beta"
+        versionCode 2
+        versionName "0.2beta"
     }
 
     buildTypes {

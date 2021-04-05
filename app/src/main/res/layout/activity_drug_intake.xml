@@ -19,7 +19,23 @@
             android:id="@+id/toolbar"
             android:theme="@style/ThemeOverlay.AppCompat.Dark"
             app:title="@string/activity_drug_intake_title"
-            app:navigationIcon="@drawable/ic_arrow_back_light"/>
+            app:navigationIcon="@drawable/ic_arrow_back_light">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="8dp"
+                android:id="@+id/activity_drug_intake_favorite"
+                android:src="@drawable/ic_favorite_off"
+                android:contentDescription="@string/cd_save_drug"
+                android:padding="4dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:tint="@color/white"/>
+
+        </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -228,6 +244,22 @@
                         <com.google.android.material.chip.Chip
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@string/one"
+                            android:checkable="true"
+                            android:id="@+id/one"
+                            style="@style/DrugIntakeDefaultQuantityChip"/>
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/two"
+                            android:checkable="true"
+                            android:id="@+id/two"
+                            style="@style/DrugIntakeDefaultQuantityChip"/>
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="@string/fraction12"
                             android:checkable="true"
                             android:id="@+id/fraction12"
@@ -247,22 +279,6 @@
                             android:text="@string/fraction14"
                             android:checkable="true"
                             android:id="@+id/fraction14"
-                            style="@style/DrugIntakeDefaultQuantityChip"/>
-
-                        <com.google.android.material.chip.Chip
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/fraction23"
-                            android:checkable="true"
-                            android:id="@+id/fraction23"
-                            style="@style/DrugIntakeDefaultQuantityChip"/>
-
-                        <com.google.android.material.chip.Chip
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/fraction34"
-                            android:checkable="true"
-                            android:id="@+id/fraction34"
                             style="@style/DrugIntakeDefaultQuantityChip"/>
 
                         <com.google.android.material.chip.Chip

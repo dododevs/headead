@@ -2,6 +2,7 @@ package revolver.headead;
 
 import android.app.Application;
 import android.graphics.Typeface;
+import android.util.Log;
 
 import androidx.annotation.ColorInt;
 import androidx.core.content.ContextCompat;
@@ -13,6 +14,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import revolver.headead.core.model.Trigger;
+import revolver.headead.core.model.migrations.HeadacheMigration;
 import revolver.headead.util.ui.ColorUtils;
 import revolver.headead.util.ui.M;
 
@@ -28,8 +30,12 @@ public class App extends Application {
         M.setDisplayMetrics(getResources().getDisplayMetrics());
 
         Realm.init(this);
-        defaultRealm = Realm.getInstance(
-                new RealmConfiguration.Builder().name("userdata.7.realm").build());
+        defaultRealm = Realm.getInstance(new RealmConfiguration.Builder()
+                .name("userdata.4.realm")
+                .schemaVersion(1)
+                .migration(new HeadacheMigration())
+                .build());
+        Log.d("onCreate", "schema version: " + defaultRealm.getConfiguration().getSchemaVersion());
 
         colorPrimary = ColorUtils.get(this, R.color.colorPrimary);
         colorPrimaryDark = ColorUtils.get(this, R.color.colorPrimaryDark);

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:clickable="true"
+    android:background="?attr/selectableItemBackground"
+    android:padding="8dp">
+
+    <ImageView
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="20dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_favorite_on"
+        android:contentDescription="@string/cd_saved_drug"
+        app:tint="@color/secondaryText"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/item_known_drug_drug_name"
+            android:textColor="@color/primaryText"
+            android:textSize="16.8sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/item_known_drug_drug_packaging_name"
+            android:textColor="@color/secondaryText"
+            android:textSize="13.6sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/item_known_drug_active_principle"
+            android:textColor="@color/secondaryText"
+            android:textSize="13.2sp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginHorizontal="16dp"
+        android:id="@+id/item_known_drug_quantity_unit"
+        android:textColor="@color/blackOlive"
+        android:textSize="14.6sp"/>
+
+</LinearLayout>

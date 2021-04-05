@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_bottom_dialog_white_rounded">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/fragment_known_drugs_picker_expanded"
+        android:alpha="0">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_bottom_dialog_white_rounded">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <revolver.headead.ui.views.typography.MontserratTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:id="@+id/fragment_known_drugs_picker_expanded_search"
+                    android:text="@string/fragment_known_drugs_picker_expanded_search"
+                    android:textColor="@color/blackOlive"
+                    android:textSize="14.6sp"
+                    android:textAllCaps="true"
+                    app:textStyle="semiBold"/>
+
+                <revolver.headead.ui.views.typography.MontserratTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:id="@+id/fragment_known_drugs_picker_expanded_saved"
+                    android:text="@string/fragment_known_drugs_picker_expanded_saved"
+                    android:textColor="@color/blackOlive"
+                    android:textSize="14.6sp"
+                    android:textAllCaps="true"
+                    app:textStyle="regular"/>
+
+            </LinearLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/fragment_known_drugs_picker_expanded_list"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:id="@+id/fragment_known_drugs_picker_expanded_no_items"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:text="@string/shrug"
+                    android:textColor="@color/tertiaryText"
+                    android:textSize="24sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:text="@string/fragment_known_drugs_picker_empty"
+                    android:textColor="@color/tertiaryText"
+                    android:textSize="14.8sp"/>
+
+            </LinearLayout>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:id="@+id/fragment_known_drugs_picker_collapsed"
+        android:orientation="horizontal">
+
+        <revolver.headead.ui.views.typography.MontserratTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:padding="16dp"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackground"
+            android:id="@+id/fragment_known_drugs_picker_search"
+            android:text="@string/fragment_known_drugs_picker_search"
+            android:textColor="@color/blackOlive"
+            android:textSize="14.6sp"
+            android:textAllCaps="true"
+            app:textStyle="semiBold"/>
+
+        <revolver.headead.ui.views.typography.MontserratTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:padding="16dp"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackground"
+            android:id="@+id/fragment_known_drugs_picker_saved"
+            android:text="@string/fragment_known_drugs_picker_saved"
+            android:textColor="@color/blackOlive"
+            android:textSize="14.6sp"
+            android:textAllCaps="true"
+            app:textStyle="regular"/>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

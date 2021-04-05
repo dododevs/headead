@@ -8,6 +8,7 @@ import android.text.Spanned;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,11 +27,13 @@ import java.util.Locale;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import revolver.headead.App;
 import revolver.headead.R;
 import revolver.headead.aifa.Aifa;
 import revolver.headead.aifa.model.DrugPackaging;
 import revolver.headead.core.model.DrugDosageUnit;
 import revolver.headead.core.model.DrugIntake;
+import revolver.headead.core.model.SavedDrug;
 import revolver.headead.ui.adapters.DrugDosageUnitsAdapter2;
 import revolver.headead.ui.fragments.SimpleAlertDialogFragment;
 import revolver.headead.ui.fragments.record2.pickers.DrugIntakeDateTimePickerFragment;
@@ -43,12 +46,13 @@ public class DrugIntakeActivity extends AppCompatActivity {
     public static final int FRACTION_12 = -12;
     public static final int FRACTION_13 = -13;
     public static final int FRACTION_14 = -14;
-    public static final int FRACTION_23 = -23;
-    public static final int FRACTION_34 = -34;
+    public static final int ONE         =  -1;
+    public static final int TWO         =  -2;
 
     private static SimpleDateFormat dateFormatter =
             new SimpleDateFormat("dd MMM, HH:mm", Locale.getDefault());
 
+    private String packagingId;
     private DrugPackaging drugPackaging;
     private Integer intakeQuantity = Integer.MIN_VALUE;
 
@@ -58,6 +62,9 @@ public class DrugIntakeActivity extends AppCompatActivity {
     private DrugDosageUnit intakeUnit;
     private Date intakeDate;
     private String intakeComment;
+
+    private boolean isFavorite = false;
+    private ImageView favoriteView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,10 +82,10 @@ public class DrugIntakeActivity extends AppCompatActivity {
                 intakeQuantity = FRACTION_13;
             } else if (checkedId == R.id.fraction14) {
                 intakeQuantity = FRACTION_14;
-            } else if (checkedId == R.id.fraction23) {
-                intakeQuantity = FRACTION_23;
-            } else if (checkedId == R.id.fraction34) {
-                intakeQuantity = FRACTION_34;
+            } else if (checkedId == R.id.one) {
+                intakeQuantity = ONE;
+            } else if (checkedId == R.id.two) {
+                intakeQuantity = TWO;
             }
             onIntakeQuantityUpdated();
         });
@@ -96,11 +103,11 @@ public class DrugIntakeActivity extends AppCompatActivity {
                     case FRACTION_14:
                         defaultValuesView.check(R.id.fraction14);
                         break;
-                    case FRACTION_23:
-                        defaultValuesView.check(R.id.fraction23);
+                    case ONE:
+                        defaultValuesView.check(R.id.one);
                         break;
-                    case FRACTION_34:
-                        defaultValuesView.check(R.id.fraction34);
+                    case TWO:
+                        defaultValuesView.check(R.id.two);
                         break;
                 }
             }
@@ -125,10 +132,23 @@ public class DrugIntakeActivity extends AppCompatActivity {
 
         findViewById(R.id.fab).setOnClickListener((v) -> onSubmitButtonPressed());
 
+        favoriteView = findViewById(R.id.activity_drug_intake_favorite);
+        favoriteView.setOnClickListener((v) -> onFavoriteButtonPressed());
+
         Aifa.getDrugLookupService().findPackagingFormatById(
                 Aifa.buildDrugPackagingByIdQueryString(
-                        getIntent().getStringExtra("id")))
+                        packagingId = getIntent().getStringExtra("id")))
                 .enqueue(new DrugPackagingLookupByIdCallback());
+
+        if (!App.getDefaultRealm().where(SavedDrug.class)
+                .and().equalTo("drugPackagingId", packagingId)
+                .findAll().isEmpty()) {
+            isFavorite = true;
+            favoriteView.setImageResource(R.drawable.ic_favorite_on);
+        } else {
+            isFavorite = false;
+            favoriteView.setImageResource(R.drawable.ic_favorite_off);
+        }
     }
 
     public void setIntakeDate(final Date date) {
@@ -181,11 +201,11 @@ public class DrugIntakeActivity extends AppCompatActivity {
                 case FRACTION_14:
                     label = getString(R.string.fraction14);
                     break;
-                case FRACTION_23:
-                    label = getString(R.string.fraction23);
+                case ONE:
+                    label = getString(R.string.one);
                     break;
-                case FRACTION_34:
-                    label = getString(R.string.fraction34);
+                case TWO:
+                    label = getString(R.string.two);
                     break;
                 default:
                     label = getString(R.string.activity_drug_intake_quantity_default);
@@ -200,6 +220,27 @@ public class DrugIntakeActivity extends AppCompatActivity {
             label = String.valueOf(intakeQuantity);
         }
         ((TextView) findViewById(R.id.activity_drug_intake_quantity_label)).setText(label);
+    }
+
+    private void onFavoriteButtonPressed() {
+        if (isFavorite) {
+            App.getDefaultRealm().executeTransaction(realm ->
+                    realm.where(SavedDrug.class)
+                        .and().equalTo("drugPackagingId", packagingId)
+                            .findAll().deleteAllFromRealm());
+            favoriteView.setImageResource(R.drawable.ic_favorite_off);
+        } else {
+            App.getDefaultRealm().executeTransaction(realm -> {
+                final SavedDrug savedDrug = new SavedDrug();
+                savedDrug.setDrugPackagingId(packagingId);
+                savedDrug.setDrugIntake(new DrugIntake(drugPackaging,
+                        intakeQuantity, intakeUnit != null ?
+                            intakeUnit.name() : null, intakeDate, intakeComment));
+                realm.insert(savedDrug);
+            });
+            favoriteView.setImageResource(R.drawable.ic_favorite_on);
+        }
+        isFavorite = !isFavorite;
     }
 
     private void onSubmitButtonPressed() {
@@ -224,9 +265,16 @@ public class DrugIntakeActivity extends AppCompatActivity {
     }
 
     private void returnDataToActivity() {
-        setResult(RESULT_OK, new Intent().putExtra("drugIntake",
-                new DrugIntake(drugPackaging, intakeQuantity,
-                        intakeUnit.name(), intakeDate, intakeComment)));
+        final DrugIntake drugIntake = new DrugIntake(
+                drugPackaging, intakeQuantity,
+                    intakeUnit.name(), intakeDate, intakeComment);
+        App.getDefaultRealm().executeTransaction(realm -> {
+            final SavedDrug savedDrug = new SavedDrug();
+            savedDrug.setDrugPackagingId(packagingId);
+            savedDrug.setDrugIntake(drugIntake);
+            realm.insertOrUpdate(savedDrug);
+        });
+        setResult(RESULT_OK, new Intent().putExtra("drugIntake", drugIntake));
         finish();
     }
 
@@ -295,6 +343,10 @@ public class DrugIntakeActivity extends AppCompatActivity {
         drugMakerView.setText(normalizeText(drugPackaging.getDrugMaker()));
         drugPackagingNameView.setText(normalizeText(drugPackaging.getPackagingDescription()));
         drugPackagingActivePrincipleView.setText(normalizeText(drugPackaging.getActivePrinciple()));
+
+        intakeUnit = DrugDosageUnit.guessProperUnit(
+                this, drugPackaging.getPackagingDescription());
+        onIntakeUnitUpdated();
     }
 
     private static Spanned normalizeText(final String info) {

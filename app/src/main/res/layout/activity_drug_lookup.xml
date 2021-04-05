@@ -85,6 +85,7 @@
         android:padding="8dp">
 
         <TextView
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -92,6 +93,14 @@
             android:text="@string/shrug"
             android:textColor="@color/tertiaryText"
             android:textSize="24sp"/>
+
+        <ImageView
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_medicine_search"
+            android:contentDescription="@string/cd_medicine_search"
+            app:tint="@color/tertiaryText"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -113,6 +122,7 @@
         android:padding="8dp">
 
         <TextView
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -120,6 +130,14 @@
             android:text="@string/shrug"
             android:textColor="@color/tertiaryText"
             android:textSize="24sp"/>
+
+        <ImageView
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_medicine_search"
+            android:contentDescription="@string/cd_medicine_search"
+            app:tint="@color/tertiaryText"/>
 
         <TextView
             android:layout_width="wrap_content"
