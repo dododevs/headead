@@ -143,10 +143,10 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
 
         findViewById(R.id.activity_record_headache_2_datetime_start).setOnClickListener((v) ->
                 startBottomTransitionToFragment(DateTimePickerFragment.asStart(),
-                        DATETIME_PICKER_TAG, M.dp(132.f).intValue(), true));
+                        DATETIME_PICKER_TAG, M.dp(132.f).intValue(), true, false, false));
         findViewById(R.id.activity_record_headache_2_datetime_end).setOnClickListener((v) ->
                 startBottomTransitionToFragment(DateTimePickerFragment.asEnd(),
-                        DATETIME_PICKER_TAG, M.dp(132.f).intValue(), true));
+                        DATETIME_PICKER_TAG, M.dp(132.f).intValue(), true, false, false));
         findViewById(R.id.activity_record_headache_2_medication).setOnClickListener((v) ->
                 startActivityForResult(new Intent(this, RecordDrugsActivity.class)
                         .putParcelableArrayListExtra("drugs", drugDosages), REQUEST_DRUGS));
@@ -709,7 +709,8 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
                                                 final String tag,
                                                 final int newPeekHeight,
                                                 final boolean dimBackground,
-                                                final boolean draggable) {
+                                                final boolean draggable,
+                                                final boolean ensureCollapsed) {
         bottomSheetFrame.animate()
                 .setDuration(200L)
                 .setInterpolator(new LinearInterpolator())
@@ -726,13 +727,23 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
                             bottomSheetBehavior.setExpandedOffset(0);
                             bottomSheetBehavior.setDraggable(draggable);
                             bottomSheetBehavior.setPeekHeight(newPeekHeight, true);
-                            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                            if (ensureCollapsed) {
+                                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                            }
                             if (dimBackground) {
                                 enableBackgroundDimmer();
                             } else {
                                 disableBackgroundDimmer();
                             }
                         }).start()).commit();
+    }
+
+    public void startBottomTransitionToFragment(final Fragment fragment,
+                                                final String tag,
+                                                final int newPeekHeight,
+                                                final boolean dimBackground,
+                                                final boolean draggable) {
+        startBottomTransitionToFragment(fragment, tag, newPeekHeight, dimBackground, draggable, true);
     }
 
     public void startBottomTransitionToFragment(final Fragment fragment, final String tag, final int newPeekHeight, final boolean dimBackground) {

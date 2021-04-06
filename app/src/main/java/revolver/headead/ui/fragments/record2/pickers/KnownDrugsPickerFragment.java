@@ -1,6 +1,7 @@
 package revolver.headead.ui.fragments.record2.pickers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import java.util.List;
 import revolver.headead.App;
 import revolver.headead.R;
 import revolver.headead.core.model.SavedDrug;
+import revolver.headead.ui.activities.DrugIntakeActivity;
 import revolver.headead.ui.activities.record.RecordDrugsActivity;
 import revolver.headead.ui.adapters.KnownDrugsAdapter;
 import revolver.headead.util.ui.M;
@@ -36,6 +38,7 @@ public class KnownDrugsPickerFragment extends Fragment {
     private TextView expandedSearchModeView, expandedSavedModeView;
 
     private BottomSheetBehavior<LinearLayout> bottomSheetBehavior;
+    private boolean openingDrugIntakeActivity = false;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -98,7 +101,17 @@ public class KnownDrugsPickerFragment extends Fragment {
                 view.findViewById(R.id.fragment_known_drugs_picker_expanded_list);
         savedListView.setLayoutManager(new LinearLayoutManager(
                 requireContext(), RecyclerView.VERTICAL, false));
-        savedListView.setAdapter(new KnownDrugsAdapter(requireActivity(), savedDrugs));
+
+        final KnownDrugsAdapter adapter = new KnownDrugsAdapter(requireActivity(), savedDrugs);
+        adapter.setOnKnownDrugSelectedListener(savedDrug -> {
+            requireActivity().startActivityForResult(
+                    new Intent(requireActivity(), DrugIntakeActivity.class)
+                            .putExtra("id", savedDrug.getDrugIntake()
+                                    .getDrugPackaging().getDrugPackagingId()),
+                                        RecordDrugsActivity.REQUEST_PICK_DRUG_FROM_SAVED);
+            openingDrugIntakeActivity = true;
+        });
+        savedListView.setAdapter(adapter);
 
         if (savedDrugs.isEmpty()) {
             savedListView.setVisibility(View.GONE);
@@ -113,9 +126,10 @@ public class KnownDrugsPickerFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putBoolean("showingSaved",
+        outState.putBoolean("showingSaved", !openingDrugIntakeActivity && (
                 bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED ||
-                        bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_SETTLING);
+                        bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_SETTLING));
+        openingDrugIntakeActivity = false;
     }
 
     @Override

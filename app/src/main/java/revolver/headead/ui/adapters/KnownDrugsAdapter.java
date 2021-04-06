@@ -53,6 +53,7 @@ public class KnownDrugsAdapter extends RecyclerView.Adapter<KnownDrugsAdapter.Vi
 
     private final List<SavedDrug> savedDrugs;
     private final Activity activity;
+    private OnKnownDrugSelectedListener listener;
 
     public KnownDrugsAdapter(final Activity activity, final List<SavedDrug> savedDrugs) {
         this.activity = activity;
@@ -86,14 +87,23 @@ public class KnownDrugsAdapter extends RecyclerView.Adapter<KnownDrugsAdapter.Vi
                     RecordedDrugsAdapter.buildQuantityString(activity, (int) quantity)));
         }
 
-        holder.itemView.setOnClickListener(v -> activity
-                .startActivityForResult(new Intent(activity, DrugIntakeActivity.class)
-                    .putExtra("id", drugPackaging.getDrugPackagingId()),
-                        RecordDrugsActivity.REQUEST_PICK_DRUG_FROM_SAVED));
+        holder.itemView.setOnClickListener(v -> {
+            if (this.listener != null) {
+                this.listener.onDrugSelected(savedDrugs.get(holder.getAdapterPosition()));
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return this.savedDrugs != null ? this.savedDrugs.size() : 0;
+    }
+
+    public void setOnKnownDrugSelectedListener(final OnKnownDrugSelectedListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnKnownDrugSelectedListener {
+        void onDrugSelected(final SavedDrug savedDrug);
     }
 }
