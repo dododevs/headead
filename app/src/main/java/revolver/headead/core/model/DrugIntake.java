@@ -27,15 +27,19 @@ public class DrugIntake extends RealmObject implements Parcelable {
     @SerializedName("comment")
     private String comment;
 
+    @SerializedName("tag")
+    private DrugTag tag;
+
     public DrugIntake() {
     }
 
-    public DrugIntake(final DrugPackaging drugPackaging, int quantity, String unit, Date intakeDate, String comment) {
+    public DrugIntake(final DrugPackaging drugPackaging, int quantity, String unit, Date intakeDate, String comment, DrugTag tag) {
         this.drugPackaging = drugPackaging;
         this.quantity = quantity;
         this.unit = unit;
         this.intakeDate = intakeDate;
         this.comment = comment;
+        this.tag = tag;
     }
 
     private DrugIntake(Parcel src) {
@@ -44,6 +48,7 @@ public class DrugIntake extends RealmObject implements Parcelable {
         this.unit = src.readString();
         this.intakeDate = (Date) src.readSerializable();
         this.comment = src.readString();
+        this.tag = src.readParcelable(DrugTag.class.getClassLoader());
     }
 
     @Override
@@ -53,6 +58,7 @@ public class DrugIntake extends RealmObject implements Parcelable {
         dest.writeString(unit);
         dest.writeSerializable(intakeDate);
         dest.writeString(comment);
+        dest.writeParcelable(tag, 0);
     }
 
     public void setDrugPackaging(DrugPackaging drugPackaging) {
@@ -75,6 +81,10 @@ public class DrugIntake extends RealmObject implements Parcelable {
         this.comment = comment;
     }
 
+    public void setTag(DrugTag tag) {
+        this.tag = tag;
+    }
+
     public DrugPackaging getDrugPackaging() {
         return drugPackaging;
     }
@@ -93,6 +103,10 @@ public class DrugIntake extends RealmObject implements Parcelable {
 
     public String getComment() {
         return comment;
+    }
+
+    public DrugTag getTag() {
+        return tag;
     }
 
     @Override

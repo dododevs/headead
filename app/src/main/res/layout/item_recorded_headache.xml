@@ -54,31 +54,19 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="21dp"
-                    android:layout_height="21dp"
-                    android:layout_margin="4dp"
-                    android:id="@+id/item_recorded_headache_aura"
-                    android:src="@drawable/ic_aura"
-                    android:contentDescription="@string/cd_aura"
-                    app:tint="@color/blackOlive"/>
-
-                <ImageView
-                    android:layout_width="21dp"
-                    android:layout_height="21dp"
-                    android:layout_margin="4dp"
-                    android:id="@+id/item_recorded_headache_drugs"
-                    android:src="@drawable/ic_medication"
-                    android:contentDescription="@string/cd_drug"
-                    app:tint="@color/blackOlive"/>
-
-            </LinearLayout>
+                android:layout_margin="4dp"
+                android:id="@+id/item_recorded_headache_drugs_tag"
+                android:elevation="2dp"
+                android:background="@drawable/bg_drug_tag"
+                android:paddingVertical="4dp"
+                android:paddingHorizontal="6dp"
+                android:textColor="@color/blackOlive"
+                android:textSize="13.6sp"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 

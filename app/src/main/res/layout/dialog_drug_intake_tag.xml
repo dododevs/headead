@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialog_drug_intake_tag_colors"
+        android:overScrollMode="never"
+        android:scrollbars="none"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:theme="@style/ThemeOverlay.MaterialComponents.Light">
+
+        <revolver.headead.ui.views.typography.LengthAwareEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/dialog_drug_intake_tag_tag"
+            android:hint="@string/dialog_drug_intake_tag_tag_hint"
+            android:inputType="text"
+            android:autofillHints="@null"
+            android:maxLength="8"
+            android:textColor="@color/black"
+            android:textSize="16.8sp"
+            app:maxLength="8"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/dialog_drug_intake_tag_description"
+        android:textColor="@color/tertiaryText"
+        android:textSize="12.8sp"/>
+
+</LinearLayout>

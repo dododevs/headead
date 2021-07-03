@@ -153,7 +153,8 @@ public class DrugPackagingOverviewFragment extends BottomSheetDialogFragment {
         rootView.findViewById(R.id.fragment_drug_packaging_overview_confirm).setOnClickListener((v) -> {
             if (quantity != Float.MIN_VALUE) {
                 ((DrugLookupActivity) requireActivity()).onDrugPackagingAndDosageConfirmed(
-                        new DrugIntake(drugPackaging, (int) quantity, selectedUnit.name(), null, null)
+                        new DrugIntake(drugPackaging, (int) quantity,
+                                selectedUnit.name(), null, null, null)
                 );
             }
         });

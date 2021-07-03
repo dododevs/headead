@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<revolver.headead.ui.views.AnimatedSlider
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="24dp"
+    android:stepSize="0"
+    android:valueFrom="0"
+    android:valueTo="100"
+    android:id="@+id/slider"
+    app:labelBehavior="gone"
+    app:thumbColor="#323F3F37"
+    app:tickColor="@color/blackOlive"
+    app:trackColor="#16dedede"
+    app:haloColor="@android:color/transparent"/>

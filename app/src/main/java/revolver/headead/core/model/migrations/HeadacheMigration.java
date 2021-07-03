@@ -10,6 +10,7 @@ import io.realm.RealmMigration;
 import io.realm.RealmObjectSchema;
 import io.realm.RealmSchema;
 import revolver.headead.core.model.DrugIntake;
+import revolver.headead.core.model.DrugTag;
 import revolver.headead.core.model.Headache;
 import revolver.headead.core.model.PainIntensity;
 import revolver.headead.core.model.PainLocation;
@@ -92,6 +93,24 @@ public class HeadacheMigration implements RealmMigration {
             savedDrugSchema.addField("drugPackagingId", String.class, FieldAttribute.PRIMARY_KEY);
             savedDrugSchema.addRealmObjectField("drugIntake",
                     requireNonNull(schema.get(DrugIntake.class.getSimpleName())));
+            oldVersion++;
+        }
+
+        /*
+         * Apply the following updates:
+         * - DrugTag: added
+         * - DrugIntake:
+         *  - field tag: added
+         * */
+        if (oldVersion == 1) {
+            final RealmObjectSchema drugTagSchema =
+                    schema.create(DrugTag.class.getSimpleName());
+            drugTagSchema.addField("tag", String.class);
+            drugTagSchema.addField("color", int.class);
+
+            final RealmObjectSchema drugIntakeSchema =
+                    schema.get(DrugIntake.class.getSimpleName());
+            drugIntakeSchema.addRealmObjectField("tag", drugTagSchema);
         }
     }
 

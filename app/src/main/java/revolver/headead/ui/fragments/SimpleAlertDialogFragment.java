@@ -20,6 +20,8 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 import revolver.headead.R;
 import revolver.headead.ui.adapters.DrugDosageUnitsAdapter2;
 import revolver.headead.util.ui.TextUtils;
@@ -121,6 +123,8 @@ public class SimpleAlertDialogFragment extends DialogFragment {
             listView.setVisibility(View.VISIBLE);
         }
 
+        final TextInputLayout editTextContainer =
+                view.findViewById(R.id.dialog_alert_simple_entry_container);
         editText = view.findViewById(R.id.dialog_alert_simple_entry);
         editText.setHint(inputHint);
         editText.setInputType(inputType);
@@ -133,7 +137,7 @@ public class SimpleAlertDialogFragment extends DialogFragment {
             }
         });
         if (inputHint != null) {
-            editText.setVisibility(View.VISIBLE);
+            editTextContainer.setVisibility(View.VISIBLE);
             positiveButtonView.setEnabled(false);
         }
 
@@ -187,6 +191,34 @@ public class SimpleAlertDialogFragment extends DialogFragment {
 
     public CharSequence getEntryText() {
         return editText != null ? editText.getText() : null;
+    }
+
+    public View getPositiveButton() {
+        return requireView().findViewById(R.id.dialog_alert_simple_positive);
+    }
+
+    public View getNegativeButton() {
+        return requireView().findViewById(R.id.dialog_alert_simple_negative);
+    }
+
+    public View getNeutralButton() {
+        return requireView().findViewById(R.id.dialog_alert_simple_neutral);
+    }
+
+    public EditText getEntryView() {
+        return requireView().findViewById(R.id.dialog_alert_simple_entry);
+    }
+
+    public TextInputLayout getEntryViewContainer() {
+        return requireView().findViewById(R.id.dialog_alert_simple_entry_container);
+    }
+
+    public RecyclerView getListView() {
+        return requireView().findViewById(R.id.dialog_alert_simple_list);
+    }
+
+    public View getCustomView() {
+        return customView;
     }
 
     public static class Builder {

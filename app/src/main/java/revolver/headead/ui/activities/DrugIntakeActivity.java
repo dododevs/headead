@@ -2,12 +2,14 @@ package revolver.headead.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.chip.ChipGroup;
 
@@ -33,12 +37,18 @@ import revolver.headead.aifa.Aifa;
 import revolver.headead.aifa.model.DrugPackaging;
 import revolver.headead.core.model.DrugDosageUnit;
 import revolver.headead.core.model.DrugIntake;
+import revolver.headead.core.model.DrugTag;
 import revolver.headead.core.model.SavedDrug;
 import revolver.headead.ui.adapters.DrugDosageUnitsAdapter2;
+import revolver.headead.ui.adapters.DrugTagColorPickerAdapter;
 import revolver.headead.ui.fragments.SimpleAlertDialogFragment;
+import revolver.headead.ui.fragments.record2.DrugTagCreationFragment;
 import revolver.headead.ui.fragments.record2.pickers.DrugIntakeDateTimePickerFragment;
 import revolver.headead.util.ui.ColorUtils;
+import revolver.headead.util.ui.IconUtils;
+import revolver.headead.util.ui.M;
 import revolver.headead.util.ui.Snacks;
+import revolver.headead.util.ui.TextUtils;
 import revolver.headead.util.ui.ViewUtils;
 
 public class DrugIntakeActivity extends AppCompatActivity {
@@ -62,6 +72,7 @@ public class DrugIntakeActivity extends AppCompatActivity {
     private DrugDosageUnit intakeUnit;
     private Date intakeDate;
     private String intakeComment;
+    private DrugTag drugTag;
 
     private boolean isFavorite = false;
     private ImageView favoriteView;
@@ -129,6 +140,8 @@ public class DrugIntakeActivity extends AppCompatActivity {
                         .show(getSupportFragmentManager(), "drugIntakeDate"));
         findViewById(R.id.activity_drug_intake_comment).setOnClickListener((v) ->
                 buildCommentEntryDialog().show(getSupportFragmentManager(), "drugIntakeComment"));
+        findViewById(R.id.activity_drug_intake_tag).setOnClickListener((v) ->
+                buildTagCreationDialog().show(getSupportFragmentManager(), "drugTag"));
 
         findViewById(R.id.fab).setOnClickListener((v) -> onSubmitButtonPressed());
 
@@ -188,6 +201,22 @@ public class DrugIntakeActivity extends AppCompatActivity {
         }
     }
 
+    private void onDrugTagUpdated() {
+        if (drugTag != null) {
+            ((TextView) findViewById(R.id.activity_drug_intake_tag_label))
+                    .setText(drugTag.getTag());
+            ((TextView) findViewById(R.id.activity_drug_intake_tag_label))
+                    .setCompoundDrawablesWithIntrinsicBounds(null, null,
+                            IconUtils.scaledDrawableWithColor(this, R.drawable.ic_color_circle,
+                                    M.dp(8.f).intValue(), drugTag.getColor()), null);
+            ((TextView) findViewById(R.id.activity_drug_intake_tag_label))
+                    .setCompoundDrawablePadding(M.dp(8.f).intValue());
+        } else {
+            ((TextView) findViewById(R.id.activity_drug_intake_tag_label))
+                    .setText(R.string.activity_drug_intake_tag_default);
+        }
+    }
+
     private void onIntakeQuantityUpdated() {
         final String label;
         if (intakeQuantity < 0) {
@@ -235,7 +264,7 @@ public class DrugIntakeActivity extends AppCompatActivity {
                 savedDrug.setDrugPackagingId(packagingId);
                 savedDrug.setDrugIntake(new DrugIntake(drugPackaging,
                         intakeQuantity, intakeUnit != null ?
-                            intakeUnit.name() : null, intakeDate, intakeComment));
+                            intakeUnit.name() : null, intakeDate, intakeComment, drugTag));
                 realm.insert(savedDrug);
             });
             favoriteView.setImageResource(R.drawable.ic_favorite_on);
@@ -267,12 +296,14 @@ public class DrugIntakeActivity extends AppCompatActivity {
     private void returnDataToActivity() {
         final DrugIntake drugIntake = new DrugIntake(
                 drugPackaging, intakeQuantity,
-                    intakeUnit.name(), intakeDate, intakeComment);
+                    intakeUnit.name(), intakeDate, intakeComment, drugTag);
         App.getDefaultRealm().executeTransaction(realm -> {
-            final SavedDrug savedDrug = new SavedDrug();
-            savedDrug.setDrugPackagingId(packagingId);
-            savedDrug.setDrugIntake(drugIntake);
-            realm.insertOrUpdate(savedDrug);
+            if (isFavorite) {
+                final SavedDrug savedDrug = new SavedDrug();
+                savedDrug.setDrugPackagingId(packagingId);
+                savedDrug.setDrugIntake(drugIntake);
+                realm.insertOrUpdate(savedDrug);
+            }
         });
         setResult(RESULT_OK, new Intent().putExtra("drugIntake", drugIntake));
         finish();
@@ -294,6 +325,19 @@ public class DrugIntakeActivity extends AppCompatActivity {
                     intakeComment = null;
                     onIntakeCommentUpdated();
                 }, true).build();
+    }
+
+    private SimpleAlertDialogFragment buildTagCreationDialog() {
+        final DrugTagCreationFragment fragment = new DrugTagCreationFragment();
+        fragment.positiveButton(getString(R.string.dialog_drug_intake_tag_positive), fragment1 -> {
+            drugTag = new DrugTag(fragment.getCurrentTag(), fragment.getCurrentColor());
+            onDrugTagUpdated();
+        }, true);
+        fragment.neutralButton(getString(R.string.dialog_drug_intake_tag_neutral), fragment1 -> {
+            drugTag = null;
+            onDrugTagUpdated();
+        }, true);
+        return fragment;
     }
 
     private SimpleAlertDialogFragment buildQuantityDialog() {

@@ -1,9 +1,11 @@
 package revolver.headead.ui.adapters;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,9 +24,14 @@ import revolver.headead.core.display.Header;
 import revolver.headead.core.display.ListItem;
 import revolver.headead.core.display.criteria.OrderingCriterion;
 import revolver.headead.core.display.filters.FilteringCriterion;
+import revolver.headead.core.model.DrugIntake;
+import revolver.headead.core.model.DrugTag;
 import revolver.headead.core.model.Headache;
 import revolver.headead.core.model.PainLocation;
 import revolver.headead.core.model.PainType;
+import revolver.headead.util.ui.ColorUtils;
+import revolver.headead.util.ui.IconUtils;
+import revolver.headead.util.ui.M;
 import revolver.headead.util.ui.ViewUtils;
 
 public class RecordedHeadachesAdapter extends RecyclerView.Adapter<RecordedHeadachesAdapter.ViewHolder> {
@@ -36,8 +43,7 @@ public class RecordedHeadachesAdapter extends RecyclerView.Adapter<RecordedHeada
         final TextView painLocationView;
         final TextView painIntensityView;
         final TextView painTypeView;
-        final ImageView auraView;
-        final ImageView drugsView;
+        final TextView drugsTagView;
         public final LinearLayout painDataView;
         final View dividerView;
 
@@ -60,8 +66,7 @@ public class RecordedHeadachesAdapter extends RecyclerView.Adapter<RecordedHeada
             painLocationView = v.findViewById(R.id.item_recorded_headache_pain_location);
             painIntensityView = v.findViewById(R.id.item_recorded_headache_pain_intensity);
             painTypeView = v.findViewById(R.id.item_recorded_headache_pain_type);
-            auraView = v.findViewById(R.id.item_recorded_headache_aura);
-            drugsView = v.findViewById(R.id.item_recorded_headache_drugs);
+            drugsTagView = v.findViewById(R.id.item_recorded_headache_drugs_tag);
             painDataView = v.findViewById(R.id.item_recorded_headache_pain_data);
             dividerView = v.findViewById(R.id.item_recorded_headache_divider);
 
@@ -112,15 +117,11 @@ public class RecordedHeadachesAdapter extends RecyclerView.Adapter<RecordedHeada
             } else {
                 holder.durationView.setText(R.string.item_recorded_headache_duration_undefined);
             }
-            if (headache.isAuraPresent()) {
-                holder.auraView.setVisibility(View.VISIBLE);
-            } else {
-                holder.auraView.setVisibility(View.GONE);
-            }
             if (headache.getDrugIntakes() != null && !headache.getDrugIntakes().isEmpty()) {
-                holder.drugsView.setVisibility(View.VISIBLE);
+                setupDrugTag(holder.drugsTagView, headache.getDrugIntakes());
+                holder.drugsTagView.setVisibility(View.VISIBLE);
             } else {
-                holder.drugsView.setVisibility(View.GONE);
+                holder.drugsTagView.setVisibility(View.GONE);
             }
             holder.painLocationView.setText(
                     PainLocation.joinMultiple(context, headache.getPainLocations()));
@@ -178,6 +179,30 @@ public class RecordedHeadachesAdapter extends RecyclerView.Adapter<RecordedHeada
             return context.getString(R.string.item_recorded_headache_duration_no_minutes, hours);
         }
         return context.getString(R.string.item_recorded_headache_duration_hours_and_minutes, hours, minutes);
+    }
+
+    private void setupDrugTag(final TextView drugTagView, final List<DrugIntake> drugIntakes) {
+        DrugTag drugTag = null;
+        for (final DrugIntake drugIntake : drugIntakes) {
+            if (drugIntake.getTag() != null) {
+                drugTag = drugIntake.getTag();
+                break;
+            }
+        }
+        if (drugTag != null) {
+            drugTagView.setText(drugTag.getTag());
+            drugTagView.setTextColor(drugTag.getColor());
+            drugTagView.setCompoundDrawables(null, null,
+                    IconUtils.scaledDrawableWithColor(context, R.drawable.ic_medication,
+                            M.dp(16.f).intValue(), drugTag.getColor()), null);
+        } else {
+            drugTagView.setText(String.valueOf(drugIntakes.size()));
+            drugTagView.setCompoundDrawables(null, null,
+                    IconUtils.scaledDrawableWithResolvedColor(
+                            context, R.drawable.ic_medication,
+                                M.dp(16.f).intValue(), R.color.blackOlive), null);
+        }
+        drugTagView.setCompoundDrawablePadding(M.dp(4.f).intValue());
     }
 
     private void applyFilteringCriterion() {

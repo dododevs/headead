@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -33,7 +34,10 @@ import revolver.headead.ui.views.PartOfDayPickerView;
 import revolver.headead.util.ui.ColorUtils;
 import revolver.headead.util.ui.Snacks;
 
-public class DateTimePickerFragment extends Fragment {
+import static revolver.headead.ui.fragments.record2.pickers.DateTimePickerFragment.DateTimeMode;
+import static revolver.headead.ui.fragments.record2.pickers.DateTimePickerFragment.TimeInputMode;
+
+public class DateTimePickerFragment2 extends Fragment {
 
     private static final @StringRes int[] futureDateErrors = {
             R.string.fragment_datetime_picker_future_date_1,
@@ -43,38 +47,7 @@ public class DateTimePickerFragment extends Fragment {
             R.string.fragment_datetime_picker_future_date_5
     };
 
-    public enum DateTimeMode {
-        DEFAULT, CUSTOM, ONGOING;
-
-        public static DateTimeMode fromString(final String name) {
-            if (name == null) {
-                return null;
-            }
-            for (final DateTimeMode dateTimeMode : values()) {
-                if (name.equals(dateTimeMode.name())) {
-                    return dateTimeMode;
-                }
-            }
-            return null;
-        }
-    }
     private DateTimeMode dateTimeMode = DateTimeMode.DEFAULT;
-
-    public enum TimeInputMode {
-        CLOCK, PART_OF_DAY;
-
-        public static TimeInputMode fromString(final String name) {
-            if (name == null) {
-                return null;
-            }
-            for (final TimeInputMode timeInputMode : values()) {
-                if (name.equals(timeInputMode.name())) {
-                    return timeInputMode;
-                }
-            }
-            return null;
-        }
-    }
     private TimeInputMode timeInputMode = TimeInputMode.CLOCK;
 
     private View collapsedLayoutView;
@@ -89,21 +62,21 @@ public class DateTimePickerFragment extends Fragment {
         super.onAttach(context);
         requireRecordHeadacheActivity().getBottomSheetBehavior().addBottomSheetCallback(
                 bottomSheetCallback = new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                    expandedLayoutView.setVisibility(View.GONE);
-                } else if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    collapsedLayoutView.setVisibility(View.GONE);
-                }
-            }
+                    @Override
+                    public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                        if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                            expandedLayoutView.setVisibility(View.GONE);
+                        } else if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                            collapsedLayoutView.setVisibility(View.GONE);
+                        }
+                    }
 
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                collapsedLayoutView.setAlpha(1.f - slideOffset);
-                expandedLayoutView.setAlpha(slideOffset);
-            }
-        });
+                    @Override
+                    public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                        collapsedLayoutView.setAlpha(1.f - slideOffset);
+                        expandedLayoutView.setAlpha(slideOffset);
+                    }
+                });
     }
 
     @Override
@@ -126,12 +99,12 @@ public class DateTimePickerFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_datetime_picker, container, false);
+        return inflater.inflate(R.layout.fragment_datetime_picker_2, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        final View.OnClickListener defaultModeClickListener, customModeClickListener, ongoingModeClickListener;
+        /*final View.OnClickListener defaultModeClickListener, customModeClickListener, ongoingModeClickListener;
 
         defaultModeClickListener = v -> setDateTimeMode(DateTimeMode.DEFAULT);
         customModeClickListener = v -> setDateTimeMode(DateTimeMode.CUSTOM);
@@ -157,8 +130,40 @@ public class DateTimePickerFragment extends Fragment {
                     .setVisibility(View.GONE);
         }
 
+        */
         collapsedLayoutView = view.findViewById(R.id.fragment_datetime_picker_collapsed);
         expandedLayoutView = view.findViewById(R.id.fragment_datetime_picker_expanded);
+
+        final Toolbar toolbar = view.findViewById(R.id.toolbar);
+        final View justStartedPresetView =
+                view.findViewById(R.id.fragment_datetime_picker_2_preset_just_started);
+        final View justEndedPresetView =
+                view.findViewById(R.id.fragment_datetime_picker_2_preset_just_ended);
+        final View pastEpisodePresetView =
+                view.findViewById(R.id.fragment_datetime_picker_2_preset_past_episode);
+
+        justStartedPresetView.setOnClickListener(v -> {
+
+        });
+        justEndedPresetView.setOnClickListener(v -> {
+            toolbar.setTitle(R.string.fragment_datetime_picker_2_preset_just_ended_title);
+            expandedLayoutView.setVisibility(View.VISIBLE);
+            requireRecordHeadacheActivity().getBottomSheetBehavior()
+                    .setState(BottomSheetBehavior.STATE_EXPANDED);
+        });
+        pastEpisodePresetView.setOnClickListener(v -> {
+            toolbar.setTitle(R.string.fragment_datetime_picker_2_preset_past_episode_title);
+            expandedLayoutView.setVisibility(View.VISIBLE);
+            requireRecordHeadacheActivity().getBottomSheetBehavior()
+                    .setState(BottomSheetBehavior.STATE_EXPANDED);
+        });
+
+        toolbar.setNavigationOnClickListener(v -> {
+            collapsedLayoutView.setVisibility(View.VISIBLE);
+            requireRecordHeadacheActivity().getBottomSheetBehavior()
+                    .setState(BottomSheetBehavior.STATE_COLLAPSED);
+        });
+        /*
 
         final MaterialCalendarView materialCalendarView =
                 view.findViewById(R.id.fragment_datetime_picker_date);
@@ -254,7 +259,7 @@ public class DateTimePickerFragment extends Fragment {
             setDateTimeMode(DateTimeMode.CUSTOM);
         } else if (getCurrentDateTimeModeFromActivity() == DateTimeMode.ONGOING) {
             setDateTimeMode(DateTimeMode.ONGOING);
-        }
+        }*/
     }
 
     private void returnDateToActivity(final Date newDate) {
@@ -374,16 +379,16 @@ public class DateTimePickerFragment extends Fragment {
         return (RecordHeadacheActivity2) Objects.requireNonNull(getActivity());
     }
 
-    public static DateTimePickerFragment asStart() {
-        final DateTimePickerFragment fragment = new DateTimePickerFragment();
+    public static DateTimePickerFragment2 asStart() {
+        final DateTimePickerFragment2 fragment = new DateTimePickerFragment2();
         final Bundle args = new Bundle();
         args.putString("target", "start");
         fragment.setArguments(args);
         return fragment;
     }
 
-    public static DateTimePickerFragment asEnd() {
-        final DateTimePickerFragment fragment = new DateTimePickerFragment();
+    public static DateTimePickerFragment2 asEnd() {
+        final DateTimePickerFragment2 fragment = new DateTimePickerFragment2();
         final Bundle args = new Bundle();
         args.putString("target", "end");
         fragment.setArguments(args);

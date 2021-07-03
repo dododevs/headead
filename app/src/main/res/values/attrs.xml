@@ -24,4 +24,7 @@
     <declare-styleable name="ExpandedCoordinatorLayout">
         <attr name="expandedOffset" format="dimension"/>
     </declare-styleable>
+    <declare-styleable name="LengthAwareEditText">
+        <attr name="maxLength" format="integer"/>
+    </declare-styleable>
 </resources>

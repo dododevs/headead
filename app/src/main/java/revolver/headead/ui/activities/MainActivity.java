@@ -1,10 +1,16 @@
 package revolver.headead.ui.activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
+import android.app.Notification;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import revolver.headead.R;
 import revolver.headead.ui.activities.record.RecordHeadacheActivity;
 import revolver.headead.ui.activities.record.RecordHeadacheActivity2;

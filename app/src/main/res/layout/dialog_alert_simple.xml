@@ -36,15 +36,23 @@
         android:layout_marginTop="8dp"
         android:visibility="gone"/>
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:id="@+id/dialog_alert_simple_entry"
-        android:hint="@string/dialog_alert_simple_hint"
-        android:inputType="text"
-        android:autofillHints="@null"
-        android:visibility="gone"/>
+        android:layout_margin="16dp"
+        android:id="@+id/dialog_alert_simple_entry_container"
+        android:visibility="gone">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:id="@+id/dialog_alert_simple_entry"
+            android:hint="@string/dialog_alert_simple_hint"
+            android:inputType="text"
+            android:autofillHints="@null"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <ScrollView
         android:layout_width="match_parent"

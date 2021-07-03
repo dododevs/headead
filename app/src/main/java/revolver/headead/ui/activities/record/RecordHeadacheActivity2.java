@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -52,6 +53,7 @@ import revolver.headead.ui.fragments.display.HeadacheDetailBackdropFragment;
 import revolver.headead.ui.fragments.display.HeadacheDetailFrontFragment;
 import revolver.headead.ui.fragments.display.ListHeadachesFragment;
 import revolver.headead.ui.fragments.record2.pickers.DateTimePickerFragment;
+import revolver.headead.ui.fragments.record2.pickers.DateTimePickerFragment2;
 import revolver.headead.ui.fragments.record2.pickers.PainIntensityPickerFragment;
 import revolver.headead.ui.fragments.record2.pickers.PainLocationPickerFragment;
 import revolver.headead.ui.fragments.record2.pickers.PainTypePickerFragment;
@@ -101,8 +103,12 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
 
     private Date headacheStartDate;
     private Date headacheEndDate;
+    private float headacheStartPartOfDay;
+    private float headacheEndPartOfDay;
     private DateTimePickerFragment.DateTimeMode headacheStartDateTimeMode;
     private DateTimePickerFragment.DateTimeMode headacheEndDateTimeMode;
+    private DateTimePickerFragment.TimeInputMode headacheStartTimeInputMode;
+    private DateTimePickerFragment.TimeInputMode headacheEndTimeInputMode;
 
     private Headache editedHeadache;
     private boolean editMode = false;
@@ -129,28 +135,28 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         headacheEndDateLabelView = findViewById(R.id.activity_record_headache_2_datetime_end_label);
 
         painLocationCardView = findViewById(R.id.activity_record_headache_2_pain_location);
-        painLocationCardView.setOnClickListener((v) ->
+        painLocationCardView.setOnClickListener(v ->
                 startBottomTransitionToFragment(new PainLocationPickerFragment(),
                         LOCATION_PICKER_TAG, M.dp(256.f).intValue(), true));
         painIntensityCardView = findViewById(R.id.activity_record_headache_2_pain_intensity);
-        painIntensityCardView.setOnClickListener((v) ->
+        painIntensityCardView.setOnClickListener(v ->
                 startBottomTransitionToFragment(new PainIntensityPickerFragment(),
                         INTENSITY_PICKER_TAG, M.dp(256.f).intValue(), true));
         painTypeCardView = findViewById(R.id.activity_record_headache_2_pain_type);
-        painTypeCardView.setOnClickListener((v) ->
+        painTypeCardView.setOnClickListener(v ->
                 startBottomTransitionToFragment(new PainTypePickerFragment(),
                         TYPE_PICKER_TAG, M.dp(256.f).intValue(), true));
 
-        findViewById(R.id.activity_record_headache_2_datetime_start).setOnClickListener((v) ->
+        findViewById(R.id.activity_record_headache_2_datetime_start).setOnClickListener(v ->
                 startBottomTransitionToFragment(DateTimePickerFragment.asStart(),
                         DATETIME_PICKER_TAG, M.dp(132.f).intValue(), true, false, false));
-        findViewById(R.id.activity_record_headache_2_datetime_end).setOnClickListener((v) ->
+        findViewById(R.id.activity_record_headache_2_datetime_end).setOnClickListener(v ->
                 startBottomTransitionToFragment(DateTimePickerFragment.asEnd(),
                         DATETIME_PICKER_TAG, M.dp(132.f).intValue(), true, false, false));
-        findViewById(R.id.activity_record_headache_2_medication).setOnClickListener((v) ->
+        findViewById(R.id.activity_record_headache_2_medication).setOnClickListener(v ->
                 startActivityForResult(new Intent(this, RecordDrugsActivity.class)
                         .putParcelableArrayListExtra("drugs", drugDosages), REQUEST_DRUGS));
-        findViewById(R.id.activity_record_headache_2_geo).setOnClickListener((v) ->
+        findViewById(R.id.activity_record_headache_2_geo).setOnClickListener(v ->
                 startActivityForResult(new Intent(this, RecordGeoActivity.class)
                         .putExtra("location", currentLocation)
                         .putExtra("cameraPosition", currentCameraPosition), REQUEST_LOCATION));
@@ -184,15 +190,35 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         revertToMainListFragment();
     }
 
+    public void setStartHeadacheDate(final Date date, float partOfDay, final DateTimePickerFragment.DateTimeMode dateTimeMode, final DateTimePickerFragment.TimeInputMode timeInputMode) {
+        headacheStartDate = date;
+        headacheStartDateTimeMode = dateTimeMode;
+        headacheStartTimeInputMode = timeInputMode;
+        headacheStartPartOfDay = partOfDay;
+        onHeadacheStartDateUpdated();
+    }
+
     public void setStartHeadacheDate(final Date date, final DateTimePickerFragment.DateTimeMode dateTimeMode) {
         headacheStartDate = date;
         headacheStartDateTimeMode = dateTimeMode;
+        headacheStartTimeInputMode = DateTimePickerFragment.TimeInputMode.CLOCK;
+        headacheStartPartOfDay = -1;
         onHeadacheStartDateUpdated();
+    }
+
+    public void setEndHeadacheDate(final Date date, float partOfDay, final DateTimePickerFragment.DateTimeMode dateTimeMode, final DateTimePickerFragment.TimeInputMode timeInputMode) {
+        headacheEndDate = date;
+        headacheEndDateTimeMode = dateTimeMode;
+        headacheEndTimeInputMode = timeInputMode;
+        headacheEndPartOfDay = partOfDay;
+        onHeadacheEndDateUpdated(false);
     }
 
     public void setEndHeadacheDate(final Date date, final DateTimePickerFragment.DateTimeMode dateTimeMode) {
         headacheEndDate = date;
         headacheEndDateTimeMode = dateTimeMode;
+        headacheEndTimeInputMode = DateTimePickerFragment.TimeInputMode.CLOCK;
+        headacheEndPartOfDay = -1;
         onHeadacheEndDateUpdated(false);
     }
 
@@ -394,6 +420,14 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         return headacheEndDate;
     }
 
+    public float getHeadacheStartPartOfDay() {
+        return headacheStartPartOfDay;
+    }
+
+    public float getHeadacheEndPartOfDay() {
+        return headacheEndPartOfDay;
+    }
+
     public Toolbar getToolbar() {
         return toolbar;
     }
@@ -404,6 +438,14 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
 
     public DateTimePickerFragment.DateTimeMode getHeadacheEndDateTimeMode() {
         return headacheEndDateTimeMode;
+    }
+
+    public DateTimePickerFragment.TimeInputMode getHeadacheStartTimeInputMode() {
+        return headacheStartTimeInputMode;
+    }
+
+    public DateTimePickerFragment.TimeInputMode getHeadacheEndTimeInputMode() {
+        return headacheEndTimeInputMode;
     }
 
     @Override
@@ -578,7 +620,13 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
                 .setVisibility(View.VISIBLE);
         if (headacheStartDate != null && headacheEndDate != null &&
                 headacheStartDate.after(headacheEndDate)) {
-            setEndHeadacheDate(headacheStartDate, DateTimePickerFragment.DateTimeMode.CUSTOM);
+            if (headacheStartTimeInputMode == DateTimePickerFragment.TimeInputMode.PART_OF_DAY) {
+                setEndHeadacheDate(headacheStartDate, headacheStartPartOfDay,
+                        DateTimePickerFragment.DateTimeMode.CUSTOM, headacheStartTimeInputMode);
+            } else {
+                setEndHeadacheDate(headacheStartDate, -1,
+                        DateTimePickerFragment.DateTimeMode.CUSTOM, headacheStartTimeInputMode);
+            }
             buildStartAfterEndErrorDialog().show(getSupportFragmentManager(), null);
         }
     }
@@ -641,7 +689,13 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
                 .setVisibility(View.VISIBLE);
         if (headacheStartDate != null && headacheEndDate != null &&
                 headacheStartDate.after(headacheEndDate)) {
-            setStartHeadacheDate(headacheEndDate, DateTimePickerFragment.DateTimeMode.CUSTOM);
+            if (headacheEndTimeInputMode == DateTimePickerFragment.TimeInputMode.PART_OF_DAY) {
+                setStartHeadacheDate(headacheEndDate, headacheEndPartOfDay,
+                        DateTimePickerFragment.DateTimeMode.CUSTOM, headacheEndTimeInputMode);
+            } else {
+                setStartHeadacheDate(headacheEndDate, -1,
+                        DateTimePickerFragment.DateTimeMode.CUSTOM, headacheEndTimeInputMode);
+            }
             buildStartAfterEndErrorDialog().show(getSupportFragmentManager(), null);
         }
     }
