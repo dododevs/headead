@@ -10,7 +10,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.Log;
 import android.util.TypedValue;
-import android.util.Xml;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +19,11 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
-import androidx.annotation.XmlRes;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.progressindicator.CircularDrawingDelegate;
-import com.google.android.material.progressindicator.CircularIndeterminateAnimatorDelegate;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.progressindicator.IndeterminateDrawable;
-import com.google.android.material.progressindicator.ProgressIndicator;
-import com.google.android.material.progressindicator.ProgressIndicatorSpec;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -63,20 +58,8 @@ public class ViewUtils {
 
     public static IndeterminateDrawable getIndeterminateProgressDrawable(Context context,
                                                                          @ColorRes int color) {
-        /*final ProgressIndicatorSpec spec = new ProgressIndicatorSpec();
-        spec.loadFromAttributes(
-                context,
-                context.getResources().getXml(drawableAttributes),
-                R.attr.progressIndicatorStyle,
-                R.style.Widget_MaterialComponents_ProgressIndicator_Circular_Indeterminate
-        );
-        return new IndeterminateDrawable(context, spec,
-                new CircularDrawingDelegate(), new CircularIndeterminateAnimatorDelegate());*/
-        final ProgressIndicator indicator = new ProgressIndicator(context, null,
-                R.attr.indeterminateProgressStyle,
-                R.style.Widget_MaterialComponents_ProgressIndicator_Circular_Indeterminate
-        );
-        indicator.setIndicatorColors(new int[] { ColorUtils.get(context, color) });
+        final CircularProgressIndicator indicator = new CircularProgressIndicator(context);
+        indicator.setIndicatorColor(ColorUtils.get(context, color));
         indicator.layout(0, 0, M.dp(24.f).intValue(), M.dp(24.f).intValue());
         return indicator.getIndeterminateDrawable();
     }

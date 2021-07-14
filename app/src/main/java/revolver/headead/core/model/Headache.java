@@ -24,7 +24,7 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
     @SerializedName("uuid")
     private String uuid;
 
-    @SerializedName("startDate")
+    /*@SerializedName("startDate")
     private Date startDate;
 
     @SerializedName("endDate")
@@ -34,7 +34,13 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
     private String startDateTimeMode;
 
     @SerializedName("endDateTimeMode")
-    private String endDateTimeMode;
+    private String endDateTimeMode;*/
+
+    @SerializedName("startMoment")
+    private Moment startMoment;
+
+    @SerializedName("endMoment")
+    private Moment endMoment;
 
     @SerializedName("painLocation")
     private RealmList<String> painLocations;
@@ -93,15 +99,23 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
         }
     }
 
-    public void setStartDate(Date startDate) {
+    /*public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }*/
+
+    public void setStartMoment(Moment startMoment) {
+        this.startMoment = startMoment;
     }
 
-    public void setStartDateTimeMode(String dateTimeMode) {
+    public void setEndMoment(Moment endMoment) {
+        this.endMoment = endMoment;
+    }
+
+    /*public void setStartDateTimeMode(String dateTimeMode) {
         this.startDateTimeMode = dateTimeMode;
     }
 
@@ -115,7 +129,7 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
 
     public void setEndDateTimeMode(DateTimePickerFragment.DateTimeMode dateTimeMode) {
         this.endDateTimeMode = dateTimeMode.toString();
-    }
+    }*/
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
@@ -161,25 +175,25 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
         return painTypes;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public Moment getStartMoment() {
+        return startMoment;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public Moment getEndMoment() {
+        return endMoment;
     }
 
     public String getUuid() {
         return uuid;
     }
 
-    public DateTimePickerFragment.DateTimeMode getStartDateTimeMode() {
+    /*public DateTimePickerFragment.DateTimeMode getStartDateTimeMode() {
         return DateTimePickerFragment.DateTimeMode.fromString(startDateTimeMode);
     }
 
     public DateTimePickerFragment.DateTimeMode getEndDateTimeMode() {
         return DateTimePickerFragment.DateTimeMode.fromString(endDateTimeMode);
-    }
+    }*/
 
     public Location getLocation() {
         if (latitude < -180.f || latitude > 180.f || longitude < -180.f || longitude > 180.f) {
@@ -209,10 +223,12 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
 
     private Headache(Parcel src) {
         this.uuid = src.readString();
-        this.startDate = (Date) src.readSerializable();
+        /*this.startDate = (Date) src.readSerializable();
         this.endDate = (Date) src.readSerializable();
         this.startDateTimeMode = src.readString();
-        this.endDateTimeMode = src.readString();
+        this.endDateTimeMode = src.readString();*/
+        this.startMoment = src.readParcelable(Moment.class.getClassLoader());
+        this.endMoment = src.readParcelable(Moment.class.getClassLoader());
         this.painLocations = new RealmList<>();
         src.readStringList(this.painLocations);
         this.painIntensity = src.readInt();
@@ -231,8 +247,10 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(uuid);
-        dest.writeSerializable(startDate);
-        dest.writeSerializable(endDate);
+        /*dest.writeSerializable(startDate);
+        dest.writeSerializable(endDate);*/
+        dest.writeParcelable(startMoment, 0);
+        dest.writeParcelable(endMoment, 0);
         dest.writeStringList(painLocations);
         dest.writeInt(painIntensity);
         dest.writeStringList(painTypes);
@@ -252,14 +270,12 @@ public class Headache extends RealmObject implements Parcelable, ListItem {
     @Override
     public String toString() {
         return "Headache{" +
-                "uuid=" + uuid +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", startDateTimeMode='" + startDateTimeMode + '\'' +
-                ", endDateTimeMode='" + endDateTimeMode + '\'' +
-                ", painLocations='" + painLocations.toString() + '\'' +
-                ", painIntensity='" + painIntensity + '\'' +
-                ", painType='" + painTypes + '\'' +
+                "uuid='" + uuid + '\'' +
+                ", startMoment=" + startMoment +
+                ", endMoment=" + endMoment +
+                ", painLocations=" + painLocations +
+                ", painIntensity=" + painIntensity +
+                ", painTypes=" + painTypes +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", selectedTriggers=" + selectedTriggers +

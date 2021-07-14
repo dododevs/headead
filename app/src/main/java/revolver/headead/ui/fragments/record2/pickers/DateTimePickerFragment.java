@@ -260,9 +260,9 @@ public class DateTimePickerFragment extends Fragment {
     private void returnDateToActivity(final Date newDate) {
         final String target = requireArguments().getString("target");
         if ("start".equals(target)) {
-            requireRecordHeadacheActivity().setStartHeadacheDate(newDate, dateTimeMode);
+            // requireRecordHeadacheActivity().setStartHeadacheDate(newDate, dateTimeMode);
         } else if ("end".equals(target)) {
-            requireRecordHeadacheActivity().setEndHeadacheDate(newDate, dateTimeMode);
+            // requireRecordHeadacheActivity().setEndHeadacheDate(newDate, dateTimeMode);
         }
         requireRecordHeadacheActivity().resetBottomPane();
     }
@@ -270,11 +270,11 @@ public class DateTimePickerFragment extends Fragment {
     private void returnPartOfDayToActivity(final Date date, final float partOfDay) {
         final String target = requireArguments().getString("target");
         if ("start".equals(target)) {
-            requireRecordHeadacheActivity().setStartHeadacheDate(
-                    date, partOfDay, dateTimeMode, TimeInputMode.PART_OF_DAY);
+            /*requireRecordHeadacheActivity().setStartHeadacheDate(
+                    date, partOfDay, dateTimeMode, TimeInputMode.PART_OF_DAY);*/
         } else if ("end".equals(target)) {
-            requireRecordHeadacheActivity().setEndHeadacheDate(
-                    date, partOfDay, dateTimeMode, TimeInputMode.PART_OF_DAY);
+            /*requireRecordHeadacheActivity().setEndHeadacheDate(
+                    date, partOfDay, dateTimeMode, TimeInputMode.PART_OF_DAY);*/
         }
         requireRecordHeadacheActivity().resetBottomPane();
     }
@@ -302,9 +302,9 @@ public class DateTimePickerFragment extends Fragment {
     private DateTimeMode getCurrentDateTimeModeFromActivity() {
         final String target = requireArguments().getString("target");
         if ("start".equals(target)) {
-            return requireRecordHeadacheActivity().getHeadacheStartDateTimeMode();
+            // return requireRecordHeadacheActivity().getHeadacheStartDateTimeMode();
         } else if ("end".equals(target)) {
-            return requireRecordHeadacheActivity().getHeadacheEndDateTimeMode();
+            // return requireRecordHeadacheActivity().getHeadacheEndDateTimeMode();
         }
         return null;
     }
@@ -371,7 +371,7 @@ public class DateTimePickerFragment extends Fragment {
     }
 
     private RecordHeadacheActivity2 requireRecordHeadacheActivity() {
-        return (RecordHeadacheActivity2) Objects.requireNonNull(getActivity());
+        return (RecordHeadacheActivity2) requireActivity();
     }
 
     public static DateTimePickerFragment asStart() {

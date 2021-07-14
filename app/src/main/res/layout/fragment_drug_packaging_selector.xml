@@ -35,7 +35,7 @@
         android:id="@+id/wheel"
         android:indeterminate="true"
         android:indeterminateTint="@color/primaryText"
-        style="@style/Widget.MaterialComponents.ProgressIndicator.Circular.Indeterminate"/>
+        style="@style/Widget.MaterialComponents.CircularProgressIndicator"/>
 
     <TextView
         android:layout_width="wrap_content"

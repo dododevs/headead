@@ -2,6 +2,7 @@ package revolver.headead.util.misc;
 
 import android.content.Context;
 import android.text.format.DateUtils;
+import android.util.Pair;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -55,4 +56,21 @@ public final class TimeFormattingUtils {
         return isYesterday(when + DateUtils.DAY_IN_MILLIS);
     }
 
+    public static Date joinDateAndTime(final Date date, final Pair<Integer, Integer> hourMinutePair) {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, hourMinutePair.first);
+        calendar.set(Calendar.MINUTE, hourMinutePair.second);
+        return calendar.getTime();
+    }
+
+    public static int getPartOfDayFromDate(final Date date) {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        int seconds = calendar.get(Calendar.SECOND);
+        seconds += hour * 60 * 60 + minute * 60;
+        return (int) Math.round(seconds / 86400.);
+    }
 }

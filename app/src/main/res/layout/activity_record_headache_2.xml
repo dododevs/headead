@@ -292,133 +292,60 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:focusable="true"
+                android:clickable="true"
+                android:id="@+id/activity_record_headache_2_datetime">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:focusable="true"
-                    android:clickable="true"
-                    android:id="@+id/activity_record_headache_2_datetime_start">
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="top|end"
+                        android:visibility="gone"
+                        android:id="@+id/activity_record_headache_2_datetime_checked"
+                        android:src="@drawable/ic_card_checked"
+                        app:tint="@color/paleSpringBudDark"
+                        android:contentDescription="@string/cd_card_checked"/>
 
-                        <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:layout_gravity="top|end"
-                            android:visibility="gone"
-                            android:id="@+id/activity_record_headache_2_datetime_start_checked"
-                            android:src="@drawable/ic_card_checked"
-                            app:tint="@color/paleSpringBudDark"
-                            android:contentDescription="@string/cd_card_checked"/>
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_datetime"
+                        android:id="@+id/activity_record_headache_2_datetime_icon"
+                        android:transformPivotX="0dp"
+                        android:transformPivotY="36dp"
+                        app:tint="@color/blackOlive"
+                        android:contentDescription="@string/cd_timespan"/>
 
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_timespan_start"
-                            android:id="@+id/activity_record_headache_2_datetime_start_icon"
-                            android:transformPivotX="0dp"
-                            android:transformPivotY="36dp"
-                            app:tint="@color/blackOlive"
-                            android:contentDescription="@string/cd_timespan_start"/>
-
-                        <revolver.headead.ui.views.typography.ManropeTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:id="@+id/activity_record_headache_2_datetime_start_value"
-                            android:alpha="0"
-                            android:textColor="@color/iconGray"
-                            android:textSize="32sp"
-                            app:textStyle="bold"/>
-
-                    </FrameLayout>
-
-                    <revolver.headead.ui.views.typography.MontserratTextView
+                    <revolver.headead.ui.views.typography.ManropeTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:gravity="center"
-                        android:id="@+id/activity_record_headache_2_datetime_start_label"
-                        android:text="@string/activity_record_headache_2_datetime_start"
-                        android:textColor="@color/blackOlive"
-                        android:textSize="12.8sp"
-                        app:textStyle="semiBold"/>
+                        android:id="@+id/activity_record_headache_2_datetime_value"
+                        android:alpha="0"
+                        android:textColor="@color/iconGray"
+                        android:textSize="32sp"
+                        app:textStyle="bold"/>
 
-                </LinearLayout>
+                </FrameLayout>
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:background="@color/cardBorder"/>
-
-                <LinearLayout
-                    android:layout_width="0dp"
+                <revolver.headead.ui.views.typography.MontserratTextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:focusable="true"
-                    android:clickable="true"
-                    android:id="@+id/activity_record_headache_2_datetime_end">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:layout_gravity="top|end"
-                            android:visibility="gone"
-                            android:id="@+id/activity_record_headache_2_datetime_end_checked"
-                            android:src="@drawable/ic_card_checked"
-                            app:tint="@color/paleSpringBudDark"
-                            android:contentDescription="@string/cd_card_checked"/>
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_gravity="center"
-                            android:id="@+id/activity_record_headache_2_datetime_end_icon"
-                            android:src="@drawable/ic_timespan_end"
-                            android:transformPivotX="0dp"
-                            android:transformPivotY="36dp"
-                            app:tint="@color/blackOlive"
-                            android:contentDescription="@string/cd_timespan_end"/>
-
-                        <revolver.headead.ui.views.typography.ManropeTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:id="@+id/activity_record_headache_2_datetime_end_value"
-                            android:alpha="0"
-                            android:textColor="@color/iconGray"
-                            android:textSize="32sp"
-                            app:textStyle="bold"/>
-
-                    </FrameLayout>
-
-                    <revolver.headead.ui.views.typography.MontserratTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:id="@+id/activity_record_headache_2_datetime_end_label"
-                        android:text="@string/activity_record_headache_2_datetime_end"
-                        android:textColor="@color/blackOlive"
-                        android:textSize="12.8sp"
-                        app:textStyle="semiBold"/>
-
-                </LinearLayout>
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:id="@+id/activity_record_headache_2_datetime_label"
+                    android:text="@string/activity_record_headache_2_datetime"
+                    android:textColor="@color/blackOlive"
+                    android:textSize="12.8sp"
+                    app:textStyle="semiBold"/>
 
             </LinearLayout>
 
@@ -621,9 +548,29 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="256dp"
+            android:layout_height="512dp"
             android:backgroundTint="@color/white"/>
 
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
+        android:id="@+id/fab"
+        android:contentDescription="@string/cd_fab"
+        android:focusable="true"
+        android:clickable="true"
+        android:src="@drawable/ic_arrow_forward_light"
+        android:visibility="gone"
+        app:tint="@color/white"
+        app:backgroundTint="@color/flame"
+        app:elevation="6dp"
+        app:fabCustomSize="48dp"
+        app:fabSize="normal"
+        app:layout_anchor="@id/activity_record_headache_2_bottom_pane"
+        app:layout_anchorGravity="top|end"
+        app:behavior_autoHide="false"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -454,4 +454,24 @@
     <string name="fragment_datetime_picker_2_presets_header">Tipo di episodio</string>
     <string name="fragment_datetime_picker_2_preset_just_ended_title">Momento iniziale</string>
     <string name="fragment_datetime_picker_2_preset_past_episode_title">Episodio passato</string>
+    <string name="cd_timespan">Icona "dell\'intervallo" di tempo</string>
+    <string name="activity_record_headache_2_datetime">Intervallo di tempo</string>
+    <string name="fragment_datetime_picker_2_tab_start">Inizio</string>
+    <string name="fragment_datetime_picker_2_tab_end">Fine</string>
+    <string name="fragment_date_picker_start_title">Data di inizio</string>
+    <string name="cd_fab" />
+    <string name="fragment_time_picker_start_title">Ora di inizio</string>
+    <string name="fragment_date_picker_label">Oggi</string>
+    <string name="fragment_time_picker_use_part_of_day">Indica la parte del giorno</string>
+    <string name="fragment_time_picker_use_clock">Indica l\'orario</string>
+    <string name="fragment_time_picker_future_time_1">Ma quell\'orario deve ancora arrivare!</string>
+    <string name="fragment_time_picker_future_time_2">Non è ancora così tardi, controlla meglio</string>
+    <string name="fragment_time_picker_future_time_3">Solo orari già passati, grazie</string>
+    <string name="fragment_end_moment_picker_one_day">+1</string>
+    <string name="fragment_end_moment_picker_two_days">+2</string>
+    <string name="fragment_end_moment_picker_three_days">+3</string>
+    <string name="fragment_end_moment_picker_zero_days">+0</string>
+    <string name="fragment_end_moment_picker_days_label">Indica se l\'orario finale si riferisce allo stesso giorno del momento iniziale o a uno, due o tre giorni dopo</string>
+    <string name="fragment_time_picker_end_title">Ora di fine</string>
+    <string name="cd_mtrl_clock_view_dot">Punto centrale dell\'orologio</string>
 </resources>

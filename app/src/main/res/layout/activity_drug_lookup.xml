@@ -50,7 +50,7 @@
             android:indeterminate="true"
             android:indeterminateTint="@color/white"
             android:visibility="invisible"
-            style="@style/Widget.MaterialComponents.ProgressIndicator.Circular.Indeterminate"/>
+            style="@style/Widget.MaterialComponents.CircularProgressIndicator"/>
 
         <ImageView
             android:layout_width="32dp"

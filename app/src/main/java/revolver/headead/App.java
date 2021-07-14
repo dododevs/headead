@@ -31,8 +31,8 @@ public class App extends Application {
 
         Realm.init(this);
         defaultRealm = Realm.getInstance(new RealmConfiguration.Builder()
-                .name("userdata.4.realm")
-                .schemaVersion(2)
+                .name("userdata.5.realm")
+                .schemaVersion(3)
                 .migration(new HeadacheMigration())
                 .build());
         Log.d("onCreate", "schema version: " + defaultRealm.getConfiguration().getSchemaVersion());
