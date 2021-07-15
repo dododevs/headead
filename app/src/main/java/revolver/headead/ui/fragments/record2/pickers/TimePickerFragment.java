@@ -89,11 +89,6 @@ public class TimePickerFragment extends Fragment
 
         getChildFragmentManager().setFragmentResultListener(
                 REQUEST_MODE_CHANGE, getViewLifecycleOwner(), this);
-
-        timeInputPager.postDelayed(() -> {
-            final ClockView clockView = view.findViewById(R.id.clock);
-            clockView.setShowMinutes();
-        }, 3000L);
     }
 
     void checkAndProgress() {

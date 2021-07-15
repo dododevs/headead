@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="230dp">
+    android:layout_height="480dp">
 
     <revolver.headead.ui.views.typography.MontserratTextView
         android:layout_width="wrap_content"
@@ -24,9 +24,10 @@
         android:visibility="gone"
         android:id="@+id/clock_picker"/>
 
-    <revolver.headead.ui.views.ClockView
+    <revolver.headead.ui.views.TimePickerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_gravity="center"
         android:id="@+id/clock"/>
 

@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="340dp">
+    android:layout_height="480dp">
 
     <androidx.viewpager2.widget.ViewPager2
         android:layout_width="match_parent"

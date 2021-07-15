@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.button.MaterialButtonToggleGroup
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/mtrl_clock_ampm_selector"
+    app:checkedButton="@id/mtrl_clock_am_selector"
+    app:singleSelection="true"
+    app:selectionRequired="true"
+    app:layout_constraintCircle="@id/mtrl_clock_view_dot"
+    app:layout_constraintCircleRadius="0dp">
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?attr/materialButtonOutlinedStyle"
+        android:id="@+id/mtrl_clock_am_selector"
+        android:text="@string/mtrl_clock_am_selector"
+        android:textColor="@color/flameDark"
+        app:strokeColor="@color/flameDark"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?attr/materialButtonOutlinedStyle"
+        android:id="@+id/mtrl_clock_pm_selector"
+        android:text="@string/mtrl_clock_pm_selector"
+        android:textColor="@color/flameDark"
+        app:strokeColor="@color/flameDark"/>
+
+</com.google.android.material.button.MaterialButtonToggleGroup>

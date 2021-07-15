@@ -474,4 +474,9 @@
     <string name="fragment_end_moment_picker_days_label">Indica se l\'orario finale si riferisce allo stesso giorno del momento iniziale o a uno, due o tre giorni dopo</string>
     <string name="fragment_time_picker_end_title">Ora di fine</string>
     <string name="cd_mtrl_clock_view_dot">Punto centrale dell\'orologio</string>
+    <string name="mtrl_time_picker_no_start_end_value">-</string>
+    <string name="mtrl_time_picker_end_label">Fine</string>
+    <string name="mtrl_time_picker_start_label">Inizio</string>
+    <string name="mtrl_clock_am_selector">AM</string>
+    <string name="mtrl_clock_pm_selector">PM</string>
 </resources>

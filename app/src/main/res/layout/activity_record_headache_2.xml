@@ -571,6 +571,7 @@
         app:fabSize="normal"
         app:layout_anchor="@id/activity_record_headache_2_bottom_pane"
         app:layout_anchorGravity="top|end"
+        app:layout_behavior="com.google.android.material.floatingactionbutton.FloatingActionButton$Behavior"
         app:behavior_autoHide="false"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

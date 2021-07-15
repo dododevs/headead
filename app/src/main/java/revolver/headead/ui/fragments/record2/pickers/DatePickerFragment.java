@@ -80,7 +80,7 @@ public class DatePickerFragment extends Fragment {
         } else if (preset == DateTimePickerPreset.PAST) {
             requireRecordHeadacheActivity().startBottomTransitionToFragment(
                     TimePickerFragment.forPastEpisode(startMoment, endMoment),
-                        TimePickerFragment.TAG, M.dp(340.f).intValue(), true);
+                        TimePickerFragment.TAG, M.dp(480.f).intValue(), true);
         }
     }
 
