@@ -18,8 +18,8 @@
         style="?attr/materialButtonOutlinedStyle"
         android:id="@+id/mtrl_clock_am_selector"
         android:text="@string/mtrl_clock_am_selector"
-        android:textColor="@color/flameDark"
-        app:strokeColor="@color/flameDark"/>
+        android:textColor="@color/mtrl_clock_ampm_selector_button_text_color"
+        app:rippleColor="@color/flame"/>
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
@@ -27,7 +27,7 @@
         style="?attr/materialButtonOutlinedStyle"
         android:id="@+id/mtrl_clock_pm_selector"
         android:text="@string/mtrl_clock_pm_selector"
-        android:textColor="@color/flameDark"
-        app:strokeColor="@color/flameDark"/>
+        android:textColor="@color/mtrl_clock_ampm_selector_button_text_color"
+        app:rippleColor="@color/flame"/>
 
 </com.google.android.material.button.MaterialButtonToggleGroup>

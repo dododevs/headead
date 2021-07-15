@@ -36,4 +36,5 @@
     <color name="middleGray">#878472</color>
     <color name="flame">#DE541E</color>
     <color name="flameDark">#c03600</color>
+    <color name="flameTranslucent">#45DE541E</color>
 </resources>

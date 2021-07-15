@@ -5,12 +5,10 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,7 +41,8 @@ public class ClockView extends ConstraintLayout {
     private final LayoutParams minuteDotLayoutParams, hourDotLayoutParams;
     private final TextView[] labelViews = new TextView[12];
     private final MaterialButtonToggleGroup amPmSelectorView;
-    private final Paint clockHandPaint;
+    private final Paint hourHandPaint;
+    private final Paint minuteHandPaint;
 
     private boolean is24H = false;
     private boolean showingMinutes = false;
@@ -115,10 +114,13 @@ public class ClockView extends ConstraintLayout {
         hourDotLayoutParams.circleConstraint = R.id.mtrl_clock_view_dot;
         hourDotLayoutParams.circleRadius = M.dp(96.f).intValue();
 
-        clockHandPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        clockHandPaint.setStyle(Paint.Style.STROKE);
-        clockHandPaint.setStrokeWidth(M.dp(2.f));
-        clockHandPaint.setColor(ColorUtils.get(context, R.color.flame));
+        minuteHandPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        minuteHandPaint.setStyle(Paint.Style.STROKE);
+        minuteHandPaint.setStrokeWidth(M.dp(2.f));
+        minuteHandPaint.setStrokeCap(Paint.Cap.ROUND);
+        minuteHandPaint.setColor(ColorUtils.get(context, R.color.flame));
+        hourHandPaint = new Paint(minuteHandPaint);
+        hourHandPaint.setColor(ColorUtils.get(context, R.color.flameTranslucent));
 
         setWillNotDraw(false);
     }
@@ -138,11 +140,6 @@ public class ClockView extends ConstraintLayout {
         if (timeChangedListener != null) {
             boolean isPm = amPmSelectorView
                     .getCheckedButtonId() == R.id.mtrl_clock_pm_selector;
-            timeChangedListener.onTimeChanged(
-                    selectedHour != -1 ? (isPm
-                            ? Integer.parseInt(hour24HLabels[selectedHour])
-                            : Integer.parseInt(hourLabels[selectedHour])) : 0,
-                    selectedMinute != -1 ? selectedMinute : 0);
             timeChangedListener.onTimeChanged(selectedHour != -1 ?
                     (isPm ? selectedHour + 12 : selectedHour) : 0,
                         selectedMinute != -1 ? selectedMinute : 0);
@@ -201,13 +198,17 @@ public class ClockView extends ConstraintLayout {
             centerDotY = centerDot.getY() + centerDot.getHeight() / 2.f;
         }
         if (showingMinutes) {
+            float hx = (hourDot.getX() + hourDot.getWidth() / 2.f + centerDotX) / 2.f;
+            float hy = (hourDot.getY() + hourDot.getHeight() / 2.f + centerDotY) / 2.f;
+            canvas.drawLine(centerDotX, centerDotY,
+                    hx, hy, hourHandPaint);
             if (!userUpdatedMinutes) {
                 return;
             }
             float mx = minuteDot.getX() + minuteDot.getWidth() / 2.f;
             float my = minuteDot.getY() + minuteDot.getHeight() / 2.f;
             canvas.drawLine(centerDotX, centerDotY,
-                    mx, my, clockHandPaint);
+                    mx, my, minuteHandPaint);
         }
     }
 

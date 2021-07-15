@@ -479,4 +479,5 @@
     <string name="mtrl_time_picker_start_label">Inizio</string>
     <string name="mtrl_clock_am_selector">AM</string>
     <string name="mtrl_clock_pm_selector">PM</string>
+    <string name="mtrl_time_picker_next_day">+1</string>
 </resources>
