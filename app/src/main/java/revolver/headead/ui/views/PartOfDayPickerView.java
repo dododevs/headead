@@ -31,6 +31,9 @@ public class PartOfDayPickerView extends LinearLayout {
     private boolean bounded = false;
     private int customBound = -1;
 
+    private OnPartOfDayChangedListener onPartOfDayChangedListener;
+    private OnPartOfDaySetListener onPartOfDaySetListener;
+
     public PartOfDayPickerView(Context context) {
         this(context, null);
     }
@@ -75,6 +78,14 @@ public class PartOfDayPickerView extends LinearLayout {
         c.set(Calendar.SECOND, 0);
         c.add(Calendar.SECOND, 86400 * (int) slider.getValue() / 100);
         return c.getTime().after(now);
+    }
+
+    public void setOnPartOfDayChangedListener(OnPartOfDayChangedListener l) {
+        onPartOfDayChangedListener = l;
+    }
+
+    public void setOnPartOfDaySetListener(OnPartOfDaySetListener l) {
+        onPartOfDaySetListener = l;
     }
 
     private void initialize() {
@@ -143,14 +154,22 @@ public class PartOfDayPickerView extends LinearLayout {
                     }
                     break;
             }
+            if (onPartOfDayChangedListener != null) {
+                onPartOfDayChangedListener.onValueChanged((int) value);
+            }
             lastRoundedValue = roundedValue;
-            Log.d("rounded", "value: " + roundedValue);
         }));
     }
 
     private void onNewValueConfirmed() {
         if (bounded && (customBound >= 0 || isLaterToday())) {
             slider.setValue(getCurrentMinimumValue());
+            if (onPartOfDayChangedListener != null) {
+                onPartOfDayChangedListener.onValueChanged((int) slider.getValue());
+            }
+        }
+        if (onPartOfDaySetListener != null) {
+            onPartOfDaySetListener.onValueSet();
         }
     }
 
@@ -179,5 +198,13 @@ public class PartOfDayPickerView extends LinearLayout {
         return (int) -Math.round(Math.sqrt((1.0 -
                 Math.pow(x - width / 2.0, 2) / Math.pow(width / 2.0, 2)) *
                     Math.pow(height / 2.0, 2)));
+    }
+
+    public interface OnPartOfDayChangedListener {
+        void onValueChanged(int value);
+    }
+
+    public interface OnPartOfDaySetListener {
+        void onValueSet();
     }
 }

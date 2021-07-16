@@ -1,12 +1,20 @@
 package revolver.headead.ui.views;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.PaintDrawable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -14,6 +22,8 @@ import java.util.Date;
 import java.util.Locale;
 
 import revolver.headead.R;
+import revolver.headead.ui.fragments.record2.pickers.timeinput.ClockPageFragment;
+import revolver.headead.ui.fragments.record2.pickers.timeinput.PartOfDayPageFragment;
 import revolver.headead.util.ui.ColorUtils;
 import revolver.headead.util.ui.M;
 import revolver.headead.util.ui.ViewUtils;
@@ -24,14 +34,22 @@ public class TimePickerView extends LinearLayout {
             new SimpleDateFormat("HH:mm", Locale.getDefault());
 
     private final ClockView clockView;
+    private final PartOfDayPickerView partOfDayPickerView;
+
     private final TextView startTimeView;
     private final TextView startTimeLabel;
+    private final ImageView startTimePartOfDayView;
     private final TextView endTimeView;
     private final TextView endTimeLabel;
+    private final ImageView endTimePartOfDayView;
     private final View nextDayView;
+
+    private final PartOfDayDrawable startPartOfDayDrawable;
+    private final PartOfDayDrawable endPartOfDayDrawable;
 
     private boolean startTimeFocused = true;
     private boolean isNextDayVisible = false;
+    private boolean isClockShown = true;
 
     private int startHour = -1;
     private int startMinute = -1;
@@ -60,8 +78,18 @@ public class TimePickerView extends LinearLayout {
         endTimeView = findViewById(R.id.mtrl_time_picker_end_box_value);
         startTimeLabel = findViewById(R.id.mtrl_time_picker_start_box_label);
         endTimeLabel = findViewById(R.id.mtrl_time_picker_end_box_label);
+        startTimePartOfDayView = findViewById(R.id.mtrl_time_picker_start_box_pod);
+        endTimePartOfDayView = findViewById(R.id.mtrl_time_picker_end_box_pod);
         nextDayView = findViewById(R.id.mtrl_time_picker_next_day);
-        clockView = new ClockView(context);
+
+        startTimePartOfDayView.setImageDrawable(
+                startPartOfDayDrawable = new PartOfDayDrawable(context, 0));
+        endTimePartOfDayView.setImageDrawable(
+                endPartOfDayDrawable = new PartOfDayDrawable(context, 0));
+
+        View.inflate(context, R.layout.mtrl_time_picker_time_inputs, this);
+        clockView = findViewById(R.id.mtrl_time_picker_clock);
+        partOfDayPickerView = findViewById(R.id.mtrl_time_picker_part_of_day);
 
         final View startTimeBox =
                 findViewById(R.id.mtrl_time_picker_start_box);
@@ -70,10 +98,6 @@ public class TimePickerView extends LinearLayout {
         startTimeBox.setOnClickListener(v -> resetStartBox());
         endTimeBox.setOnClickListener(v -> resetEndBox());
 
-        addView(clockView, ViewUtils.newLayoutParams(LinearLayout.LayoutParams.class)
-                .matchParentInWidth().height(264.f)
-                    .gravity(Gravity.CENTER_HORIZONTAL).verticalMargin(16.f)
-                        .get());
         int clockPadding = M.dp(16.f).intValue();
         clockView.setPadding(clockPadding, clockPadding, clockPadding, clockPadding);
         clockView.setOnTimeChangedListener((hour, minute) -> {
@@ -101,6 +125,81 @@ public class TimePickerView extends LinearLayout {
                 clockView.reset();
             }
         });
+
+        partOfDayPickerView.setOnPartOfDayChangedListener(val -> {
+            if (startTimeFocused) {
+                startPartOfDayDrawable.setValue(val);
+            } else {
+                endPartOfDayDrawable.setValue(val);
+            }
+        });
+        partOfDayPickerView.setOnPartOfDaySetListener(() -> {
+
+        });
+    }
+
+    public void setShowClockInput() {
+        if (isClockShown) {
+            return;
+        }
+        partOfDayPickerView.animate().alpha(0.f)
+                .setDuration(200L)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .withEndAction(() -> {
+                    partOfDayPickerView.setVisibility(GONE);
+                    partOfDayPickerView.setAlpha(1.f);
+                }).start();
+        clockView.animate().alpha(1.f)
+                .setDuration(200L)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .withStartAction(() -> {
+                    clockView.setAlpha(0.f);
+                    clockView.setVisibility(VISIBLE);
+                }).setStartDelay(200L).start();
+        isClockShown = true;
+        if (startTimeFocused) {
+            resetStartBox();
+            startTimePartOfDayView.setVisibility(GONE);
+            startTimeView.setVisibility(VISIBLE);
+        } else {
+            resetEndBox();
+            endTimePartOfDayView.setVisibility(GONE);
+            endTimeView.setVisibility(VISIBLE);
+        }
+    }
+
+    public void setShowPartOfDayInput() {
+        if (!isClockShown) {
+            return;
+        }
+        clockView.animate().alpha(0.f)
+                .setDuration(200L)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .withEndAction(() -> {
+                    clockView.setVisibility(GONE);
+                    clockView.setAlpha(1.f);
+                }).start();
+        partOfDayPickerView.animate().alpha(1.f)
+                .setDuration(200L)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .withStartAction(() -> {
+                    partOfDayPickerView.setAlpha(0.f);
+                    partOfDayPickerView.setVisibility(VISIBLE);
+                }).setStartDelay(200L).start();
+        isClockShown = false;
+        if (startTimeFocused) {
+            resetStartBox();
+            startTimePartOfDayView.setVisibility(VISIBLE);
+            startTimeView.setVisibility(GONE);
+        } else {
+            resetEndBox();
+            endTimePartOfDayView.setVisibility(VISIBLE);
+            endTimeView.setVisibility(GONE);
+        }
+    }
+
+    public boolean isClockShown() {
+        return isClockShown;
     }
 
     private void resetStartBox() {
@@ -140,7 +239,7 @@ public class TimePickerView extends LinearLayout {
         }
         if (endHour < startHour ||
                 (endHour == startHour &&
-                    endMinute < startMinute)) {
+                    endMinute <= startMinute)) {
             if (isNextDayVisible) {
                 return;
             }

@@ -51,8 +51,8 @@ public class EndMomentPickerFragment extends TimePickerFragment {
         startMoment = requireArguments().getParcelable("startMoment");
         endMoment = requireArguments().getParcelable("endMoment");
 
-        innerTimePickerPager = view.findViewById(R.id.fragment_time_picker)
-                .findViewById(R.id.time_input_pager);
+        /*innerTimePickerPager = view.findViewById(R.id.fragment_time_picker)
+                .findViewById(R.id.time_input_pager);*/
         innerTimePickerPager.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
             if (timeInputMode == DateTimePickerFragment.TimeInputMode.CLOCK) {
                 ((TextView) innerTimePickerPager

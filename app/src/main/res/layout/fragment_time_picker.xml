@@ -1,13 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="480dp">
 
-    <androidx.viewpager2.widget.ViewPager2
+    <!--<androidx.viewpager2.widget.ViewPager2
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:id="@+id/time_input_pager"/>
+        android:id="@+id/time_input_pager"/>-->
+
+    <revolver.headead.ui.views.typography.MontserratTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:id="@+id/fragment_time_picker_title"
+        android:text="@string/fragment_time_picker_start_end_title"
+        android:textSize="12.8sp"
+        android:textAllCaps="true"
+        app:textStyle="semiBold"/>
+
+    <revolver.headead.ui.views.TimePickerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:id="@+id/time_picker"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_margin="16dp"
+        android:id="@+id/fragment_time_picker_input_switch"
+        android:text="@string/fragment_time_picker_use_part_of_day"
+        android:textColor="@color/flameDark"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:focusable="true"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackground"
+        android:padding="4dp"/>
 
 </FrameLayout>

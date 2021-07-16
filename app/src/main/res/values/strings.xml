@@ -480,4 +480,6 @@
     <string name="mtrl_clock_am_selector">AM</string>
     <string name="mtrl_clock_pm_selector">PM</string>
     <string name="mtrl_time_picker_next_day">+1</string>
+    <string name="fragment_time_picker_start_end_title">Ora di inizio e fine</string>
+    <string name="cd_part_of_day">Icona che indica la parte del giorno selezionata</string>
 </resources>

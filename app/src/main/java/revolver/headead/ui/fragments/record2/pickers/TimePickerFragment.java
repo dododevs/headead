@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +33,7 @@ import revolver.headead.ui.fragments.record2.pickers.timeinput.PartOfDayPageFrag
 import revolver.headead.ui.views.ClockView;
 import revolver.headead.ui.views.MaterialTimePickerView;
 import revolver.headead.ui.views.PartOfDayPickerView;
+import revolver.headead.ui.views.TimePickerView;
 import revolver.headead.util.misc.TimeFormattingUtils;
 import revolver.headead.util.ui.M;
 import revolver.headead.util.ui.Snacks;
@@ -72,7 +74,7 @@ public class TimePickerFragment extends Fragment
         fab.setOnClickListener(v -> checkAndProgress());
         fab.show();
 
-        timeInputPager = view.findViewById(R.id.time_input_pager);
+        /*timeInputPager = view.findViewById(R.id.time_input_pager);
         timeInputPager.setUserInputEnabled(false);
         timeInputPager.setAdapter(new FragmentStateAdapter(this) {
             @NonNull
@@ -88,7 +90,22 @@ public class TimePickerFragment extends Fragment
         });
 
         getChildFragmentManager().setFragmentResultListener(
-                REQUEST_MODE_CHANGE, getViewLifecycleOwner(), this);
+                REQUEST_MODE_CHANGE, getViewLifecycleOwner(), this);*/
+
+
+        final TimePickerView timePickerView =
+                view.findViewById(R.id.time_picker);
+        final TextView inputSwitchView =
+                view.findViewById(R.id.fragment_time_picker_input_switch);
+        inputSwitchView.setOnClickListener(v -> {
+            if (timePickerView.isClockShown()) {
+                inputSwitchView.setText(R.string.fragment_time_picker_use_clock);
+                timePickerView.setShowPartOfDayInput();
+            } else {
+                inputSwitchView.setText(R.string.fragment_time_picker_use_part_of_day);
+                timePickerView.setShowClockInput();
+            }
+        });
     }
 
     void checkAndProgress() {
