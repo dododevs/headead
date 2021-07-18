@@ -8,7 +8,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 
 import io.realm.RealmObject;
-import revolver.headead.ui.fragments.record2.pickers.DateTimePickerFragment;
+import revolver.headead.ui.fragments.record2.pickers.TimeInputMode;
+import revolver.headead.util.misc.TimeFormattingUtils;
 
 public class Moment extends RealmObject implements Parcelable {
 
@@ -24,7 +25,7 @@ public class Moment extends RealmObject implements Parcelable {
     public Moment() {
     }
 
-    public Moment(Date date, int partOfDay, DateTimePickerFragment.TimeInputMode timeInputMode) {
+    public Moment(Date date, int partOfDay, TimeInputMode timeInputMode) {
         this.date = date;
         this.partOfDay = partOfDay;
         this.timeInputMode = timeInputMode != null ? timeInputMode.name() : null;
@@ -38,9 +39,13 @@ public class Moment extends RealmObject implements Parcelable {
         return partOfDay;
     }
 
-    public DateTimePickerFragment.TimeInputMode getTimeInputMode() {
+    public int convertDateToPartOfDay() {
+        return date != null ? TimeFormattingUtils.getPartOfDayFromDate(date) : -1;
+    }
+
+    public TimeInputMode getTimeInputMode() {
         return timeInputMode != null
-                ? DateTimePickerFragment.TimeInputMode.fromString(timeInputMode)
+                ? TimeInputMode.fromString(timeInputMode)
                 : null;
     }
 

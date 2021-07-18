@@ -13,13 +13,10 @@ import androidx.fragment.app.Fragment;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
 
 import revolver.headead.R;
 import revolver.headead.ui.activities.record.RecordHeadacheActivity2;
 import revolver.headead.util.ui.M;
-
-import static revolver.headead.ui.fragments.record2.pickers.DateTimePickerFragment.TimeInputMode;
 
 public class DateTimePickerFragment2 extends Fragment {
 

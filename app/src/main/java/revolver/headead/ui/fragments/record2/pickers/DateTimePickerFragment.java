@@ -1,15 +1,11 @@
 package revolver.headead.ui.fragments.record2.pickers;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,7 +18,6 @@ import com.google.android.material.radiobutton.MaterialRadioButton;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
 
 import revolver.headead.App;
 import revolver.headead.R;
@@ -30,7 +25,6 @@ import revolver.headead.ui.activities.record.RecordHeadacheActivity2;
 import revolver.headead.ui.views.MaterialCalendarView;
 import revolver.headead.ui.views.MaterialTimePickerView;
 import revolver.headead.ui.views.PartOfDayPickerView;
-import revolver.headead.util.ui.ColorUtils;
 import revolver.headead.util.ui.Snacks;
 
 public class DateTimePickerFragment extends Fragment {
@@ -60,21 +54,6 @@ public class DateTimePickerFragment extends Fragment {
     }
     private DateTimeMode dateTimeMode = DateTimeMode.DEFAULT;
 
-    public enum TimeInputMode {
-        CLOCK, PART_OF_DAY;
-
-        public static TimeInputMode fromString(final String name) {
-            if (name == null) {
-                return null;
-            }
-            for (final TimeInputMode timeInputMode : values()) {
-                if (name.equals(timeInputMode.name())) {
-                    return timeInputMode;
-                }
-            }
-            return null;
-        }
-    }
     private TimeInputMode timeInputMode = TimeInputMode.CLOCK;
 
     private View collapsedLayoutView;

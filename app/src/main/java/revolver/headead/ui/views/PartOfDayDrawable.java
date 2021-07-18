@@ -51,7 +51,7 @@ public class PartOfDayDrawable extends Drawable {
         canvas.scale(0.9f, 0.9f,
                 getBounds().width() / 2.f, getBounds().height() / 2.f);
         canvas.drawArc(getBounds().left, getBounds().top,
-                getBounds().right, getBounds().bottom, 0, value / 100.f * 360.f,
+                getBounds().right, getBounds().bottom, 180, value / 100.f * 180.f,
                     false, arcPaint);
         canvas.restore();
     }

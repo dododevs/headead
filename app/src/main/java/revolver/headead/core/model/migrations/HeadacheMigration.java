@@ -5,11 +5,9 @@ import androidx.annotation.NonNull;
 import java.util.Date;
 
 import io.realm.DynamicRealm;
-import io.realm.DynamicRealmObject;
 import io.realm.FieldAttribute;
 import io.realm.RealmList;
 import io.realm.RealmMigration;
-import io.realm.RealmObject;
 import io.realm.RealmObjectSchema;
 import io.realm.RealmSchema;
 import revolver.headead.core.model.DrugIntake;
@@ -17,10 +15,8 @@ import revolver.headead.core.model.DrugTag;
 import revolver.headead.core.model.Headache;
 import revolver.headead.core.model.Moment;
 import revolver.headead.core.model.PainIntensity;
-import revolver.headead.core.model.PainLocation;
-import revolver.headead.core.model.PainType;
 import revolver.headead.core.model.SavedDrug;
-import revolver.headead.ui.fragments.record2.pickers.DateTimePickerFragment;
+import revolver.headead.ui.fragments.record2.pickers.TimeInputMode;
 
 import static java.util.Objects.requireNonNull;
 
@@ -143,9 +139,9 @@ public class HeadacheMigration implements RealmMigration {
                 final Date startDate = headache.getDate("startDate");
                 final Date endDate = headache.getDate("endDate");
                 final Moment startMoment = new Moment(
-                        startDate, -1, DateTimePickerFragment.TimeInputMode.CLOCK);
+                        startDate, -1, TimeInputMode.CLOCK);
                 final Moment endMoment = new Moment(
-                        endDate, -1, DateTimePickerFragment.TimeInputMode.CLOCK);
+                        endDate, -1, TimeInputMode.CLOCK);
                 headache.set("startMoment", startMoment);
                 headache.set("endMoment", endMoment);
             });

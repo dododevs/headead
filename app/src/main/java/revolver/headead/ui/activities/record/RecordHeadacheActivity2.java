@@ -20,9 +20,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,7 +35,6 @@ import com.google.android.material.shape.CornerFamily;
 import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.shape.ShapeAppearanceModel;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -60,12 +56,12 @@ import revolver.headead.ui.fragments.display.HeadacheDetailBackdropFragment;
 import revolver.headead.ui.fragments.display.HeadacheDetailFrontFragment;
 import revolver.headead.ui.fragments.display.ListHeadachesFragment;
 import revolver.headead.ui.fragments.record2.pickers.DatePickerFragment;
-import revolver.headead.ui.fragments.record2.pickers.DateTimePickerFragment;
 import revolver.headead.ui.fragments.record2.pickers.DateTimePickerFragment2;
 import revolver.headead.ui.fragments.record2.pickers.PainIntensityPickerFragment;
 import revolver.headead.ui.fragments.record2.pickers.PainLocationPickerFragment;
 import revolver.headead.ui.fragments.record2.pickers.PainTypePickerFragment;
 import revolver.headead.ui.fragments.record2.RecordHeadacheBottomPaneFragment;
+import revolver.headead.ui.fragments.record2.pickers.TimeInputMode;
 import revolver.headead.ui.fragments.record2.pickers.TimePickerFragment;
 import revolver.headead.util.misc.TimeFormattingUtils;
 import revolver.headead.util.ui.M;
@@ -115,8 +111,8 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
     private Date headacheEndDate;
     private float headacheStartPartOfDay;
     private float headacheEndPartOfDay;
-    private DateTimePickerFragment.TimeInputMode headacheStartTimeInputMode;
-    private DateTimePickerFragment.TimeInputMode headacheEndTimeInputMode;
+    private TimeInputMode headacheStartTimeInputMode;
+    private TimeInputMode headacheEndTimeInputMode;
 
     private Moment headacheStart;
     private Moment headacheEnd;
@@ -199,28 +195,28 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
 
     public void setStartHeadacheDate(final Date startDate) {
         headacheStartDate = startDate;
-        headacheStartTimeInputMode = DateTimePickerFragment.TimeInputMode.CLOCK;
+        headacheStartTimeInputMode = TimeInputMode.CLOCK;
         headacheStartPartOfDay = -1;
         onHeadacheDatesUpdated();
     }
 
     public void setStartHeadacheDate(final Date startDateWithoutTime, float partOfDay) {
         headacheStartDate = startDateWithoutTime;
-        headacheStartTimeInputMode = DateTimePickerFragment.TimeInputMode.PART_OF_DAY;
+        headacheStartTimeInputMode = TimeInputMode.PART_OF_DAY;
         headacheStartPartOfDay = partOfDay;
         onHeadacheDatesUpdated();
     }
 
     public void setEndHeadacheDate(final Date endDate) {
         headacheEndDate = endDate;
-        headacheEndTimeInputMode = DateTimePickerFragment.TimeInputMode.CLOCK;
+        headacheEndTimeInputMode = TimeInputMode.CLOCK;
         headacheEndPartOfDay = -1;
         onHeadacheDatesUpdated();
     }
 
     public void setEndHeadacheDate(final Date endDateWithoutTime, float partOfDay) {
         headacheEndDate = endDateWithoutTime;
-        headacheEndTimeInputMode = DateTimePickerFragment.TimeInputMode.PART_OF_DAY;
+        headacheEndTimeInputMode = TimeInputMode.PART_OF_DAY;
         headacheEndPartOfDay = partOfDay;
         onHeadacheDatesUpdated();
     }
@@ -457,11 +453,11 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         return bottomFabButton;
     }
 
-    public DateTimePickerFragment.TimeInputMode getHeadacheStartTimeInputMode() {
+    public TimeInputMode getHeadacheStartTimeInputMode() {
         return headacheStartTimeInputMode;
     }
 
-    public DateTimePickerFragment.TimeInputMode getHeadacheEndTimeInputMode() {
+    public TimeInputMode getHeadacheEndTimeInputMode() {
         return headacheEndTimeInputMode;
     }
 

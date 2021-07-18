@@ -88,6 +88,14 @@ public class PartOfDayPickerView extends LinearLayout {
         onPartOfDaySetListener = l;
     }
 
+    public OnPartOfDayChangedListener getOnPartOfDayChangedListener() {
+        return onPartOfDayChangedListener;
+    }
+
+    public OnPartOfDaySetListener getOnPartOfDaySetListener() {
+        return onPartOfDaySetListener;
+    }
+
     private void initialize() {
         setOrientation(VERTICAL);
 

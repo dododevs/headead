@@ -263,6 +263,7 @@ public class ClockView extends ConstraintLayout {
     }
 
     public void reset() {
+        selectedHour = selectedMinute = -1;
         userUpdatedMinutes = false;
         resetAllLabelViews();
         minuteDot.animate().alpha(0.f)
@@ -288,6 +289,14 @@ public class ClockView extends ConstraintLayout {
 
     public void setOnTimeSetListener(OnTimeSetListener l) {
         timeSetListener = l;
+    }
+
+    public OnTimeChangedListener getTimeChangedListener() {
+        return timeChangedListener;
+    }
+
+    public OnTimeSetListener getTimeSetListener() {
+        return timeSetListener;
     }
 
     private void switchClockLabels(String[] newLabels) {

@@ -73,4 +73,8 @@ public final class TimeFormattingUtils {
         seconds += hour * 60 * 60 + minute * 60;
         return (int) Math.round(seconds / 86400.);
     }
+
+    public static int getPartOfDayFromTimePair(int hour, int minute) {
+        return (int) Math.round((hour * 60 * 60 + minute * 60) / 86400. * 100);
+    }
 }
