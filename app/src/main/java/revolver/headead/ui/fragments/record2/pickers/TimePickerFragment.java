@@ -1,37 +1,24 @@
 package revolver.headead.ui.fragments.record2.pickers;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentResultListener;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.Date;
 
 import revolver.headead.R;
 import revolver.headead.core.model.DateTimePickerPreset;
 import revolver.headead.core.model.Moment;
 import revolver.headead.ui.activities.record.RecordHeadacheActivity2;
 import revolver.headead.ui.fragments.BackPressAware;
-import revolver.headead.ui.views.MaterialTimePickerView;
-import revolver.headead.ui.views.PartOfDayPickerView;
 import revolver.headead.ui.views.TimePickerView;
-import revolver.headead.util.misc.TimeFormattingUtils;
 import revolver.headead.util.ui.M;
-import revolver.headead.util.ui.Snacks;
 
 public class TimePickerFragment extends Fragment implements BackPressAware {
 
