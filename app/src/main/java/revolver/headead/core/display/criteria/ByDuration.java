@@ -16,7 +16,7 @@ public class ByDuration extends OrderingCriterion {
     @Override
     public void apply(Context context, List<ListItem> dataset, List<Headache> headaches) {
         dataset.clear();
-        Collections.sort(headaches, (headache2, headache1) -> {
+        /*Collections.sort(headaches, (headache2, headache1) -> {
             if (headache1.getEndDate() == null) {
                 return new Date(headache2.getEndDate().getTime() - headache2.getStartDate().getTime())
                         .compareTo(new Date(System.currentTimeMillis() -
@@ -29,7 +29,7 @@ public class ByDuration extends OrderingCriterion {
             return new Date(headache2.getEndDate().getTime() - headache2.getStartDate().getTime())
                     .compareTo(new Date(headache1.getEndDate().getTime() -
                             headache1.getStartDate().getTime()));
-        });
+        });*/
         dataset.addAll(headaches);
         dataset.add(0, new Header(context.getString(
                 R.string.ordering_criterion_by_duration_header)));

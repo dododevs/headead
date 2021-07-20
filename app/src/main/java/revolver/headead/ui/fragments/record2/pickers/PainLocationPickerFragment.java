@@ -130,6 +130,6 @@ public class PainLocationPickerFragment extends Fragment {
     }
 
     private RecordHeadacheActivity2 requireRecordHeadacheActivity() {
-        return (RecordHeadacheActivity2) Objects.requireNonNull(getActivity());
+        return (RecordHeadacheActivity2) requireActivity();
     }
 }

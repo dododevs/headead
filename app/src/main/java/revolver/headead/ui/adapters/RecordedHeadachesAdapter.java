@@ -110,10 +110,12 @@ public class RecordedHeadachesAdapter extends RecyclerView.Adapter<RecordedHeada
         final ListItem item = this.dataset.get(position);
         if (item instanceof Headache) {
             final Headache headache = (Headache) item;
-            holder.startTimeView.setText(startAndEndFormatter.format(headache.getStartDate()));
-            if (headache.getEndDate() != null) {
+            holder.startTimeView.setText(
+                    startAndEndFormatter.format(headache.getStartMoment().getDate()));
+            if (headache.getEndMoment() != null) {
                 holder.durationView.setText(buildDurationLabel(
-                        context, headache.getStartDate(), headache.getEndDate()));
+                        context, headache.getStartMoment().getDate(),
+                            headache.getEndMoment().getDate()));
             } else {
                 holder.durationView.setText(R.string.item_recorded_headache_duration_undefined);
             }
@@ -217,7 +219,8 @@ public class RecordedHeadachesAdapter extends RecyclerView.Adapter<RecordedHeada
             return;
         }
         Collections.sort(filteredHeadaches, (headache1, headache2) ->
-                headache2.getStartDate().compareTo(headache1.getStartDate()));
+                headache2.getStartMoment().getDate()
+                        .compareTo(headache1.getStartMoment().getDate()));
         orderingCriterion.apply(context, this.dataset, this.filteredHeadaches);
     }
 

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:baselineAligned="false">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:padding="8dp"
+        android:orientation="vertical"
+        android:focusable="true"
+        android:clickable="true"
+        android:id="@+id/mtrl_time_picker_start_box">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_gravity="center_horizontal">
+
+            <revolver.headead.ui.views.typography.LektonTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:text="@string/mtrl_time_picker_no_start_end_value"
+                android:textSize="36sp"
+                android:textColor="@color/blackOlive"
+                android:textAlignment="center"
+                android:id="@+id/mtrl_time_picker_start_box_value"/>
+
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:id="@+id/mtrl_time_picker_start_box_pod"
+                android:visibility="gone"
+                android:contentDescription="@string/cd_part_of_day"/>
+
+        </FrameLayout>
+
+        <revolver.headead.ui.views.typography.MontserratTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="4dp"
+            android:id="@+id/mtrl_time_picker_start_box_label"
+            android:text="@string/mtrl_time_picker_start_label"
+            android:textColor="@color/flameDark"
+            android:textSize="12sp"
+            android:textAllCaps="true"
+            android:textAlignment="center"
+            app:textStyle="semiBold"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/paleSpringBudDark"
+        android:id="@+id/mtrl_time_picker_box_divider"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:padding="8dp"
+        android:orientation="vertical"
+        android:focusable="true"
+        android:clickable="true"
+        android:id="@+id/mtrl_time_picker_end_box">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_gravity="center_horizontal">
+
+            <revolver.headead.ui.views.typography.MontserratTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/mtrl_time_picker_next_day"
+                android:text="@string/mtrl_time_picker_next_day"
+                android:textColor="@color/flameDark"
+                android:textSize="12.8sp"
+                android:textAllCaps="true"
+                android:textAlignment="center"
+                android:visibility="gone"
+                app:textStyle="semiBold"/>
+
+            <revolver.headead.ui.views.typography.LektonTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:text="@string/mtrl_time_picker_no_start_end_value"
+                android:textSize="36sp"
+                android:textColor="@color/blackOlive"
+                android:textAlignment="center"
+                android:id="@+id/mtrl_time_picker_end_box_value"/>
+
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:id="@+id/mtrl_time_picker_end_box_pod"
+                android:visibility="gone"
+                android:contentDescription="@string/cd_part_of_day"/>
+
+        </FrameLayout>
+
+        <revolver.headead.ui.views.typography.MontserratTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="4dp"
+            android:id="@+id/mtrl_time_picker_end_box_label"
+            android:text="@string/mtrl_time_picker_end_label"
+            android:textColor="@color/tertiaryText"
+            android:textSize="12sp"
+            android:textAllCaps="true"
+            android:textAlignment="center"
+            app:textStyle="semiBold"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -2,8 +2,9 @@ package revolver.headead.core.model.migrations;
 
 import androidx.annotation.NonNull;
 
+import java.util.Date;
+
 import io.realm.DynamicRealm;
-import io.realm.DynamicRealmObject;
 import io.realm.FieldAttribute;
 import io.realm.RealmList;
 import io.realm.RealmMigration;
@@ -12,10 +13,10 @@ import io.realm.RealmSchema;
 import revolver.headead.core.model.DrugIntake;
 import revolver.headead.core.model.DrugTag;
 import revolver.headead.core.model.Headache;
+import revolver.headead.core.model.Moment;
 import revolver.headead.core.model.PainIntensity;
-import revolver.headead.core.model.PainLocation;
-import revolver.headead.core.model.PainType;
 import revolver.headead.core.model.SavedDrug;
+import revolver.headead.ui.fragments.record2.pickers.TimeInputMode;
 
 import static java.util.Objects.requireNonNull;
 
@@ -109,8 +110,46 @@ public class HeadacheMigration implements RealmMigration {
             drugTagSchema.addField("color", int.class);
 
             final RealmObjectSchema drugIntakeSchema =
-                    schema.get(DrugIntake.class.getSimpleName());
+                    requireNonNull(schema.get(DrugIntake.class.getSimpleName()));
             drugIntakeSchema.addRealmObjectField("tag", drugTagSchema);
+            oldVersion++;
+        }
+
+        /*
+         * Apply the following updates:
+         * - Moment: added
+         * - Headache:
+         *  - field startDate, endDate: removed
+         *  - field startDateTimeMode, endDateTimeMode: removed
+         *  - field startMoment, endMoment: added
+         * */
+        if (oldVersion == 2) {
+            final RealmObjectSchema momentSchema =
+                    schema.create(Moment.class.getSimpleName());
+            momentSchema.addField("date", Date.class);
+            momentSchema.addField("partOfDay", int.class);
+            momentSchema.addField("timeInputMode", String.class);
+
+            final RealmObjectSchema headacheSchema =
+                    requireNonNull(schema.get(Headache.class.getSimpleName()));
+            headacheSchema.addRealmObjectField("startMoment", momentSchema);
+            headacheSchema.addRealmObjectField("endMoment", momentSchema);
+
+            headacheSchema.transform(headache -> {
+                final Date startDate = headache.getDate("startDate");
+                final Date endDate = headache.getDate("endDate");
+                final Moment startMoment = new Moment(
+                        startDate, -1, TimeInputMode.CLOCK);
+                final Moment endMoment = new Moment(
+                        endDate, -1, TimeInputMode.CLOCK);
+                headache.set("startMoment", startMoment);
+                headache.set("endMoment", endMoment);
+            });
+
+            headacheSchema.removeField("startDate");
+            headacheSchema.removeField("endDate");
+            headacheSchema.removeField("startDateTimeMode");
+            headacheSchema.removeField("endDateTimeMode");
         }
     }
 

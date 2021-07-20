@@ -54,17 +54,18 @@ public class HeadacheDetailBackdropFragment extends Fragment {
 
         ((TextView) view.findViewById(R.id.fragment_headache_detail_backdrop_start))
                 .setText(RecordedHeadachesAdapter.startAndEndFormatter
-                        .format(headache.getStartDate()));
-        if (headache.getEndDate() != null) {
+                        .format(headache.getStartMoment().getDate()));
+        if (headache.getEndMoment() != null) {
             view.findViewById(R.id.fragment_headache_detail_backdrop_timespan_arrow)
                     .setVisibility(View.VISIBLE);
             view.findViewById(R.id.fragment_headache_detail_backdrop_end)
                     .setVisibility(View.VISIBLE);
             ((TextView) view.findViewById(R.id.fragment_headache_detail_backdrop_end))
-                    .setText(endTimeFormatter.format(headache.getEndDate()));
+                    .setText(endTimeFormatter.format(headache.getEndMoment().getDate()));
             ((TextView) view.findViewById(R.id.fragment_headache_detail_backdrop_duration))
                     .setText(RecordedHeadachesAdapter.buildDurationLabel(requireContext(),
-                            headache.getStartDate(), headache.getEndDate()));
+                            headache.getStartMoment().getDate(),
+                                headache.getEndMoment().getDate()));
         } else {
             view.findViewById(R.id.fragment_headache_detail_backdrop_timespan_arrow)
                     .setVisibility(View.GONE);

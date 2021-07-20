@@ -30,14 +30,15 @@ public class ByMonth extends OrderingCriterion {
         for (int i = headaches.size() - 1; i >= 0; i--) {
             final Headache headache = headaches.get(i);
             if (lastMonth == -1) {
-                lastMonth = getMonthFromDate(headache.getStartDate());
-            } else if (getMonthFromDate(headache.getStartDate()) != lastMonth) {
+                lastMonth = getMonthFromDate(headache.getStartMoment().getDate());
+            } else if (getMonthFromDate(headache.getStartMoment().getDate()) != lastMonth) {
                 dataset.add(i + 1, new Header(
-                        monthFormatter.format(headaches.get(i + 1).getStartDate())));
-                lastMonth = getMonthFromDate(headache.getStartDate());
+                        monthFormatter.format(headaches.get(i + 1).getStartMoment().getDate())));
+                lastMonth = getMonthFromDate(headache.getStartMoment().getDate());
             }
         }
-        dataset.add(0, new Header(monthFormatter.format(headaches.get(0).getStartDate())));
+        dataset.add(0, new Header(monthFormatter.format(
+                headaches.get(0).getStartMoment().getDate())));
     }
 
     private static int getMonthFromDate(final Date date) {

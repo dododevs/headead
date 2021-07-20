@@ -10,6 +10,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
 import android.util.ArrayMap;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -21,7 +22,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -30,6 +30,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.libraries.maps.model.CameraPosition;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.shape.CornerFamily;
 import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.shape.ShapeAppearanceModel;
@@ -45,19 +46,23 @@ import revolver.headead.App;
 import revolver.headead.R;
 import revolver.headead.core.model.DrugIntake;
 import revolver.headead.core.model.Headache;
+import revolver.headead.core.model.Moment;
 import revolver.headead.core.model.PainLocation;
 import revolver.headead.core.model.PainType;
 import revolver.headead.core.model.Trigger;
+import revolver.headead.ui.fragments.BackPressAware;
 import revolver.headead.ui.fragments.SimpleAlertDialogFragment;
 import revolver.headead.ui.fragments.display.HeadacheDetailBackdropFragment;
 import revolver.headead.ui.fragments.display.HeadacheDetailFrontFragment;
 import revolver.headead.ui.fragments.display.ListHeadachesFragment;
-import revolver.headead.ui.fragments.record2.pickers.DateTimePickerFragment;
+import revolver.headead.ui.fragments.record2.pickers.DatePickerFragment;
 import revolver.headead.ui.fragments.record2.pickers.DateTimePickerFragment2;
 import revolver.headead.ui.fragments.record2.pickers.PainIntensityPickerFragment;
 import revolver.headead.ui.fragments.record2.pickers.PainLocationPickerFragment;
 import revolver.headead.ui.fragments.record2.pickers.PainTypePickerFragment;
 import revolver.headead.ui.fragments.record2.RecordHeadacheBottomPaneFragment;
+import revolver.headead.ui.fragments.record2.pickers.TimeInputMode;
+import revolver.headead.ui.fragments.record2.pickers.TimePickerFragment;
 import revolver.headead.util.misc.TimeFormattingUtils;
 import revolver.headead.util.ui.M;
 import revolver.headead.util.ui.Snacks;
@@ -74,16 +79,16 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
     public static final String EXTRAS_TAG = "extras";
     private static final List<String> backStackedFragmentTags =
             Arrays.asList(LOCATION_PICKER_TAG, INTENSITY_PICKER_TAG,
-                    TYPE_PICKER_TAG, DATETIME_PICKER_TAG, EXTRAS_TAG);
+                    TYPE_PICKER_TAG, DATETIME_PICKER_TAG, EXTRAS_TAG,
+                        DatePickerFragment.TAG, TimePickerFragment.TAG);
     private static final int REQUEST_DRUGS = "letsFindYouAQuickFix".hashCode() & 0xff;
     private static final int REQUEST_LOCATION = "lemmeTrackYou".hashCode() & 0xff;
 
     private MaterialCardView painLocationCardView, painIntensityCardView, painTypeCardView;
     private TextView painLocationValueView, painIntensityValueView, painTypeValueView;
     private ImageView painLocationIconView, painIntensityIconView, painTypeIconView;
-    private TextView headacheStartDateValueView, headacheEndDateValueView;
-    private ImageView headacheStartDateIconView, headacheEndDateIconView;
-    private TextView headacheEndDateLabelView;
+    private TextView headacheDateValueView;
+    private ImageView headacheDateIconView;
 
     private Toolbar toolbar;
     private View.OnClickListener navigationClickListener;
@@ -91,6 +96,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
     private FrameLayout bottomSheetDimmer;
     private BottomSheetBehavior<LinearLayout> bottomSheetBehavior;
     private Fragment backdropFragment;
+    private FloatingActionButton bottomFabButton;
 
     private List<PainLocation> painLocations;
     private int painIntensity;
@@ -105,10 +111,11 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
     private Date headacheEndDate;
     private float headacheStartPartOfDay;
     private float headacheEndPartOfDay;
-    private DateTimePickerFragment.DateTimeMode headacheStartDateTimeMode;
-    private DateTimePickerFragment.DateTimeMode headacheEndDateTimeMode;
-    private DateTimePickerFragment.TimeInputMode headacheStartTimeInputMode;
-    private DateTimePickerFragment.TimeInputMode headacheEndTimeInputMode;
+    private TimeInputMode headacheStartTimeInputMode;
+    private TimeInputMode headacheEndTimeInputMode;
+
+    private Moment headacheStart;
+    private Moment headacheEnd;
 
     private Headache editedHeadache;
     private boolean editMode = false;
@@ -119,7 +126,8 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_record_headache_2);
 
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(navigationClickListener = (v) -> revertToMainListFragment());
+        toolbar.setNavigationOnClickListener(
+                navigationClickListener = v -> revertToMainListFragment());
 
         painLocationValueView = findViewById(R.id.activity_record_headache_2_pain_location_value);
         painLocationIconView = findViewById(R.id.activity_record_headache_2_pain_location_icon);
@@ -128,11 +136,8 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         painTypeValueView = findViewById(R.id.activity_record_headache_2_pain_type_value);
         painTypeIconView = findViewById(R.id.activity_record_headache_2_pain_type_icon);
 
-        headacheStartDateValueView = findViewById(R.id.activity_record_headache_2_datetime_start_value);
-        headacheStartDateIconView = findViewById(R.id.activity_record_headache_2_datetime_start_icon);
-        headacheEndDateValueView = findViewById(R.id.activity_record_headache_2_datetime_end_value);
-        headacheEndDateIconView = findViewById(R.id.activity_record_headache_2_datetime_end_icon);
-        headacheEndDateLabelView = findViewById(R.id.activity_record_headache_2_datetime_end_label);
+        headacheDateValueView = findViewById(R.id.activity_record_headache_2_datetime_value);
+        headacheDateIconView = findViewById(R.id.activity_record_headache_2_datetime_icon);
 
         painLocationCardView = findViewById(R.id.activity_record_headache_2_pain_location);
         painLocationCardView.setOnClickListener(v ->
@@ -147,12 +152,9 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
                 startBottomTransitionToFragment(new PainTypePickerFragment(),
                         TYPE_PICKER_TAG, M.dp(256.f).intValue(), true));
 
-        findViewById(R.id.activity_record_headache_2_datetime_start).setOnClickListener(v ->
-                startBottomTransitionToFragment(DateTimePickerFragment.asStart(),
-                        DATETIME_PICKER_TAG, M.dp(132.f).intValue(), true, false, false));
-        findViewById(R.id.activity_record_headache_2_datetime_end).setOnClickListener(v ->
-                startBottomTransitionToFragment(DateTimePickerFragment.asEnd(),
-                        DATETIME_PICKER_TAG, M.dp(132.f).intValue(), true, false, false));
+        findViewById(R.id.activity_record_headache_2_datetime).setOnClickListener(v ->
+                startBottomTransitionToFragment(new DateTimePickerFragment2(),
+                        DATETIME_PICKER_TAG, M.dp(330.f).intValue(), true, false, false));
         findViewById(R.id.activity_record_headache_2_medication).setOnClickListener(v ->
                 startActivityForResult(new Intent(this, RecordDrugsActivity.class)
                         .putParcelableArrayListExtra("drugs", drugDosages), REQUEST_DRUGS));
@@ -186,40 +188,47 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
 
         bottomSheetFrame = findViewById(R.id.bottom_frame);
         bottomSheetDimmer = findViewById(R.id.activity_record_headache_2_dim);
+        bottomFabButton = findViewById(R.id.fab);
 
         revertToMainListFragment();
     }
 
-    public void setStartHeadacheDate(final Date date, float partOfDay, final DateTimePickerFragment.DateTimeMode dateTimeMode, final DateTimePickerFragment.TimeInputMode timeInputMode) {
-        headacheStartDate = date;
-        headacheStartDateTimeMode = dateTimeMode;
-        headacheStartTimeInputMode = timeInputMode;
-        headacheStartPartOfDay = partOfDay;
-        onHeadacheStartDateUpdated();
-    }
-
-    public void setStartHeadacheDate(final Date date, final DateTimePickerFragment.DateTimeMode dateTimeMode) {
-        headacheStartDate = date;
-        headacheStartDateTimeMode = dateTimeMode;
-        headacheStartTimeInputMode = DateTimePickerFragment.TimeInputMode.CLOCK;
+    public void setStartHeadacheDate(final Date startDate) {
+        headacheStartDate = startDate;
+        headacheStartTimeInputMode = TimeInputMode.CLOCK;
         headacheStartPartOfDay = -1;
-        onHeadacheStartDateUpdated();
+        onHeadacheDatesUpdated();
     }
 
-    public void setEndHeadacheDate(final Date date, float partOfDay, final DateTimePickerFragment.DateTimeMode dateTimeMode, final DateTimePickerFragment.TimeInputMode timeInputMode) {
-        headacheEndDate = date;
-        headacheEndDateTimeMode = dateTimeMode;
-        headacheEndTimeInputMode = timeInputMode;
-        headacheEndPartOfDay = partOfDay;
-        onHeadacheEndDateUpdated(false);
+    public void setStartHeadacheDate(final Date startDateWithoutTime, float partOfDay) {
+        headacheStartDate = startDateWithoutTime;
+        headacheStartTimeInputMode = TimeInputMode.PART_OF_DAY;
+        headacheStartPartOfDay = partOfDay;
+        onHeadacheDatesUpdated();
     }
 
-    public void setEndHeadacheDate(final Date date, final DateTimePickerFragment.DateTimeMode dateTimeMode) {
-        headacheEndDate = date;
-        headacheEndDateTimeMode = dateTimeMode;
-        headacheEndTimeInputMode = DateTimePickerFragment.TimeInputMode.CLOCK;
+    public void setEndHeadacheDate(final Date endDate) {
+        headacheEndDate = endDate;
+        headacheEndTimeInputMode = TimeInputMode.CLOCK;
         headacheEndPartOfDay = -1;
-        onHeadacheEndDateUpdated(false);
+        onHeadacheDatesUpdated();
+    }
+
+    public void setEndHeadacheDate(final Date endDateWithoutTime, float partOfDay) {
+        headacheEndDate = endDateWithoutTime;
+        headacheEndTimeInputMode = TimeInputMode.PART_OF_DAY;
+        headacheEndPartOfDay = partOfDay;
+        onHeadacheDatesUpdated();
+    }
+
+    public void setHeadacheStart(Moment headacheStart) {
+        this.headacheStart = headacheStart;
+        onHeadacheDatesUpdated();
+    }
+
+    public void setHeadacheEnd(Moment headacheEnd) {
+        this.headacheEnd = headacheEnd;
+        onHeadacheDatesUpdated();
     }
 
     @Override
@@ -428,23 +437,27 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         return headacheEndPartOfDay;
     }
 
+    public Moment getHeadacheStart() {
+        return headacheStart;
+    }
+
+    public Moment getHeadacheEnd() {
+        return headacheEnd;
+    }
+
     public Toolbar getToolbar() {
         return toolbar;
     }
 
-    public DateTimePickerFragment.DateTimeMode getHeadacheStartDateTimeMode() {
-        return headacheStartDateTimeMode;
+    public FloatingActionButton getBottomFabButton() {
+        return bottomFabButton;
     }
 
-    public DateTimePickerFragment.DateTimeMode getHeadacheEndDateTimeMode() {
-        return headacheEndDateTimeMode;
-    }
-
-    public DateTimePickerFragment.TimeInputMode getHeadacheStartTimeInputMode() {
+    public TimeInputMode getHeadacheStartTimeInputMode() {
         return headacheStartTimeInputMode;
     }
 
-    public DateTimePickerFragment.TimeInputMode getHeadacheEndTimeInputMode() {
+    public TimeInputMode getHeadacheEndTimeInputMode() {
         return headacheEndTimeInputMode;
     }
 
@@ -461,6 +474,9 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         super.onPause();
         if (Build.VERSION.SDK_INT >= 23) {
             ViewUtils.setLightStatusBar(this, false);
+        }
+        if (backStackedFragmentTags.contains(getMostRecentlyAddedFragment().getTag())) {
+            resetBottomPane();
         }
     }
 
@@ -506,11 +522,8 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         } else if (painTypes == null) {
             bounceMissingDataView(findViewById(R.id.activity_record_headache_2_pain_type));
             missingData = true;
-        } else if (headacheStartDate == null) {
-            bounceMissingDataView(findViewById(R.id.activity_record_headache_2_datetime_start));
-            missingData = true;
-        } else if (headacheEndDate == null && headacheEndDateTimeMode != DateTimePickerFragment.DateTimeMode.ONGOING) {
-            bounceMissingDataView(findViewById(R.id.activity_record_headache_2_datetime_end));
+        } else if (headacheStartDate == null || headacheEndDate == null) {
+            bounceMissingDataView(findViewById(R.id.activity_record_headache_2_datetime));
             missingData = true;
         }
         if (missingData) {
@@ -519,10 +532,8 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         } else {
             final Headache headache =
                     editMode ? editedHeadache : new Headache();
-            headache.setStartDateTimeMode(headacheStartDateTimeMode);
-            headache.setStartDate(headacheStartDate);
-            headache.setEndDateTimeMode(headacheEndDateTimeMode);
-            headache.setEndDate(headacheEndDate);
+            headache.setStartMoment(headacheStart);
+            headache.setEndMoment(headacheEnd);
 
             final RealmList<PainLocation> painLocations = new RealmList<>();
             painLocations.addAll(this.painLocations);
@@ -580,9 +591,9 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         }
     }
 
-    private void onHeadacheStartDateUpdated() {
+    private void onHeadacheDatesUpdated() {
         if (headacheStartDate == null) {
-            headacheStartDateIconView.animate()
+            headacheDateIconView.animate()
                     .translationX(0.f)
                     .translationY(0.f)
                     .scaleX(1.f)
@@ -591,16 +602,16 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
                     .setDuration(200L)
                     .setInterpolator(new AccelerateDecelerateInterpolator())
                     .start();
-            headacheStartDateValueView.animate()
+            headacheDateValueView.animate()
                     .alpha(0.f)
                     .setDuration(200L)
                     .setInterpolator(new LinearInterpolator())
                     .start();
-            findViewById(R.id.activity_record_headache_2_datetime_start_checked)
+            findViewById(R.id.activity_record_headache_2_datetime_checked)
                     .setVisibility(View.GONE);
             return;
         }
-        headacheStartDateIconView.animate()
+        headacheDateIconView.animate()
                 .translationX(M.dp(-24.f))
                 .translationY(M.dp(12.f))
                 .scaleX(0.5f)
@@ -609,95 +620,15 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
                 .setDuration(200L)
                 .setInterpolator(new AccelerateDecelerateInterpolator())
                 .start();
-        headacheStartDateValueView.animate()
+        headacheDateValueView.animate()
                 .alpha(1.f)
                 .setDuration(200L)
                 .setInterpolator(new LinearInterpolator())
                 .start();
-        headacheStartDateValueView.setText(
+        headacheDateValueView.setText(
                 TimeFormattingUtils.formatPastDateShort(this, headacheStartDate));
-        findViewById(R.id.activity_record_headache_2_datetime_start_checked)
+        findViewById(R.id.activity_record_headache_2_datetime_checked)
                 .setVisibility(View.VISIBLE);
-        if (headacheStartDate != null && headacheEndDate != null &&
-                headacheStartDate.after(headacheEndDate)) {
-            if (headacheStartTimeInputMode == DateTimePickerFragment.TimeInputMode.PART_OF_DAY) {
-                setEndHeadacheDate(headacheStartDate, headacheStartPartOfDay,
-                        DateTimePickerFragment.DateTimeMode.CUSTOM, headacheStartTimeInputMode);
-            } else {
-                setEndHeadacheDate(headacheStartDate, -1,
-                        DateTimePickerFragment.DateTimeMode.CUSTOM, headacheStartTimeInputMode);
-            }
-            buildStartAfterEndErrorDialog().show(getSupportFragmentManager(), null);
-        }
-    }
-
-    private void onHeadacheEndDateUpdated(boolean reset) {
-        if (headacheEndDate == null) {
-            headacheEndDateIconView.animate()
-                    .translationX(0.f)
-                    .translationY(0.f)
-                    .scaleX(1.f)
-                    .scaleY(1.f)
-                    .alpha(1.f)
-                    .setDuration(200L)
-                    .setInterpolator(new AccelerateDecelerateInterpolator())
-                    .withStartAction(() -> {
-                        if (reset) {
-                            headacheEndDateIconView.setImageResource(
-                                    R.drawable.ic_timespan_end);
-                        } else {
-                            headacheEndDateIconView.setImageResource(
-                                    R.drawable.ic_timespan_ongoing);
-                        }
-                    })
-                    .start();
-            headacheEndDateValueView.animate()
-                    .alpha(0.f)
-                    .setDuration(200L)
-                    .setInterpolator(new LinearInterpolator())
-                    .start();
-            if (reset) {
-                headacheEndDateLabelView.setText(
-                        R.string.activity_record_headache_2_datetime_end);
-                findViewById(R.id.activity_record_headache_2_datetime_end_checked)
-                        .setVisibility(View.GONE);
-                return;
-            } else {
-                headacheEndDateLabelView.setText(
-                        R.string.activity_record_headache_2_datetime_ongoing);
-            }
-        } else {
-            headacheEndDateIconView.animate()
-                    .translationX(M.dp(-24.f))
-                    .translationY(M.dp(12.f))
-                    .scaleX(0.5f)
-                    .scaleY(0.5f)
-                    .alpha(0.f)
-                    .setDuration(200L)
-                    .setInterpolator(new AccelerateDecelerateInterpolator())
-                    .start();
-            headacheEndDateValueView.animate()
-                    .alpha(1.f)
-                    .setDuration(200L)
-                    .setInterpolator(new LinearInterpolator())
-                    .start();
-            headacheEndDateLabelView.setText(R.string.activity_record_headache_2_datetime_end);
-            headacheEndDateValueView.setText(
-                    TimeFormattingUtils.formatPastDateShort(this, headacheEndDate));
-        }
-        findViewById(R.id.activity_record_headache_2_datetime_end_checked)
-                .setVisibility(View.VISIBLE);
-        if (headacheStartDate != null && headacheEndDate != null &&
-                headacheStartDate.after(headacheEndDate)) {
-            if (headacheEndTimeInputMode == DateTimePickerFragment.TimeInputMode.PART_OF_DAY) {
-                setStartHeadacheDate(headacheEndDate, headacheEndPartOfDay,
-                        DateTimePickerFragment.DateTimeMode.CUSTOM, headacheEndTimeInputMode);
-            } else {
-                setStartHeadacheDate(headacheEndDate, -1,
-                        DateTimePickerFragment.DateTimeMode.CUSTOM, headacheEndTimeInputMode);
-            }
-            buildStartAfterEndErrorDialog().show(getSupportFragmentManager(), null);
-        }
     }
 
     private SimpleAlertDialogFragment buildStartAfterEndErrorDialog() {
@@ -841,12 +772,9 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
     public void startEditMode(final Headache headache) {
         editMode = true;
         editedHeadache = headache;
-        headacheStartDateTimeMode = editedHeadache.getStartDateTimeMode();
-        headacheEndDateTimeMode = editedHeadache.getEndDateTimeMode();
-        headacheStartDate = editedHeadache.getStartDate();
-        headacheEndDate = editedHeadache.getEndDate();
-        onHeadacheStartDateUpdated();
-        onHeadacheEndDateUpdated(false);
+        headacheStart = editedHeadache.getStartMoment();
+        headacheEnd = editedHeadache.getEndMoment();
+        onHeadacheDatesUpdated();
         animatePainLocationChange(editedHeadache.getPainLocations());
         animatePainIntensityChange(editedHeadache.getPainIntensity());
         animatePainTypeChange(editedHeadache.getPainTypes());
@@ -874,6 +802,8 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
     }
 
     public void resetBottomPane() {
+        Log.d("resetBottomPane", "hiding button");
+        bottomFabButton.hide();
         startBottomTransitionToFragment(new RecordHeadacheBottomPaneFragment(),
                 null, M.dp(96.f).intValue(), false);
     }
@@ -887,12 +817,9 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
     }
 
     public void clearAllFields() {
-        headacheStartDateTimeMode = null;
-        headacheEndDateTimeMode = null;
         headacheStartDate = null;
         headacheEndDate = null;
-        onHeadacheStartDateUpdated();
-        onHeadacheEndDateUpdated(true);
+        onHeadacheDatesUpdated();
 
         animatePainLocationChange(null);
         animatePainIntensityChange(0);
@@ -912,12 +839,15 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        final List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        final Fragment lastAdded = fragments.get(fragments.size() - 1);
+        final Fragment lastAdded = getMostRecentlyAddedFragment();
         if (backStackedFragmentTags.contains(lastAdded.getTag())) {
             /* if one of the picker fragments is visible, revert back to
                BottomPaneFragment instead of firing onBackPressed */
-            resetBottomPane();
+            if (lastAdded instanceof BackPressAware) {
+                ((BackPressAware) lastAdded).onBackPressed();
+            } else {
+                resetBottomPane();
+            }
         } else if (editMode) {
             startBottomTransitionToFragment(HeadacheDetailFrontFragment.of(editedHeadache),
                     "detailFront", M.screenHeight() - ViewUtils
@@ -931,6 +861,11 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         } else {
             revertToMainListFragment();
         }
+    }
+
+    private Fragment getMostRecentlyAddedFragment() {
+        final List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        return fragments.get(fragments.size() - 1);
     }
 
     public static MaterialShapeDrawable createBottomPaneRoundedBackground() {

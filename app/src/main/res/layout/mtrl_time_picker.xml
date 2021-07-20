@@ -69,6 +69,7 @@
             android:textColor="@color/blackOlive"
             android:textAlignment="center"
             android:textCursorDrawable="@drawable/mtrl_time_picker_cursor"
+            android:imeOptions="actionDone"
             android:inputType="number"
             android:id="@+id/mtrl_time_picker_minute"
             android:autofillHints="@null"

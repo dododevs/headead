@@ -5,16 +5,11 @@ import android.graphics.drawable.AnimatedVectorDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
 
 import com.google.android.material.slider.Slider;
 
@@ -32,6 +27,12 @@ public class PartOfDayPickerView extends LinearLayout {
 
     private final static Calendar c = Calendar.getInstance();
     private int lastRoundedValue = 0;
+
+    private boolean bounded = false;
+    private int customBound = -1;
+
+    private OnPartOfDayChangedListener onPartOfDayChangedListener;
+    private OnPartOfDaySetListener onPartOfDaySetListener;
 
     public PartOfDayPickerView(Context context) {
         this(context, null);
@@ -55,8 +56,18 @@ public class PartOfDayPickerView extends LinearLayout {
         onNewValueConfirmed();
     }
 
-    public float getPartOfDay() {
-        return slider.getValue();
+    public void setBounded(boolean b) {
+        bounded = b;
+        onNewValueConfirmed();
+    }
+
+    public void setBound(int b) {
+        customBound = b;
+        onNewValueConfirmed();
+    }
+
+    public int getPartOfDay() {
+        return (int) slider.getValue();
     }
 
     public boolean isLaterToday() {
@@ -67,6 +78,22 @@ public class PartOfDayPickerView extends LinearLayout {
         c.set(Calendar.SECOND, 0);
         c.add(Calendar.SECOND, 86400 * (int) slider.getValue() / 100);
         return c.getTime().after(now);
+    }
+
+    public void setOnPartOfDayChangedListener(OnPartOfDayChangedListener l) {
+        onPartOfDayChangedListener = l;
+    }
+
+    public void setOnPartOfDaySetListener(OnPartOfDaySetListener l) {
+        onPartOfDaySetListener = l;
+    }
+
+    public OnPartOfDayChangedListener getOnPartOfDayChangedListener() {
+        return onPartOfDayChangedListener;
+    }
+
+    public OnPartOfDaySetListener getOnPartOfDaySetListener() {
+        return onPartOfDaySetListener;
     }
 
     private void initialize() {
@@ -135,20 +162,29 @@ public class PartOfDayPickerView extends LinearLayout {
                     }
                     break;
             }
+            if (onPartOfDayChangedListener != null) {
+                onPartOfDayChangedListener.onValueChanged((int) value);
+            }
             lastRoundedValue = roundedValue;
-            Log.d("rounded", "value: " + roundedValue);
         }));
     }
 
     private void onNewValueConfirmed() {
-        if (isLaterToday()) {
-            int min = getCurrentMinimumValue();
-            Log.d("min", min + "");
-            slider.setValue(min);
+        if (bounded && (customBound >= 0 || isLaterToday())) {
+            slider.setValue(getCurrentMinimumValue());
+            if (onPartOfDayChangedListener != null) {
+                onPartOfDayChangedListener.onValueChanged((int) slider.getValue());
+            }
+        }
+        if (onPartOfDaySetListener != null) {
+            onPartOfDaySetListener.onValueSet();
         }
     }
 
     private int getCurrentMinimumValue() {
+        if (customBound >= 0) {
+            return customBound;
+        }
         c.setTime(new Date());
         return (c.get(Calendar.SECOND) + c.get(Calendar.MINUTE) * 60 +
                     c.get(Calendar.HOUR_OF_DAY) * 60 * 60) * 100 / 86400;
@@ -170,5 +206,13 @@ public class PartOfDayPickerView extends LinearLayout {
         return (int) -Math.round(Math.sqrt((1.0 -
                 Math.pow(x - width / 2.0, 2) / Math.pow(width / 2.0, 2)) *
                     Math.pow(height / 2.0, 2)));
+    }
+
+    public interface OnPartOfDayChangedListener {
+        void onValueChanged(int value);
+    }
+
+    public interface OnPartOfDaySetListener {
+        void onValueSet();
     }
 }
