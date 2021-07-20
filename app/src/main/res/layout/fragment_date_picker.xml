@@ -16,7 +16,7 @@
         android:textAllCaps="true"
         app:textStyle="semiBold"/>
 
-    <revolver.headead.ui.views.MaterialCalendarView
+    <revolver.headead.ui.views.MaterialRangeCalendarView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/fragment_date_picker_calendar"

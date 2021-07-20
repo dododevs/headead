@@ -43,8 +43,8 @@ public class MaterialCalendarView extends LinearLayout {
             obtainOrderedWeekdays(dateSymbols.getShortWeekdays());
     private static final String[] monthNames = dateSymbols.getMonths();
 
-    private int dayOfMonth;
-    private DaysGridAdapter adapter;
+    int dayOfMonth;
+    DaysGridAdapter adapter;
 
     public MaterialCalendarView(Context context) {
         this(context, null);
@@ -65,11 +65,7 @@ public class MaterialCalendarView extends LinearLayout {
     }
 
     public Date getDate() {
-        int today = calendar.get(Calendar.DAY_OF_MONTH);
-        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        Date calendarDate = calendar.getTime();
-        calendar.set(Calendar.DAY_OF_MONTH, today);
-        return calendarDate;
+        return getDateForDayOfMonth(dayOfMonth);
     }
 
     public void setDate(final Date date) {
@@ -119,12 +115,20 @@ public class MaterialCalendarView extends LinearLayout {
         return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
-    private int getFirstWeekdayOffset() {
+    int getFirstWeekdayOffset() {
         int today = calendar.get(Calendar.DAY_OF_MONTH);
         calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
         int offset = calendar.get(Calendar.DAY_OF_WEEK) - calendar.getFirstDayOfWeek();
         calendar.set(Calendar.DAY_OF_MONTH, today);
         return offset < 0 ? ForbiddenMath.floorMod(offset, 7): offset;
+    }
+
+    Date getDateForDayOfMonth(int dayOfMonth) {
+        int today = calendar.get(Calendar.DAY_OF_MONTH);
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        Date calendarDate = calendar.getTime();
+        calendar.set(Calendar.DAY_OF_MONTH, today);
+        return calendarDate;
     }
 
     private static String[] obtainOrderedWeekdays(final String[] weekdayNames) {
@@ -140,8 +144,7 @@ public class MaterialCalendarView extends LinearLayout {
         return orderedWeekdayNames;
     }
 
-    private class DaysGridAdapter extends RecyclerView.Adapter<DaysGridAdapter.ViewHolder> {
-
+    class DaysGridAdapter extends RecyclerView.Adapter<DaysGridAdapter.ViewHolder> {
         private static final int VIEW_TYPE_WEEK_DAY = 0;
         private static final int VIEW_TYPE_DAY = 1;
 
@@ -173,7 +176,7 @@ public class MaterialCalendarView extends LinearLayout {
                 holder.digitView.setText("");
                 holder.itemView.setLayoutParams(ViewUtils.newLayoutParams(MarginLayoutParams.class)
                         .matchParentInWidth().wrapContentInHeight()
-                        .   verticalMargin(8.f).horizontalMargin(8.f).get());
+                            .verticalMargin(8.f).horizontalMargin(8.f).get());
                 holder.itemView.setOnClickListener(null);
                 holder.itemView.setBackground(null);
             } else if (position >= 7 + getFirstWeekdayOffset()) {
@@ -181,7 +184,7 @@ public class MaterialCalendarView extends LinearLayout {
                 holder.digitView.setText(String.valueOf(position + 1));
                 holder.itemView.setLayoutParams(ViewUtils.newLayoutParams(MarginLayoutParams.class)
                         .matchParentInWidth().wrapContentInHeight()
-                            .verticalMargin(8.f).horizontalMargin(8.f).get());
+                            .verticalMargin(8.f).get());//.horizontalMargin(8.f).get());
                 if (position == dayOfMonth - 1) {
                     holder.itemView.setBackgroundResource(R.drawable.bg_item_day_selected);
                     holder.digitView.setTextColor(Color.WHITE);
