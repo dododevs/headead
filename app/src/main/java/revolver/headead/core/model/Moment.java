@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import io.realm.RealmObject;
@@ -61,6 +62,61 @@ public class Moment extends RealmObject implements Parcelable {
         this.timeInputMode = timeInputMode;
     }
 
+    public boolean after(Moment anotherMoment) {
+        if (getTimeInputMode() == TimeInputMode.CLOCK &&
+                anotherMoment.getTimeInputMode() == TimeInputMode.CLOCK) {
+            return getDate().after(anotherMoment.getDate());
+        } else {
+            return getTimeInputMode() == TimeInputMode.PART_OF_DAY
+                    ? partOfDay > anotherMoment.convertDateToPartOfDay()
+                    : convertDateToPartOfDay() > anotherMoment.getPartOfDay();
+        }
+    }
+
+    public boolean before(Moment anotherMoment) {
+        if (getTimeInputMode() == TimeInputMode.CLOCK &&
+                anotherMoment.getTimeInputMode() == TimeInputMode.CLOCK) {
+            return getDate().before(anotherMoment.getDate());
+        } else {
+            return getTimeInputMode() == TimeInputMode.PART_OF_DAY
+                    ? partOfDay < anotherMoment.convertDateToPartOfDay()
+                    : convertDateToPartOfDay() < anotherMoment.getPartOfDay();
+        }
+    }
+
+    public Moment withTime(Moment time) {
+        if (getTimeInputMode() == TimeInputMode.PART_OF_DAY) {
+            throw new IllegalStateException("Cannot join two time moments.");
+        }
+        if (time.getTimeInputMode() == TimeInputMode.CLOCK) {
+            return new Moment(TimeFormattingUtils.joinDateAndTime(
+                    getDate(), time.getDate()), -1, TimeInputMode.CLOCK);
+        } else if (time.getTimeInputMode() == TimeInputMode.PART_OF_DAY) {
+            return new Moment(getDate(), time.getPartOfDay(), TimeInputMode.PART_OF_DAY);
+        }
+        return this;
+    }
+
+    public Moment withDate(Moment date) {
+        if (getTimeInputMode() == TimeInputMode.CLOCK) {
+            return new Moment(TimeFormattingUtils.joinDateAndTime(
+                    date.getDate(), getDate()), -1, TimeInputMode.CLOCK);
+        } else if (getTimeInputMode() == TimeInputMode.PART_OF_DAY) {
+            return new Moment(date.getDate(), getPartOfDay(), TimeInputMode.PART_OF_DAY);
+        }
+        return this;
+    }
+
+    public Moment withDate(Date date) {
+        if (getTimeInputMode() == TimeInputMode.CLOCK) {
+            return new Moment(TimeFormattingUtils.joinDateAndTime(
+                    date, getDate()), -1, TimeInputMode.CLOCK);
+        } else if (getTimeInputMode() == TimeInputMode.PART_OF_DAY) {
+            return new Moment(date, getPartOfDay(), TimeInputMode.PART_OF_DAY);
+        }
+        return this;
+    }
+
     private Moment(Parcel src) {
         this.date = (Date) src.readSerializable();
         this.partOfDay = src.readInt();
@@ -90,4 +146,8 @@ public class Moment extends RealmObject implements Parcelable {
             return new Moment[size];
         }
     };
+
+    public static Moment now() {
+        return new Moment(new Date(), -1, TimeInputMode.CLOCK);
+    }
 }

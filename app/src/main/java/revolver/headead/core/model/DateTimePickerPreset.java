@@ -1,7 +1,7 @@
 package revolver.headead.core.model;
 
 public enum DateTimePickerPreset {
-    JUST_STARTED, JUST_ENDED, PAST;
+    JUST_STARTED, JUST_ENDED, PAST, CUSTOM_DAY_OFFSET;
 
     public static DateTimePickerPreset fromString(String name) {
         if (name == null) {

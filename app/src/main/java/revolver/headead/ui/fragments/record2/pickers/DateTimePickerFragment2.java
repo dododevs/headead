@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import revolver.headead.R;
+import revolver.headead.core.model.Moment;
 import revolver.headead.ui.activities.record.RecordHeadacheActivity2;
 import revolver.headead.util.ui.M;
 
@@ -76,7 +77,7 @@ public class DateTimePickerFragment2 extends Fragment {
     }
 
     private void applyJustStartedPreset() {
-
+        returnMomentsToActivity(Moment.now(), null);
     }
 
     private void applyJustEndedPreset() {
@@ -100,44 +101,19 @@ public class DateTimePickerFragment2 extends Fragment {
         );
     }
 
-    private void returnDatesToActivity() {
+    private void returnMomentsToActivity(final Moment start, final Moment end) {
+        requireRecordHeadacheActivity().setHeadacheStart(start);
+        requireRecordHeadacheActivity().setHeadacheEnd(end);
+        requireRecordHeadacheActivity().onHeadacheMomentsUpdated();
         requireRecordHeadacheActivity().resetBottomPane();
     }
 
-    private Date getCurrentStartDateFromActivity() {
-        return requireRecordHeadacheActivity().getHeadacheStartDate();
+    private Moment getCurrentStartMomentFromActivity() {
+        return requireRecordHeadacheActivity().getHeadacheStart();
     }
 
-    private Date getCurrentEndDateFromActivity() {
-        return requireRecordHeadacheActivity().getHeadacheEndDate();
-    }
-
-    private float getCurrentStartPartOfDayFromActivity() {
-        return requireRecordHeadacheActivity().getHeadacheStartPartOfDay();
-    }
-
-    private float getCurrentEndPartOfDayFromActivity() {
-        return requireRecordHeadacheActivity().getHeadacheEndPartOfDay();
-    }
-
-    private TimeInputMode getCurrentStartTimeInputModeFromActivity() {
-        return requireRecordHeadacheActivity().getHeadacheStartTimeInputMode();
-    }
-
-    private TimeInputMode getCurrentEndTimeInputModeFromActivity() {
-        return requireRecordHeadacheActivity().getHeadacheEndTimeInputMode();
-    }
-
-    private String getRandomFutureDateErrorString() {
-        return getString(futureDateErrors[(int) Math.floor(Math.random() * futureDateErrors.length)]);
-    }
-
-    private static Date joinDateAndTime(final Date date, final Pair<Integer, Integer> hourMinutePair) {
-        final Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.HOUR_OF_DAY, hourMinutePair.first);
-        calendar.set(Calendar.MINUTE, hourMinutePair.second);
-        return calendar.getTime();
+    private Moment getCurrentEndMomentFromActivity() {
+        return requireRecordHeadacheActivity().getHeadacheEnd();
     }
 
     private RecordHeadacheActivity2 requireRecordHeadacheActivity() {

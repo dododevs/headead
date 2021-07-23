@@ -11,6 +11,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
+        android:id="@+id/fragment_date_picker_title"
         android:text="@string/fragment_date_picker_start_title"
         android:textSize="12.8sp"
         android:textAllCaps="true"

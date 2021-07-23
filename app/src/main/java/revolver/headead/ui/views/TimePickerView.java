@@ -4,19 +4,19 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.Pair;
+import android.view.Gravity;
+import android.view.Menu;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
-
-import androidx.lifecycle.Observer;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Observable;
 
 import revolver.headead.R;
 import revolver.headead.core.model.Moment;
@@ -41,7 +41,8 @@ public class TimePickerView extends LinearLayout {
     private final TextView endTimeView;
     private final TextView endTimeLabel;
     private final ImageView endTimePartOfDayView;
-    private final View nextDayView;
+    private final TextView nextDayView;
+    private final View dayOffsetDotsView;
 
     private final PartOfDayDrawable startPartOfDayDrawable;
     private final PartOfDayDrawable endPartOfDayDrawable;
@@ -61,7 +62,11 @@ public class TimePickerView extends LinearLayout {
     private Moment startMoment;
     private Moment endMoment;
 
+    private int maximumDayOffset = Integer.MAX_VALUE;
+    private int dayOffset = 0;
+
     private OnTimeInputModeChangedListener timeInputModeChangedListener;
+    private OnCustomDayOffsetSelectedListener customDayOffsetSelectedListener;
 
     public TimePickerView(Context context) {
         this(context, null);
@@ -117,25 +122,27 @@ public class TimePickerView extends LinearLayout {
                 startTimeView.setText(timeFormatter.format(c.getTime()));
                 startHour = hour;
                 startMinute = minute;
-                startMoment = new Moment(createDateObjectFromTime(
+                startMoment = new Moment(createDateObjectFromTime(startMoment,
                         startHour, startMinute), -1, TimeInputMode.CLOCK);
             } else {
                 endTimeView.setText(timeFormatter.format(c.getTime()));
                 endHour = hour;
                 endMinute = minute;
-                endMoment = new Moment(createDateObjectFromTime(
+                endMoment = new Moment(createDateObjectFromTime(endMoment,
                         endHour, endMinute), -1, TimeInputMode.CLOCK);
             }
             updateNextDayView();
         });
         clockView.setOnTimeSetListener(() -> {
             if (startTimeFocused) {
-                startMoment = new Moment(createDateObjectFromTime(
+                startMoment = new Moment(createDateObjectFromTime(startMoment,
                         startHour, startMinute), -1, TimeInputMode.CLOCK);
-                focusEndBox(false);
-                clockView.reset();
+                if (!isStartOnly) {
+                    focusEndBox(false);
+                    clockView.reset();
+                }
             } else {
-                endMoment = new Moment(createDateObjectFromTime(
+                endMoment = new Moment(createDateObjectFromTime(endMoment,
                         endHour, endMinute), -1, TimeInputMode.CLOCK);
             }
         });
@@ -152,16 +159,52 @@ public class TimePickerView extends LinearLayout {
         });
         partOfDayPickerView.setOnPartOfDaySetListener(() -> {
             if (startTimeFocused) {
-                startMoment = new Moment(null, startPartOfDay,
+                startMoment = new Moment(startMoment.getDate(), startPartOfDay,
                         TimeInputMode.PART_OF_DAY);
                 if (!isStartOnly) {
                     focusEndBox(false);
                     clockView.reset();
                 }
             } else {
-                endMoment = new Moment(null, endPartOfDay,
+                endMoment = new Moment(endMoment.getDate(), endPartOfDay,
                         TimeInputMode.PART_OF_DAY);
             }
+        });
+
+        dayOffsetDotsView = findViewById(R.id.mtrl_time_picker_day_offset_dots);
+        dayOffsetDotsView.setOnClickListener(v -> {
+            final PopupMenu dayOffsetMenu = new PopupMenu(
+                    context, v, Gravity.BOTTOM | Gravity.START);
+            dayOffsetMenu.inflate(R.menu.popup_day_offset);
+
+            final Menu menu = dayOffsetMenu.getMenu();
+            menu.findItem(R.id.popup_day_offset_zero)
+                    .setEnabled(!isStartTimeAfterEndTime());
+            menu.findItem(R.id.popup_day_offset_one)
+                    .setEnabled(maximumDayOffset >= 1);
+            menu.findItem(R.id.popup_day_offset_two)
+                    .setEnabled(maximumDayOffset >= 2);
+            menu.findItem(R.id.popup_day_offset_three)
+                    .setEnabled(maximumDayOffset >= 3);
+            dayOffsetMenu.setOnMenuItemClickListener(item -> {
+                if (item.getItemId() == R.id.popup_day_offset_zero) {
+                    dayOffset = 0;
+                } else if (item.getItemId() == R.id.popup_day_offset_one) {
+                    dayOffset = 1;
+                } else if (item.getItemId() == R.id.popup_day_offset_two) {
+                    dayOffset = 2;
+                } else if (item.getItemId() == R.id.popup_day_offset_three) {
+                    dayOffset = 3;
+                } else if (item.getItemId() == R.id.popup_day_offset_custom) {
+                    dayOffset = -1;
+                    if (customDayOffsetSelectedListener != null) {
+                        customDayOffsetSelectedListener.onCustomDayOffsetSelected();
+                    }
+                }
+                updateNextDayView();
+                return true;
+            });
+            dayOffsetMenu.show();
         });
     }
 
@@ -194,6 +237,16 @@ public class TimePickerView extends LinearLayout {
             }
         }
 
+        if (startMoment != null && endMoment != null) {
+            maximumDayOffset = computeMaximumDayOffset(startMoment);
+            Log.d("setMoments", "maximumDayOffset = " + maximumDayOffset);
+            if (dayOffset > 3) {
+                dayOffset = -1;
+            }
+            dayOffset = computeActualDayOffset(startMoment, endMoment);
+            Log.d("setMoments", "dayOffset = " + dayOffset);
+        }
+
         updateNextDayView();
         focusStartBox(false);
     }
@@ -202,14 +255,18 @@ public class TimePickerView extends LinearLayout {
         isStartOnly = startOnly;
         endTimeBox.setVisibility(startOnly ? GONE : VISIBLE);
         boxDividerView.setVisibility(startOnly ? GONE : VISIBLE);
+        dayOffsetDotsView.setVisibility(startOnly ? GONE : VISIBLE);
     }
 
     public void setOnTimeInputModeChangedListener(OnTimeInputModeChangedListener l) {
         timeInputModeChangedListener = l;
     }
 
+    public void setOnCustomDayOffsetSelectedListener(OnCustomDayOffsetSelectedListener l) {
+        customDayOffsetSelectedListener = l;
+    }
+
     public void setShowClockInput(boolean reset) {
-        Log.d("TimePickerView", "setShowClockInput");
         if (isClockShown) {
             return;
         }
@@ -248,7 +305,6 @@ public class TimePickerView extends LinearLayout {
     }
 
     private void setShowPartOfDayInput(boolean reset) {
-        Log.d("TimePickerView", "setShowPartOfDayInput");
         if (!isClockShown) {
             return;
         }
@@ -285,6 +341,15 @@ public class TimePickerView extends LinearLayout {
         setShowPartOfDayInput(false);
     }
 
+    public void setCustomDayOffset(Date endDate) {
+        if (endMoment != null) {
+            endMoment = endMoment.withDate(endDate);
+        } else {
+            endMoment = new Moment(endDate, -1, TimeInputMode.CLOCK);
+        }
+        updateNextDayView();
+    }
+
     public boolean isClockShown() {
         return isClockShown;
     }
@@ -294,11 +359,18 @@ public class TimePickerView extends LinearLayout {
     }
 
     public Moment getEndMoment() {
+        if (dayOffset >= 0) {
+            int actualDayOffset = dayOffset;
+            if (actualDayOffset == 0 && isStartTimeAfterEndTime()) {
+                actualDayOffset = 1;
+            }
+            endMoment = endMoment.withDate(applyDayOffset(
+                    startMoment.getDate(), actualDayOffset));
+        }
         return endMoment;
     }
 
     private void focusStartBox(boolean reset) {
-        Log.d("TimePickerView", "focusStartBox");
         endTimeLabel.setTextColor(
                 ColorUtils.get(getContext(), R.color.tertiaryText));
         startTimeLabel.setTextColor(
@@ -325,7 +397,6 @@ public class TimePickerView extends LinearLayout {
     }
 
     private void focusEndBox(boolean reset) {
-        Log.d("TimePickerView", "focusEndBox");
         startTimeLabel.setTextColor(
                 ColorUtils.get(getContext(), R.color.tertiaryText));
         endTimeLabel.setTextColor(
@@ -352,7 +423,6 @@ public class TimePickerView extends LinearLayout {
     }
 
     private void resetStartBox() {
-        Log.d("TimePickerView", "resetStartBox");
         startHour = startMinute = startPartOfDay = -1;
         startMoment = null;
         clockView.reset();
@@ -362,7 +432,6 @@ public class TimePickerView extends LinearLayout {
     }
 
     private void resetEndBox() {
-        Log.d("TimePickerView", "resetEndBox");
         endHour = endMinute = endPartOfDay = -1;
         endMoment = null;
         clockView.reset();
@@ -372,7 +441,6 @@ public class TimePickerView extends LinearLayout {
     }
 
     private void updateNextDayView() {
-        Log.d("updateNextDayView", "startPartOfDay = " + startPartOfDay + " endPartOfDay = " + endPartOfDay);
         boolean userInsertedStart =
                 (startHour >= 0 && startMinute >= 0) || startPartOfDay >= 0;
         boolean userInsertedEnd =
@@ -388,14 +456,15 @@ public class TimePickerView extends LinearLayout {
             }
             return;
         }
-        if (isStartTimeAfterEndTime()) {
+        if (isStartTimeAfterEndTime() || dayOffset > 0 ||
+                (dayOffset == -1 && endMoment != null)) {
             showNextDayView();
         } else {
             hideNextDayView();
         }
     }
 
-    private boolean isStartTimeAfterEndTime() {
+    public boolean isStartTimeAfterEndTime() {
         if (startHour >= 0 && startMinute >= 0 && endHour >= 0 && endMinute >= 0) {
             return endHour < startHour ||
                     (endHour == startHour &&
@@ -415,6 +484,15 @@ public class TimePickerView extends LinearLayout {
     }
 
     private void showNextDayView() {
+        if (dayOffset > 0) {
+            nextDayView.setText(getContext()
+                    .getString(R.string.mtrl_time_picker_day_offset_fmt, dayOffset));
+        } else if (dayOffset == -1) {
+            nextDayView.setText(TimeFormattingUtils
+                    .formatPastDateShort(getContext(), endMoment.getDate()));
+        } else {
+            nextDayView.setText(R.string.mtrl_time_picker_next_day);
+        }
         if (isNextDayVisible) {
             return;
         }
@@ -441,11 +519,18 @@ public class TimePickerView extends LinearLayout {
         isNextDayVisible = false;
     }
 
-    private static Date createDateObjectFromTime(int hour, int minute) {
+    public static Date createDateObjectFromTime(Moment date, int hour, int minute) {
         Calendar c = Calendar.getInstance();
+        if (date != null) {
+            c.setTime(date.getDate());
+        }
         c.set(Calendar.HOUR_OF_DAY, hour);
         c.set(Calendar.MINUTE, minute);
         return c.getTime();
+    }
+
+    private static Date applyDayOffset(final Date date, int dayOffset) {
+        return new Date(date.getTime() + dayOffset * 24 * 3600 * 1000);
     }
 
     private static Pair<Integer, Integer> getTimePairFromDateObject(final Date date) {
@@ -454,7 +539,23 @@ public class TimePickerView extends LinearLayout {
         return new Pair<>(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
     }
 
+    private static int computeMaximumDayOffset(Moment startMoment) {
+        final Date now = new Date();
+        final Date then = startMoment.getDate();
+        return (int) Math.ceil((now.getTime() - then.getTime()) / 1000. / 3600 / 24.);
+    }
+
+    private static int computeActualDayOffset(Moment startMoment, Moment endMoment) {
+        final Date then1 = endMoment.getDate();
+        final Date then2 = startMoment.getDate();
+        return (int) Math.floor((then1.getTime() - then2.getTime()) / 1000. / 3600 / 24.);
+    }
+
     public interface OnTimeInputModeChangedListener {
         void onTimeInputModeChanged(TimeInputMode mode);
+    }
+
+    public interface OnCustomDayOffsetSelectedListener {
+        void onCustomDayOffsetSelected();
     }
 }

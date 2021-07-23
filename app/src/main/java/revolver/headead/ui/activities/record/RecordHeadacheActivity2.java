@@ -631,6 +631,46 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
                 .setVisibility(View.VISIBLE);
     }
 
+    public void onHeadacheMomentsUpdated() {
+        if (headacheStart == null) {
+            headacheDateIconView.animate()
+                    .translationX(0.f)
+                    .translationY(0.f)
+                    .scaleX(1.f)
+                    .scaleY(1.f)
+                    .alpha(1.f)
+                    .setDuration(200L)
+                    .setInterpolator(new AccelerateDecelerateInterpolator())
+                    .start();
+            headacheDateValueView.animate()
+                    .alpha(0.f)
+                    .setDuration(200L)
+                    .setInterpolator(new LinearInterpolator())
+                    .start();
+            findViewById(R.id.activity_record_headache_2_datetime_checked)
+                    .setVisibility(View.GONE);
+            return;
+        }
+        headacheDateIconView.animate()
+                .translationX(M.dp(-24.f))
+                .translationY(M.dp(12.f))
+                .scaleX(0.5f)
+                .scaleY(0.5f)
+                .alpha(0.f)
+                .setDuration(200L)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .start();
+        headacheDateValueView.animate()
+                .alpha(1.f)
+                .setDuration(200L)
+                .setInterpolator(new LinearInterpolator())
+                .start();
+        headacheDateValueView.setText(TimeFormattingUtils
+                .createStartToEndString(this, headacheStart, headacheEnd));
+        findViewById(R.id.activity_record_headache_2_datetime_checked)
+                .setVisibility(View.VISIBLE);
+    }
+
     private SimpleAlertDialogFragment buildStartAfterEndErrorDialog() {
         return new SimpleAlertDialogFragment.Builder(this)
                 .title(R.string.dialog_start_after_end_title)

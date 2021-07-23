@@ -37,7 +37,7 @@ public class DatePickerFragment extends Fragment {
 
     private MaterialCalendarView calendarView;
 
-    private DateTimePickerPreset preset;
+    private DateTimePickerPreset preset, originalPreset;
     private Moment startMoment;
     private Moment endMoment;
 
@@ -50,8 +50,16 @@ public class DatePickerFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         preset = DateTimePickerPreset.fromString(requireArguments().getString("mode"));
+        originalPreset = DateTimePickerPreset.fromString(
+                requireArguments().getString("originalMode"));
         startMoment = requireArguments().getParcelable("startMoment");
         endMoment = requireArguments().getParcelable("endMoment");
+
+        final TextView titleView =
+                view.findViewById(R.id.fragment_date_picker_title);
+        if (preset == DateTimePickerPreset.CUSTOM_DAY_OFFSET) {
+            titleView.setText(R.string.fragment_date_picker_end_title);
+        }
 
         calendarView = view.findViewById(R.id.fragment_date_picker_calendar);
         if (startMoment != null) {
@@ -72,15 +80,35 @@ public class DatePickerFragment extends Fragment {
             Snacks.normal(requireView(), getRandomFutureDateErrorString(), true);
             return;
         }
-        startMoment = new Moment(current, -1, null);
         if (preset == DateTimePickerPreset.JUST_ENDED) {
+            startMoment = new Moment(current, -1, TimeInputMode.CLOCK);
             requireRecordHeadacheActivity().startBottomTransitionToFragment(
                     TimePickerFragment.forJustEnded(startMoment),
-                        TimePickerFragment.TAG, M.dp(230.f).intValue(), true);
+                        TimePickerFragment.TAG, M.dp(480.f).intValue(), true);
         } else if (preset == DateTimePickerPreset.PAST) {
+            startMoment = new Moment(current, -1, TimeInputMode.CLOCK);
             requireRecordHeadacheActivity().startBottomTransitionToFragment(
                     TimePickerFragment.forPastEpisode(startMoment, endMoment),
                         TimePickerFragment.TAG, M.dp(480.f).intValue(), true);
+        } else if (preset == DateTimePickerPreset.CUSTOM_DAY_OFFSET) {
+            if (current.before(startMoment.getDate())) {
+                Snacks.normal(requireView(),
+                        R.string.fragment_date_picker_end_before_start, true);
+                return;
+            }
+            final Bundle result = new Bundle();
+            result.putSerializable("date", current);
+            getParentFragmentManager().setFragmentResult(
+                    TimePickerFragment.REQUEST_CUSTOM_DAY_OFFSET, result);
+            if (originalPreset == DateTimePickerPreset.JUST_ENDED) {
+                requireRecordHeadacheActivity().startBottomTransitionToFragment(
+                        TimePickerFragment.forJustEnded(startMoment),
+                            TimePickerFragment.TAG, M.dp(480.f).intValue(), true);
+            } else if (originalPreset == DateTimePickerPreset.PAST) {
+                requireRecordHeadacheActivity().startBottomTransitionToFragment(
+                        TimePickerFragment.forPastEpisode(startMoment, endMoment),
+                            TimePickerFragment.TAG, M.dp(480.f).intValue(), true);
+            }
         }
     }
 
@@ -107,6 +135,19 @@ public class DatePickerFragment extends Fragment {
         final Bundle args = new Bundle();
         args.putParcelable("startMoment", startMoment);
         args.putString("mode", DateTimePickerPreset.JUST_ENDED.name());
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static DatePickerFragment forCustomDayOffset(DateTimePickerPreset preset,
+                                                        Moment startMoment,
+                                                        Moment endMoment) {
+        final DatePickerFragment fragment = new DatePickerFragment();
+        final Bundle args = new Bundle();
+        args.putParcelable("startMoment", startMoment);
+        args.putParcelable("endMoment", endMoment);
+        args.putString("mode", DateTimePickerPreset.CUSTOM_DAY_OFFSET.name());
+        args.putString("originalMode", preset.name());
         fragment.setArguments(args);
         return fragment;
     }

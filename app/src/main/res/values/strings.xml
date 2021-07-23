@@ -482,4 +482,17 @@
     <string name="mtrl_time_picker_next_day">+1</string>
     <string name="fragment_time_picker_start_end_title">Ora di inizio e fine</string>
     <string name="cd_part_of_day">Icona che indica la parte del giorno selezionata</string>
+    <string name="dialog_day_offset_zero">+0 giorni (stessa giornata)</string>
+    <string name="dialog_day_offset_one">+1 giorno</string>
+    <string name="dialog_day_offset_two">+2 giorni</string>
+    <string name="dialog_day_offset_three">+3 giorni</string>
+    <string name="dialog_day_offset_custom">Scegli una data…</string>
+    <string name="popup_day_offset_zero">Stesso giorno</string>
+    <string name="popup_day_offset_one">+1 giorno</string>
+    <string name="popup_day_offset_two">+2 giorni</string>
+    <string name="popup_day_offset_three">+3 giorni</string>
+    <string name="popup_day_offset_custom">Scegli una data…</string>
+    <string name="mtrl_time_picker_day_offset_fmt">+%d</string>
+    <string name="fragment_date_picker_end_title">Data di fine</string>
+    <string name="fragment_date_picker_end_before_start">La data di fine deve essere posteriore a quella di inizio</string>
 </resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="@string/popup_day_offset_zero"
+        android:id="@+id/popup_day_offset_zero"/>
+    <item android:title="@string/popup_day_offset_one"
+        android:id="@+id/popup_day_offset_one"/>
+    <item android:title="@string/popup_day_offset_two"
+        android:id="@+id/popup_day_offset_two"/>
+    <item android:title="@string/popup_day_offset_three"
+        android:id="@+id/popup_day_offset_three"/>
+    <item android:title="@string/popup_day_offset_custom"
+        android:id="@+id/popup_day_offset_custom"/>
+</menu>

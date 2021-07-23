@@ -133,4 +133,17 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_dots"
+        app:tint="@color/iconGray"
+        android:contentDescription="@string/cd_more_details"
+        android:focusable="true"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:id="@+id/mtrl_time_picker_day_offset_dots"/>
+
 </LinearLayout>

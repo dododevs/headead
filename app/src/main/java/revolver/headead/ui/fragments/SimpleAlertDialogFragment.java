@@ -24,6 +24,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import revolver.headead.R;
 import revolver.headead.ui.adapters.DrugDosageUnitsAdapter2;
+import revolver.headead.util.ui.M;
 import revolver.headead.util.ui.TextUtils;
 
 public class SimpleAlertDialogFragment extends DialogFragment {
@@ -36,6 +37,7 @@ public class SimpleAlertDialogFragment extends DialogFragment {
     private int inputType = EditorInfo.TYPE_CLASS_TEXT;
 
     private View customView;
+    private int[] customPaddings = { -1, -1, -1, -1 };
 
     private EditText editText;
     private EntryTextValidator entryTextValidator;
@@ -57,6 +59,15 @@ public class SimpleAlertDialogFragment extends DialogFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        final int leftPadding = customPaddings[0];
+        final int topPadding = customPaddings[1];
+        final int rightPadding = customPaddings[2];
+        final int bottomPadding = customPaddings[3];
+        view.setPadding(leftPadding >= 0 ? leftPadding : view.getPaddingLeft(),
+                topPadding >= 0 ? topPadding : view.getPaddingTop(),
+                    rightPadding >= 0 ? rightPadding : view.getPaddingRight(),
+                        bottomPadding >= 0 ? bottomPadding : view.getPaddingBottom());
+
         final TextView titleView = view.findViewById(R.id.dialog_alert_simple_title);
         titleView.setText(title);
         if (title != null) {
@@ -147,6 +158,16 @@ public class SimpleAlertDialogFragment extends DialogFragment {
             customViewContainer.setVisibility(View.VISIBLE);
             customViewContainer.addView(customView);
         }
+
+        if (positiveButtonView.getVisibility() != View.VISIBLE &&
+                negativeButtonView.getVisibility() != View.VISIBLE &&
+                    neutralButtonView.getVisibility() != View.VISIBLE) {
+            view.findViewById(R.id.dialog_alert_simple_button_container).setVisibility(View.GONE);
+        }
+    }
+
+    public void customPadding(int index, int padding) {
+        this.customPaddings[index] = padding;
     }
 
     public void title(String title) {
@@ -229,6 +250,38 @@ public class SimpleAlertDialogFragment extends DialogFragment {
         public Builder(Context context) {
             this.context = context;
             this.fragment = new SimpleAlertDialogFragment();
+        }
+
+        public Builder leftPadding(int dp) {
+            this.fragment.customPadding(0, M.dp(dp).intValue());
+            return this;
+        }
+
+        public Builder topPadding(int dp) {
+            this.fragment.customPadding(1, M.dp(dp).intValue());
+            return this;
+        }
+
+        public Builder rightPadding(int dp) {
+            this.fragment.customPadding(2, M.dp(dp).intValue());
+            return this;
+        }
+
+        public Builder bottomPadding(int dp) {
+            this.fragment.customPadding(3, M.dp(dp).intValue());
+            return this;
+        }
+
+        public Builder horizontalPadding(int dp) {
+            this.leftPadding(dp);
+            this.rightPadding(dp);
+            return this;
+        }
+
+        public Builder verticalPadding(int dp) {
+            this.topPadding(dp);
+            this.bottomPadding(dp);
+            return this;
         }
 
         public Builder title(final String title) {
