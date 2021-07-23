@@ -15,18 +15,11 @@ import java.util.Calendar;
 import java.util.Date;
 
 import revolver.headead.R;
+import revolver.headead.core.model.Moment;
 import revolver.headead.ui.activities.record.RecordHeadacheActivity2;
 import revolver.headead.util.ui.M;
 
 public class DateTimePickerFragment2 extends Fragment {
-
-    private static final @StringRes int[] futureDateErrors = {
-            R.string.fragment_datetime_picker_future_date_1,
-            R.string.fragment_datetime_picker_future_date_2,
-            R.string.fragment_datetime_picker_future_date_3,
-            R.string.fragment_datetime_picker_future_date_4,
-            R.string.fragment_datetime_picker_future_date_5
-    };
 
     @Nullable
     @Override
@@ -36,33 +29,6 @@ public class DateTimePickerFragment2 extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        /*final View.OnClickListener defaultModeClickListener, customModeClickListener, ongoingModeClickListener;
-
-        defaultModeClickListener = v -> setDateTimeMode(DateTimeMode.DEFAULT);
-        customModeClickListener = v -> setDateTimeMode(DateTimeMode.CUSTOM);
-        ongoingModeClickListener = v -> setDateTimeMode(DateTimeMode.ONGOING);
-
-        collapsedDefaultModeView = view.findViewById(R.id.fragment_datetime_picker_now);
-        collapsedDefaultModeView.setOnClickListener(defaultModeClickListener);
-        collapsedCustomModeView = view.findViewById(R.id.fragment_datetime_picker_custom);
-        collapsedCustomModeView.setOnClickListener(customModeClickListener);
-        collapsedOngoingModeView = view.findViewById(R.id.fragment_datetime_picker_ongoing);
-        collapsedOngoingModeView.setOnClickListener(ongoingModeClickListener);
-        expandedDefaultModeView = view.findViewById(R.id.fragment_datetime_picker_expanded_now);
-        expandedDefaultModeView.setOnClickListener(defaultModeClickListener);
-        expandedCustomModeView = view.findViewById(R.id.fragment_datetime_picker_expanded_custom);
-        expandedCustomModeView.setOnClickListener(customModeClickListener);
-        expandedOngoingModeView = view.findViewById(R.id.fragment_datetime_picker_expanded_ongoing);
-        expandedOngoingModeView.setOnClickListener(ongoingModeClickListener);
-
-        if ("start".equals(requireArguments().getString("target"))) {
-            collapsedOngoingModeView.setVisibility(View.GONE);
-            expandedOngoingModeView.setVisibility(View.GONE);
-            view.findViewById(R.id.fragment_datetime_picker_ongoing_selector)
-                    .setVisibility(View.GONE);
-        }
-
-        */
         final View justStartedPresetView =
                 view.findViewById(R.id.fragment_datetime_picker_2_preset_just_started);
         final View justEndedPresetView =
@@ -76,7 +42,7 @@ public class DateTimePickerFragment2 extends Fragment {
     }
 
     private void applyJustStartedPreset() {
-
+        returnMomentsToActivity(Moment.now(), null);
     }
 
     private void applyJustEndedPreset() {
@@ -91,7 +57,7 @@ public class DateTimePickerFragment2 extends Fragment {
 
     private void applyPastEpisodePreset() {
         requireRecordHeadacheActivity().startBottomTransitionToFragment(
-                DatePickerFragment.forPastEpisode(
+                DatePickerFragment.asStartOfPastEpisode(
                         requireRecordHeadacheActivity().getHeadacheStart(),
                             requireRecordHeadacheActivity().getHeadacheEnd()),
                 DatePickerFragment.TAG,
@@ -100,44 +66,11 @@ public class DateTimePickerFragment2 extends Fragment {
         );
     }
 
-    private void returnDatesToActivity() {
+    private void returnMomentsToActivity(final Moment start, final Moment end) {
+        requireRecordHeadacheActivity().setHeadacheStart(start);
+        requireRecordHeadacheActivity().setHeadacheEnd(end);
+        requireRecordHeadacheActivity().onHeadacheMomentsUpdated();
         requireRecordHeadacheActivity().resetBottomPane();
-    }
-
-    private Date getCurrentStartDateFromActivity() {
-        return requireRecordHeadacheActivity().getHeadacheStartDate();
-    }
-
-    private Date getCurrentEndDateFromActivity() {
-        return requireRecordHeadacheActivity().getHeadacheEndDate();
-    }
-
-    private float getCurrentStartPartOfDayFromActivity() {
-        return requireRecordHeadacheActivity().getHeadacheStartPartOfDay();
-    }
-
-    private float getCurrentEndPartOfDayFromActivity() {
-        return requireRecordHeadacheActivity().getHeadacheEndPartOfDay();
-    }
-
-    private TimeInputMode getCurrentStartTimeInputModeFromActivity() {
-        return requireRecordHeadacheActivity().getHeadacheStartTimeInputMode();
-    }
-
-    private TimeInputMode getCurrentEndTimeInputModeFromActivity() {
-        return requireRecordHeadacheActivity().getHeadacheEndTimeInputMode();
-    }
-
-    private String getRandomFutureDateErrorString() {
-        return getString(futureDateErrors[(int) Math.floor(Math.random() * futureDateErrors.length)]);
-    }
-
-    private static Date joinDateAndTime(final Date date, final Pair<Integer, Integer> hourMinutePair) {
-        final Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.HOUR_OF_DAY, hourMinutePair.first);
-        calendar.set(Calendar.MINUTE, hourMinutePair.second);
-        return calendar.getTime();
     }
 
     private RecordHeadacheActivity2 requireRecordHeadacheActivity() {

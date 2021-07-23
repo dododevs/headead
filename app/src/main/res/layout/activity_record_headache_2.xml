@@ -331,8 +331,8 @@
                         android:id="@+id/activity_record_headache_2_datetime_value"
                         android:alpha="0"
                         android:textColor="@color/iconGray"
-                        android:textSize="32sp"
-                        app:textStyle="bold"/>
+                        android:textSize="28sp"
+                        app:textStyle="semiBold"/>
 
                 </FrameLayout>
 

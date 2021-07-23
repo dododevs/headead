@@ -163,7 +163,9 @@ public class RecordedHeadachesAdapter extends RecyclerView.Adapter<RecordedHeada
 
     @Override
     public int getItemViewType(int position) {
-        return this.dataset.get(position) instanceof Header ? VIEW_TYPE_HEADER : VIEW_TYPE_ITEM;
+        return this.dataset.get(position) instanceof Header
+                ? VIEW_TYPE_HEADER
+                : VIEW_TYPE_ITEM;
     }
 
     public static String buildDurationLabel(final Context context, final Date start, final Date end) {
@@ -171,9 +173,7 @@ public class RecordedHeadachesAdapter extends RecyclerView.Adapter<RecordedHeada
         int seconds = (int) (elapsed / 1000);
         int hours = seconds / 3600;
         int minutes = (seconds - hours * 3600) / 60;
-        if (hours > 6) {
-            return context.getString(R.string.item_recorded_headache_duration_more_than_6h);
-        } else if (hours == 0 && minutes < 1) {
+        if (hours == 0 && minutes < 1) {
             return context.getString(R.string.item_recorded_headache_duration_less_than_1min);
         } else if (hours == 0) {
             return context.getString(R.string.item_recorded_headache_duration_less_than_1h, minutes);

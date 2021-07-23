@@ -10,13 +10,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.lifecycle.Observer;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Observable;
 
 import revolver.headead.R;
 import revolver.headead.core.model.Moment;
@@ -82,11 +79,11 @@ public class TimePickerView extends LinearLayout {
         View.inflate(context, R.layout.mtrl_time_picker_start_end_boxes, this);
 
         boxDividerView = findViewById(R.id.mtrl_time_picker_box_divider);
-        startTimeView = findViewById(R.id.mtrl_time_picker_start_box_value);
+        startTimeView = findViewById(R.id.mtrl_time_picker_box_value);
         endTimeView = findViewById(R.id.mtrl_time_picker_end_box_value);
-        startTimeLabel = findViewById(R.id.mtrl_time_picker_start_box_label);
+        startTimeLabel = findViewById(R.id.mtrl_time_picker_box_label);
         endTimeLabel = findViewById(R.id.mtrl_time_picker_end_box_label);
-        startTimePartOfDayView = findViewById(R.id.mtrl_time_picker_start_box_pod);
+        startTimePartOfDayView = findViewById(R.id.mtrl_time_picker_box_pod);
         endTimePartOfDayView = findViewById(R.id.mtrl_time_picker_end_box_pod);
         nextDayView = findViewById(R.id.mtrl_time_picker_next_day);
 
@@ -100,7 +97,7 @@ public class TimePickerView extends LinearLayout {
         partOfDayPickerView = findViewById(R.id.mtrl_time_picker_part_of_day);
 
         final View startTimeBox =
-                findViewById(R.id.mtrl_time_picker_start_box);
+                findViewById(R.id.mtrl_time_picker_box);
         final View endTimeBox =
                 findViewById(R.id.mtrl_time_picker_end_box);
         startTimeBox.setOnClickListener(v -> focusStartBox(true));

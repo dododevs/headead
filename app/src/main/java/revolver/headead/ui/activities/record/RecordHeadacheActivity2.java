@@ -80,7 +80,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
     private static final List<String> backStackedFragmentTags =
             Arrays.asList(LOCATION_PICKER_TAG, INTENSITY_PICKER_TAG,
                     TYPE_PICKER_TAG, DATETIME_PICKER_TAG, EXTRAS_TAG,
-                        DatePickerFragment.TAG, TimePickerFragment.TAG);
+                    DatePickerFragment.TAG, TimePickerFragment.TAG);
     private static final int REQUEST_DRUGS = "letsFindYouAQuickFix".hashCode() & 0xff;
     private static final int REQUEST_LOCATION = "lemmeTrackYou".hashCode() & 0xff;
 
@@ -522,7 +522,7 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
         } else if (painTypes == null) {
             bounceMissingDataView(findViewById(R.id.activity_record_headache_2_pain_type));
             missingData = true;
-        } else if (headacheStartDate == null || headacheEndDate == null) {
+        } else if (headacheStart == null) {
             bounceMissingDataView(findViewById(R.id.activity_record_headache_2_datetime));
             missingData = true;
         }
@@ -579,8 +579,8 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
             if (editMode) {
                 startBottomTransitionToFragment(HeadacheDetailFrontFragment
                         .of(editedHeadache), "detailFront", M.screenHeight() - ViewUtils
-                            .getStatusBarHeight() - M.dp(128.f + 16.f)
-                                .intValue(), false, false);
+                        .getStatusBarHeight() - M.dp(128.f + 16.f)
+                        .intValue(), false, false);
                 replaceBackdropFragment(HeadacheDetailBackdropFragment.of(editedHeadache));
             } else {
                 revertToMainListFragment();
@@ -631,12 +631,44 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
                 .setVisibility(View.VISIBLE);
     }
 
-    private SimpleAlertDialogFragment buildStartAfterEndErrorDialog() {
-        return new SimpleAlertDialogFragment.Builder(this)
-                .title(R.string.dialog_start_after_end_title)
-                .message(R.string.dialog_start_after_end_message)
-                .positiveButton(R.string.dialog_start_after_end_positive, null, true)
-                .build();
+    public void onHeadacheMomentsUpdated() {
+        if (headacheStart == null) {
+            headacheDateIconView.animate()
+                    .translationX(0.f)
+                    .translationY(0.f)
+                    .scaleX(1.f)
+                    .scaleY(1.f)
+                    .alpha(1.f)
+                    .setDuration(200L)
+                    .setInterpolator(new AccelerateDecelerateInterpolator())
+                    .start();
+            headacheDateValueView.animate()
+                    .alpha(0.f)
+                    .setDuration(200L)
+                    .setInterpolator(new LinearInterpolator())
+                    .start();
+            findViewById(R.id.activity_record_headache_2_datetime_checked)
+                    .setVisibility(View.GONE);
+            return;
+        }
+        headacheDateIconView.animate()
+                .translationX(M.dp(-24.f))
+                .translationY(M.dp(12.f))
+                .scaleX(0.5f)
+                .scaleY(0.5f)
+                .alpha(0.f)
+                .setDuration(200L)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .start();
+        headacheDateValueView.animate()
+                .alpha(1.f)
+                .setDuration(200L)
+                .setInterpolator(new LinearInterpolator())
+                .start();
+        headacheDateValueView.setText(TimeFormattingUtils
+                .createStartToEndString(this, headacheStart, headacheEnd));
+        findViewById(R.id.activity_record_headache_2_datetime_checked)
+                .setVisibility(View.VISIBLE);
     }
 
     private void onCurrentLocationUpdated() {
@@ -844,7 +876,11 @@ public class RecordHeadacheActivity2 extends AppCompatActivity {
             /* if one of the picker fragments is visible, revert back to
                BottomPaneFragment instead of firing onBackPressed */
             if (lastAdded instanceof BackPressAware) {
-                ((BackPressAware) lastAdded).onBackPressed();
+                boolean doesNotHandleOnBackPressed =
+                        !((BackPressAware) lastAdded).onBackPressed();
+                if (doesNotHandleOnBackPressed) {
+                    resetBottomPane();
+                }
             } else {
                 resetBottomPane();
             }

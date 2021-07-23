@@ -17,7 +17,7 @@
         android:textAllCaps="true"
         app:textStyle="semiBold"/>
 
-    <revolver.headead.ui.views.TimePickerView
+    <revolver.headead.ui.views.SingleTimePickerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

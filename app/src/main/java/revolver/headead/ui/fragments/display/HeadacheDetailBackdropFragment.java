@@ -19,6 +19,7 @@ import revolver.headead.R;
 import revolver.headead.core.model.Headache;
 import revolver.headead.ui.activities.record.RecordHeadacheActivity2;
 import revolver.headead.ui.adapters.RecordedHeadachesAdapter;
+import revolver.headead.util.misc.TimeFormattingUtils;
 
 public class HeadacheDetailBackdropFragment extends Fragment {
 
@@ -61,7 +62,8 @@ public class HeadacheDetailBackdropFragment extends Fragment {
             view.findViewById(R.id.fragment_headache_detail_backdrop_end)
                     .setVisibility(View.VISIBLE);
             ((TextView) view.findViewById(R.id.fragment_headache_detail_backdrop_end))
-                    .setText(endTimeFormatter.format(headache.getEndMoment().getDate()));
+                    .setText(TimeFormattingUtils.formatEndTimeWithDayOffset(
+                            headache.getStartMoment(), headache.getEndMoment()));
             ((TextView) view.findViewById(R.id.fragment_headache_detail_backdrop_duration))
                     .setText(RecordedHeadachesAdapter.buildDurationLabel(requireContext(),
                             headache.getStartMoment().getDate(),
