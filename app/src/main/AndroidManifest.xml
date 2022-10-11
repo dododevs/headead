@@ -33,7 +33,7 @@
         <activity android:name=".ui.activities.DrugIntakeActivity"/>
 
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBYgjT4euOuBBTbHXH5fwZVm3Os8tDsir4"/>
+            android:value=""/>
     </application>
 
 </manifest>
